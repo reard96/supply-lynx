@@ -3,7 +3,7 @@ import React from 'react'
 class Table extends React.Component {
   render() {
     return (
-      <table class='table'>
+      <table className='table'>
         <thead>
           <tr>
             <th>#</th>
@@ -13,8 +13,8 @@ class Table extends React.Component {
         </thead>
         <tbody >
           {this.props.candidates.map((candidate) => {
-            return(
-              <tr>
+            return (
+              <tr key={candidate.id}>
                 <th>{candidate.id.toNumber()}</th>
                 <td>{candidate.name}</td>
                 <td>{candidate.voteCount.toNumber()}</td>

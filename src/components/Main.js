@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { getUsers } from '../store/users';
 import { Container } from 'reactstrap';
 
-import App from './App';
+import Vote from './Vote';
 
 class Main extends Component {
   componentDidMount() {
@@ -22,7 +22,7 @@ class Main extends Component {
           /> */}
           <Container>
             <Switch>
-              <Route path='/' exact render={() => <App />} />
+              <Route path='/' exact render={() => <Vote />} />
             </Switch>
           </Container>
         </div>

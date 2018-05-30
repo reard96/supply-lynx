@@ -1,6 +1,7 @@
-const path = require('path')
+const path = require('path');
 module.exports = {
-  entry: path.join(__dirname, 'src/js', 'App.js'),
+  // entry: path.join(__dirname, 'src/components', 'App.js'),
+  entry: './src/index.js',
   devServer: {
     contentBase: path.join(__dirname, 'src'),
   },
@@ -12,7 +13,7 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        use: ['style-loader','css-loader'],
+        use: ['style-loader', 'css-loader'],
         include: [/src/, /node_modules/]
       }, {
         test: /\.jsx?$/,
@@ -28,4 +29,4 @@ module.exports = {
       }
     ]
   }
-}
+};

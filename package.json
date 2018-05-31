@@ -8,7 +8,8 @@
   },
   "scripts": {
     "seed": "node ./db/seed.js",
-    "start": "webpack-dev-server --open & SECRET=capstone nodemon server.js --ignore dist/ --ignore src/",
+    "server": "SECRET=capstone nodemon server.js --ignore dist/ --ignore src/",
+    "start": "webpack-dev-server --open",
     "build": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

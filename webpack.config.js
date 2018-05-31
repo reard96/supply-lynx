@@ -3,12 +3,12 @@ module.exports = {
   mode: 'development',
   devtool: 'source-map',
   entry: './src/index.js',
-  // devServer: {
-  //   contentBase: path.join(__dirname, 'src'),
-  // },
+  devServer: {
+    contentBase: path.join(__dirname, 'src'),
+  },
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: 'bundle.js'
+    filename: 'build.js'
   },
   module: {
     rules: [

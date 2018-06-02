@@ -1,7 +1,5 @@
-const BarterAgreement = artifacts.require("./BarterAgreement.sol");
+var Sale = artifacts.require("./Sale.sol");
 
-module.exports = function(deployer) {
-  deployer.deploy(BarterAgreement);
+module.exports = function(deployer, network, accounts) {
+  deployer.deploy(Sale, accounts[1]);
 };
-
-// this syntax will allow you to migrate your contracts to the blockchain in the truffle config file, by running truffle migrate

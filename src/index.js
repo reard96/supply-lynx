@@ -1,20 +1,15 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
-import { Provider } from 'react-redux'
+import {Provider} from 'react-redux'
 import store from './store'
-import Web3Manager from './web3/Web3Manager';
-import SimpleStorageContract from '../build/contracts/SimpleStorage';
-
+import history from './history'
+import { Router } from 'react-router-dom'
 ReactDOM.render(
   <Provider store={store}>
-    <div>
-      <Web3Manager
-        contract={SimpleStorageContract}
-        interval={100}
-      />
-      <App />
-    </div>
+    <Router history={history}>
+        <App />
+     </Router>
   </Provider>,
   document.getElementById('root')
 );

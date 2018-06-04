@@ -8,9 +8,7 @@ contract Business {
         uint quantity,
         uint price,
         string unit,
-        bool requested,
-        bool accepted,
-        bool completed,
+        string mode,
         address buyer,
         address seller
     );
@@ -21,14 +19,22 @@ contract Business {
         uint quantity;
         uint price;
         string unit;
-        bool requested;
-        bool accepted;
-        bool completed;
+        string mode;
         address buyer;
         address seller;
     }
 
     Order[] public orders;
+    address public admin;
+
+    constructor() public {
+        admin = msg.sender;
+    }
+
+    modifier restricted() {
+        require(msg.sender == admin);
+        _;
+    }
 
     function getOrdersCount() public view returns (uint) {
         return orders.length;
@@ -41,9 +47,7 @@ contract Business {
             quantity: quantity,
             price: price,
             unit: unit,
-            requested: true,
-            accepted: false,
-            completed: false,
+            mode: "requested",
             buyer: msg.sender,
             seller: 0x0000
         });
@@ -55,9 +59,7 @@ contract Business {
             bid.quantity,
             bid.price,
             bid.unit,
-            bid.requested,
-            bid.accepted,
-            bid.completed,
+            bid.mode,
             bid.buyer,
             bid.seller
         );
@@ -66,7 +68,7 @@ contract Business {
     function acceptBid(uint id) public {
         Order storage bid = orders[id];
         require(msg.sender != bid.buyer);
-        bid.accepted = true;
+        bid.mode = "accepted";
         bid.seller = msg.sender;
         emit OrderLog(
             id,
@@ -75,9 +77,7 @@ contract Business {
             bid.quantity,
             bid.price,
             bid.unit,
-            bid.requested,
-            bid.accepted,
-            bid.completed,
+            bid.mode,
             bid.buyer,
             bid.seller
         );
@@ -90,9 +90,7 @@ contract Business {
             quantity: quantity,
             price: price,
             unit: unit,
-            requested: true,
-            accepted: false,
-            completed: false,
+            mode: "requested",
             buyer: 0x0000,
             seller: msg.sender
         });
@@ -104,9 +102,7 @@ contract Business {
             quote.quantity,
             quote.price,
             quote.unit,
-            quote.requested,
-            quote.accepted,
-            quote.completed,
+            quote.mode,
             quote.buyer,
             quote.seller
         );
@@ -115,7 +111,7 @@ contract Business {
     function acceptQuote(uint id) public payable {
         Order storage quote = orders[id];
         require(msg.sender != quote.seller);
-        quote.accepted = true;
+        quote.mode = "accepted";
         quote.buyer = msg.sender;
         quote.payment = msg.value;
         emit OrderLog(
@@ -125,9 +121,7 @@ contract Business {
             quote.quantity,
             quote.price,
             quote.unit,
-            quote.requested,
-            quote.accepted,
-            quote.completed,
+            quote.mode,
             quote.buyer,
             quote.seller
         );
@@ -135,7 +129,7 @@ contract Business {
 
     function completeOrder(uint id) public {
         Order storage order = orders[id];
-        order.completed = true;
+        order.mode = "completed";
         order.seller.transfer(order.payment);
         emit OrderLog(
             id,
@@ -144,9 +138,24 @@ contract Business {
             order.quantity,
             order.price,
             order.unit,
-            order.requested,
-            order.accepted,
-            order.completed,
+            order.mode,
+            order.buyer,
+            order.seller
+        );
+    }
+
+    function cancelOrder(uint id) public {
+        Order storage order = orders[id];
+        order.mode = "cancelled";
+        order.buyer.transfer(order.payment);
+        emit OrderLog(
+            id,
+            order.payment,
+            order.productId,
+            order.quantity,
+            order.price,
+            order.unit,
+            order.mode,
             order.buyer,
             order.seller
         );

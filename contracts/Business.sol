@@ -3,6 +3,7 @@ pragma solidity ^0.4.2;
 contract Business {
     event OrderLog (
         uint id,
+        uint payment,
         uint productId,
         uint quantity,
         uint price,
@@ -15,6 +16,7 @@ contract Business {
     );
 
     struct Order {
+        uint payment;
         uint productId;
         uint quantity;
         uint price;
@@ -34,6 +36,7 @@ contract Business {
 
     function createBid(uint productId, uint quantity, uint price, string unit) public payable {
         Order memory bid = Order({
+            payment: msg.value,
             productId: productId,
             quantity: quantity,
             price: price,
@@ -47,6 +50,7 @@ contract Business {
         uint id = orders.push(bid) - 1;
         emit OrderLog(
             id,
+            bid.payment,
             bid.productId,
             bid.quantity,
             bid.price,
@@ -63,8 +67,10 @@ contract Business {
         Order storage bid = orders[id];
         require(msg.sender != bid.buyer);
         bid.accepted = true;
+        bid.seller = msg.sender;
         emit OrderLog(
             id,
+            bid.payment,
             bid.productId,
             bid.quantity,
             bid.price,
@@ -79,6 +85,7 @@ contract Business {
 
     function createQuote(uint productId, uint quantity, uint price, string unit) public {
         Order memory quote = Order({
+            payment: 0,
             productId: productId,
             quantity: quantity,
             price: price,
@@ -92,6 +99,7 @@ contract Business {
         uint id = orders.push(quote) - 1;
         emit OrderLog(
             id,
+            quote.payment,
             quote.productId,
             quote.quantity,
             quote.price,
@@ -108,8 +116,11 @@ contract Business {
         Order storage quote = orders[id];
         require(msg.sender != quote.seller);
         quote.accepted = true;
+        quote.buyer = msg.sender;
+        quote.payment = msg.value;
         emit OrderLog(
             id,
+            quote.payment,
             quote.productId,
             quote.quantity,
             quote.price,
@@ -125,9 +136,10 @@ contract Business {
     function completeOrder(uint id) public {
         Order storage order = orders[id];
         order.completed = true;
-        order.seller.transfer(order.price * order.quantity);
+        order.seller.transfer(order.payment);
         emit OrderLog(
             id,
+            order.payment,
             order.productId,
             order.quantity,
             order.price,

@@ -8,7 +8,8 @@ contract Business {
         uint quantity,
         uint price,
         string unit,
-        string mode,
+        string class,
+        string status,
         address buyer,
         address seller
     );
@@ -19,7 +20,8 @@ contract Business {
         uint quantity;
         uint price;
         string unit;
-        string mode;
+        string class;
+        string status;
         address buyer;
         address seller;
     }
@@ -47,7 +49,8 @@ contract Business {
             quantity: quantity,
             price: price,
             unit: unit,
-            mode: "requested",
+            class: "bid",
+            status: "requested",
             buyer: msg.sender,
             seller: 0x0000
         });
@@ -59,7 +62,8 @@ contract Business {
             bid.quantity,
             bid.price,
             bid.unit,
-            bid.mode,
+            bid.class,
+            bid.status,
             bid.buyer,
             bid.seller
         );
@@ -68,7 +72,7 @@ contract Business {
     function acceptBid(uint id) public {
         Order storage bid = orders[id];
         require(msg.sender != bid.buyer);
-        bid.mode = "accepted";
+        bid.status = "accepted";
         bid.seller = msg.sender;
         emit OrderLog(
             id,
@@ -77,7 +81,8 @@ contract Business {
             bid.quantity,
             bid.price,
             bid.unit,
-            bid.mode,
+            bid.class,
+            bid.status,
             bid.buyer,
             bid.seller
         );
@@ -90,7 +95,8 @@ contract Business {
             quantity: quantity,
             price: price,
             unit: unit,
-            mode: "requested",
+            class: "quote",
+            status: "requested",
             buyer: 0x0000,
             seller: msg.sender
         });
@@ -102,7 +108,8 @@ contract Business {
             quote.quantity,
             quote.price,
             quote.unit,
-            quote.mode,
+            quote.class,
+            quote.status,
             quote.buyer,
             quote.seller
         );
@@ -111,7 +118,7 @@ contract Business {
     function acceptQuote(uint id) public payable {
         Order storage quote = orders[id];
         require(msg.sender != quote.seller);
-        quote.mode = "accepted";
+        quote.status = "accepted";
         quote.buyer = msg.sender;
         quote.payment = msg.value;
         emit OrderLog(
@@ -121,7 +128,8 @@ contract Business {
             quote.quantity,
             quote.price,
             quote.unit,
-            quote.mode,
+            quote.class,
+            quote.status,
             quote.buyer,
             quote.seller
         );
@@ -129,7 +137,7 @@ contract Business {
 
     function completeOrder(uint id) public {
         Order storage order = orders[id];
-        order.mode = "completed";
+        order.status = "completed";
         order.seller.transfer(order.payment);
         emit OrderLog(
             id,
@@ -138,7 +146,8 @@ contract Business {
             order.quantity,
             order.price,
             order.unit,
-            order.mode,
+            order.class,
+            order.status,
             order.buyer,
             order.seller
         );
@@ -146,7 +155,7 @@ contract Business {
 
     function cancelOrder(uint id) public {
         Order storage order = orders[id];
-        order.mode = "cancelled";
+        order.status = "cancelled";
         order.buyer.transfer(order.payment);
         emit OrderLog(
             id,
@@ -155,7 +164,8 @@ contract Business {
             order.quantity,
             order.price,
             order.unit,
-            order.mode,
+            order.class,
+            order.status,
             order.buyer,
             order.seller
         );

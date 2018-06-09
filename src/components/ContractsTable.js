@@ -7,10 +7,11 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import Checkbox from '@material-ui/core/Checkbox';
 
 const CustomTableCell = withStyles(theme => ({
   head: {
-    backgroundColor: theme.palette.common.black,
+    backgroundColor: theme.palette.primary.dark,
     color: theme.palette.common.white,
   },
   body: {
@@ -19,6 +20,14 @@ const CustomTableCell = withStyles(theme => ({
 }))(TableCell);
 
 const styles = theme => ({
+  palette: {
+    primary: {
+      light: '#757ce8',
+      main: '#3f50b5',
+      dark: '#002884',
+      contrastText: '#fff',
+    }
+  },
   root: {
     width: '100%',
     marginTop: theme.spacing.unit * 3,
@@ -56,6 +65,9 @@ function CustomizedTable(props) {
       <Table className={classes.table}>
         <TableHead>
           <TableRow>
+            <CustomTableCell padding="checkbox">
+              <Checkbox />
+            </CustomTableCell>
             <CustomTableCell>Dessert (100g serving)</CustomTableCell>
             <CustomTableCell numeric>Calories</CustomTableCell>
             <CustomTableCell numeric>Fat (g)</CustomTableCell>
@@ -67,6 +79,9 @@ function CustomizedTable(props) {
           {data.map(n => {
             return (
               <TableRow className={classes.row} key={n.id}>
+                <CustomTableCell padding="checkbox">
+                  <Checkbox />
+                </CustomTableCell>
                 <CustomTableCell component="th" scope="row">
                   {n.name}
                 </CustomTableCell>

@@ -16,6 +16,12 @@ import About from './About'
 import MyProfile from './MyProfile'
 import { me, fetchServices } from '../store'
 
+import IntegrationReactSelect from './EntityDashboard';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+//Needed for onTouchTap
+// injectTapEventPlugin();
+
 class Routes extends Component {
   componentDidMount () {
     window.scroll(0,0)
@@ -24,6 +30,7 @@ class Routes extends Component {
 
   render () {
     const {isLoggedIn} = this.props;
+    console.log('isLoggedIn',isLoggedIn)
     return (
       <div>
         <NavBar />
@@ -34,6 +41,7 @@ class Routes extends Component {
           <Route exact path="/" component={Homepage} />
           <Route exact path="/faq" component={FAQ} />
           <Route exact path="/about" component={About} />
+          <MuiThemeProvider><Route exact path='/entity' component={IntegrationReactSelect} /></MuiThemeProvider>
           {
             isLoggedIn &&
               <Switch>

@@ -8,6 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const CustomTableCell = withStyles(theme => ({
   head: {
@@ -73,6 +74,7 @@ function CustomizedTable(props) {
             <CustomTableCell numeric>Fat (g)</CustomTableCell>
             <CustomTableCell numeric>Carbs (g)</CustomTableCell>
             <CustomTableCell numeric>Protein (g)</CustomTableCell>
+            <CustomTableCell>Status</CustomTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -89,6 +91,9 @@ function CustomizedTable(props) {
                 <CustomTableCell numeric>{n.fat}</CustomTableCell>
                 <CustomTableCell numeric>{n.carbs}</CustomTableCell>
                 <CustomTableCell numeric>{n.protein}</CustomTableCell>
+                <CustomTableCell>
+                  <CircularProgress value={ Math.floor(Math.random() * 100) } />
+                </CustomTableCell>
               </TableRow>
             );
           })}

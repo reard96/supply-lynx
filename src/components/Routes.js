@@ -22,8 +22,6 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 //Needed for onTouchTap
 // injectTapEventPlugin();
 
-import CustomizedTable from './ContractsTable';
-
 class Routes extends Component {
   componentDidMount () {
     window.scroll(0,0)
@@ -44,7 +42,6 @@ class Routes extends Component {
           <Route exact path="/faq" component={FAQ} />
           <Route exact path="/about" component={About} />
           <MuiThemeProvider><Route exact path='/entity' component={IntegrationReactSelect} /></MuiThemeProvider>
-          <MuiThemeProvider><Route exact path='/dashboard' component={CustomizedTable} /></MuiThemeProvider>
           {
             isLoggedIn &&
               <Switch>

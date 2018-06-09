@@ -15,6 +15,8 @@ import Chip from '@material-ui/core/Chip';
 import Select from 'react-select';
 import './react-select.css';
 
+import CustomizedTable from './ContractsTable';
+
 const suggestions = [
   { label: 'Afghanistan' },
   { label: 'Aland Islands' },
@@ -288,6 +290,7 @@ class IntegrationReactSelect extends React.Component {
             },
           }}
         />
+        <CustomizedTable />
       </div>
     );
   }

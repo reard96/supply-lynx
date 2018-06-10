@@ -16,7 +16,10 @@ import Select from 'react-select';
 import { connect } from 'react-redux';
 import './react-select.css';
 
-/*const suggestions = [
+import CustomizedTable from './ContractsTable';
+
+/*
+const suggestions = [
   { label: 'Afghanistan' },
   { label: 'Aland Islands' },
   { label: 'Albania' },
@@ -296,6 +299,7 @@ class IntegrationReactSelect extends React.Component {
             },
           }}
         />
+        <CustomizedTable />
       </div>
     );
   }

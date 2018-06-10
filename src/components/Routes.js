@@ -6,8 +6,6 @@ import SingleService from './SingleService'
 import AddService from './AddService'
 import SingleUser from './SingleUser'
 import SingleUserPublic from './SingleUserPublic'
-import AllThreads from './AllThreads'
-import AddMessage from './AddMessage'
 import Homepage from './Homepage'
 import { Login, Signup } from './SignUp'
 import NavBar from './NavBar'
@@ -51,8 +49,6 @@ class Routes extends Component {
                 <Route exact path='/services' component={AllServices} />
                 <Route exact path='/services/new' component={AddService} />
                 <Route exact path='/services/:id' component={SingleService} />
-                <Route exact path='/messages' component={AllThreads} />
-                <Route exact path='/messages/new' component={AddMessage} />
                 <Route exact path='/my-profile' component={MyProfile} />
               </Switch>
           }

@@ -6,35 +6,34 @@ const Service = db.define( "service", {
       type: Sequelize.STRING,
       allowNull: false
     },
-    description: {
+/*    description: {
       type: Sequelize.STRING,
       allowNull: false
+    },*/
+    productId: {
+      type: Sequelize.INTEGER
     },
     category: {
      type: Sequelize.ENUM('Goods', 'Services')
     },
-    isAvailable: {
+    /*isAvailable: {
       type: Sequelize.BOOLEAN,
       defaultValue: true
-    },
+    },*/
     price: {
-      type: Sequelize.FLOAT,
+      type: Sequelize.INTEGER,
       validate: {
         min: 0
       }
     },
-    status: {
-      type: Sequelize.ENUM("Posted", "Pending", "Completed"),
-      defaultValue: "Posted"
-    },
-  imgUrl: {
-    type: Sequelize.STRING,
-    defaultValue: '/assets/items/placeholder.png'
-  },
-  contractId: {
-    type: Sequelize.INTEGER,
-    defaultValue: null
-  }
+    /*status: {
+      type: Sequelize.ENUM("Pending", "Completed"),
+      defaultValue: "Pending"
+    },*/
+    /*contractId: {
+      type: Sequelize.INTEGER,
+      defaultValue: null
+    }*/
 });
 
 module.exports = Service;

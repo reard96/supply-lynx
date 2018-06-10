@@ -13,9 +13,13 @@ import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import ClearIcon from '@material-ui/icons/Clear';
 import Chip from '@material-ui/core/Chip';
 import Select from 'react-select';
+import { connect } from 'react-redux';
 import './react-select.css';
 
+
 import CustomizedTable from './ContractsTable';
+/*const suggestions = [
+
 
 const suggestions = [
   { label: 'Afghanistan' },
@@ -55,7 +59,8 @@ const suggestions = [
 ].map(suggestion => ({
   value: suggestion.label,
   label: suggestion.label,
-}));
+}));*/
+
 
 class Option extends React.Component {
 
@@ -239,12 +244,13 @@ const styles = theme => ({
 
 class IntegrationReactSelect extends React.Component {
 
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
+    const { services } = props;
     this.state = {
-      single: null,
+     // single: null,
       multi: null,
-      multiLabel: null,
+     // multiLabel: null,
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -256,9 +262,14 @@ class IntegrationReactSelect extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
-
-    console.log('searches', this.props);
+    const { classes, services } = this.props;
+//    console.log(services)
+//    console.log('searches', this.props);
+    console.log(this.state);
+    const suggestions = services.map(suggestion => ({
+      value: suggestion,
+      label: suggestion
+    }));
 
     return (
       <div className={classes.root}>
@@ -286,7 +297,7 @@ class IntegrationReactSelect extends React.Component {
               instanceId: 'react-select-chip-label',
               id: 'react-select-chip-label',
               simpleValue: true,
-              options: suggestions,
+              options: suggestions
             },
           }}
         />
@@ -300,4 +311,14 @@ IntegrationReactSelect.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(IntegrationReactSelect);
+const mapStateToProps = ({ /*services,*/ user }) => {
+  const services = ['chocolate', 'apple', 'banana']
+  return {
+    services,
+    user
+  }
+};
+
+const styledComponent = withStyles(styles)(IntegrationReactSelect);
+
+export default connect(mapStateToProps)(styledComponent);

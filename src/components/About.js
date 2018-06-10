@@ -13,10 +13,7 @@ const About = props => {
           <div className="containerInner bt">
             <div className="f4 b">What is Block & Mortar?</div>
             <p>
-              Block & Mortar is an app that allows local communities to buy and
-              sell their goods and services, featuring an intuitive user
-              interface backed by the security and transparency of the Ethereum
-              blockchain.
+              HELLO!!
             </p>
             <p>
               Users can post an item or service for sale and set a price in

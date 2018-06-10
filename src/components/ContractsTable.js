@@ -60,7 +60,7 @@ const data = [
 
 function CustomizedTable(props) {
   const { classes } = props;
-
+  console.log(props.orders)
   return (
     <Paper className={classes.root}>
       <Table className={classes.table}>

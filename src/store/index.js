@@ -1,4 +1,4 @@
-import {createStore, combineReducers, applyMiddleware} from 'redux'
+import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { createLogger } from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
@@ -10,15 +10,17 @@ import users from './users'
 import singleService from './singleService'
 import currentUser from './currentUser'
 import singleUser from './singleUser'
+import orders from './orders'
 
-export const reducer = combineReducers({ web3, accounts, contract, services, users, singleService, currentUser, singleUser })
+export const reducer = combineReducers({ web3, orders, accounts, contract, services, users, singleService, currentUser, singleUser })
 const middleware = composeWithDevTools(applyMiddleware(
   thunkMiddleware,
-  createLogger({collapsed: true})
+  createLogger({ collapsed: true })
 ))
 const store = createStore(reducer, middleware)
 
 export default store
+export * from './orders'
 export * from './web3'
 export * from './accounts'
 export * from './contract'

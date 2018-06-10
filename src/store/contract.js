@@ -1,6 +1,6 @@
-import BarterAgreement from "../../build/contracts/BarterAgreement.json"
+import Business from "../../build/contracts/Business.json"
 const contract = require("truffle-contract")
-const agreementStorage = contract(BarterAgreement) //this is creating a new instance of BarterAgreement every time
+const agreementStorage = contract(Business)
 
 //Initial State
 const defaultContract = {}

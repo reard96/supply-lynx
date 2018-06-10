@@ -1,5 +1,5 @@
 const db = require('../server/db')
-const {User, Service, Order} = require('../server/db/models')
+const {User, Service} = require('../server/db/models')
 
 async function seed () {
   await db.sync({force: true})
@@ -19,14 +19,14 @@ async function seed () {
     Service.create({name: 'vanilla', productID: 102, category: 'Goods', price: 100}),
     Service.create({name: 'wheat', productID: 103, category: 'Goods', price: 100}),
     Service.create({name: 'truck transport', productID: 104, category: 'Services', price: 1000}),
-  ])
+    Service.create({name: 'ship transport', productID: 105, category: 'Services', price: 1000}),
+    Service.create({name: 'loading dock help', productID: 106, category: 'Services', price: 1000}),
+    Service.create({name: 'coffee', productID: 107, category: 'Goods', price: 100}),
+    Service.create({name: 'rice', productID: 108, category: 'Goods', price: 100}),
+    Service.create({name: 'sugar', productID: 109, category: 'Goods', price: 100}),
 
-  const orders = await Promise.all([
-    Order.create({id: 0, payment: 100, productID:  , category: 'Goods', price: 100}),
-    Order.create({name: 'vanilla', productID: 101, category: 'Goods', price: 100}),
-    Order.create({name: 'wheat', productID: 102, category: 'Goods', price: 100}),
-    Order.create({name: 'truck transport', productID: 103, category: 'Services', price: 1000}),
   ])
+}
 
 // Execute the `seed` function
 // `Async` functions always return a promise, so we can use `catch` to handle any errors

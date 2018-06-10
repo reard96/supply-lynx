@@ -78,6 +78,8 @@
     "pg-hstore": "^2.3.2",
     "prop-types": "^15.6.1",
     "react": "^15.4.2",
+    "react-addons-create-fragment": "^15.4.2",
+    "react-addons-transition-group": "^15.4.2",
     "react-bodymovin": "^1.1.1",
     "react-dom": "^15.4.2",
     "react-loading-indicator": "^1.0.2",

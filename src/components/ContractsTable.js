@@ -9,6 +9,8 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { connect } from 'react-redux';
+
 
 const CustomTableCell = withStyles(theme => ({
   head: {
@@ -59,7 +61,8 @@ const data = [
 ];
 
 function CustomizedTable(props) {
-  const { classes } = props;
+  //const { classes } = props;
+  const { classes, services } = props;
 
   return (
     <Paper className={classes.root}>
@@ -78,7 +81,8 @@ function CustomizedTable(props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map(n => {
+          {/*data.map(n => {*/}
+          {services.map(n => {  
             return (
               <TableRow className={classes.row} key={n.id}>
                 <CustomTableCell padding="checkbox">
@@ -107,4 +111,12 @@ CustomizedTable.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(CustomizedTable);
+const mapState = ({ services }) => {
+  return {
+    services
+  }
+}
+
+const styledComponent = withStyles(styles)(CustomizedTable);
+
+export default connect(mapState)(styledComponent)

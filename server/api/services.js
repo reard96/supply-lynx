@@ -1,44 +1,32 @@
-const router = require('express').Router()
+const app = require('express').Router()
 const {Service} = require('../db/models')
-module.exports = router
+module.exports = app
 
-router.get('/', (req, res, next) => {
-  Service.findAll({ include: [{ all: true }] })
-    .then(services => res.json(services))
-    .catch(next)
-})
-
-
-router.post('/', (req, res, next) => {
-  Service.create(req.body)
-    .then(service => Service.findById(service.id, {include: [{ all: true }]}))
-    .then(foundService => res.json(foundService))
-    .catch(next);
-})
-
-router.get('/:id', (req, res, next) => {
-  Service.findById(req.params.id, { include: [{ all: true }] })
-    .then(service => res.json(service))
-    .catch(next)
-})
-
-router.get('/buyer/:buyerId', (req, res, next) => {
-  Service.findAll({where: {sellerId: req.params.sellerId}, include: [{ all: true }]})
+app.get('/', (req, res, next) => {
+  Service.findAll()
     .then(services => res.send(services))
     .catch(next)
 })
 
-router.get('/seller/:sellerId', (req, res, next) => {
-    Service.findAll({where: {sellerId: req.params.sellerId}, include: [{ all: true }]})
-      .then(services => res.send(services))
-      .catch(next)
-  })
 
+app.post('/', (req, res, next) => {
+  Service.create(req.body)
+    .then(service => res.send(service))
+    .catch(next);
+})
 
-router.put("/:id", (req, res, next) => {
+app.get('/:id', (req, res, next) => {
   Service.findById(req.params.id)
-    .then(service => service.update(req.body))
-    .then(updatedService => Service.findById(req.params.id, { include: [{ all: true }] }))
-    .then(foundService => res.json(foundService))
+    .then(service => res.send(service))
+    .catch(next)
+})
+
+app.put("/:id", (req, res, next) => {
+  Service.findById(req.params.id)
+    .then(service => {
+      Object.assign(service, req.body)
+      return service.save();
+    })
+    .then(service => res.send(service))
     .catch(next);
 });

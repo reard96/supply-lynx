@@ -24,7 +24,8 @@ async function seed () {
     Service.create({name: 'coffee', productID: 107, category: 'Goods', price: 100}),
     Service.create({name: 'rice', productID: 108, category: 'Goods', price: 100}),
     Service.create({name: 'sugar', productID: 109, category: 'Goods', price: 100}),
-
+    Service.create({name: 'cell phones', productID: 110, category: 'Goods', price: 100}),
+    Service.create({name: 'MacBooks', productID: 111, category: 'Goods', price: 100}),
   ])
 }
 

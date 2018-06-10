@@ -14,6 +14,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import Chip from '@material-ui/core/Chip';
 import Select from 'react-select';
 import { connect } from 'react-redux';
+import axios from 'axios';
 import './react-select.css';
 
 import CustomizedTable from './ContractsTable';
@@ -74,7 +75,6 @@ class Option extends React.Component {
 
   render() {
     const { children, isFocused, isSelected, onFocus } = this.props;
-
     return (
       <MenuItem
         onFocus={onFocus}
@@ -244,11 +244,12 @@ class IntegrationReactSelect extends React.Component {
 
   constructor(props){
     super(props);
-    const { services } = props;
+//    const { services } = props;
     this.state = {
      // single: null,
       multi: null,
      // multiLabel: null,
+      services: []
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -259,8 +260,25 @@ class IntegrationReactSelect extends React.Component {
 
   };
 
+
+
+  componentDidMount() {
+    axios.get('/api/services')
+      .then(result => result.data)
+      .then(services => {
+        this.setState({ services })
+      })
+      /*store.subscribe(() => {
+        this.setState({
+          services: store.getState().services
+        })
+      })*/
+      console.log(this.state.services)
+  }
+
   render() {
-    const { classes, services } = this.props;
+    const { classes/*, services*/ } = this.props;
+    const { services } = this.state;
 //    console.log(services)
 //    console.log('searches', this.props);
     console.log(this.state);
@@ -309,14 +327,17 @@ IntegrationReactSelect.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = ({ /*services,*/ user }) => {
-  const services = ['chocolate', 'apple', 'banana']
+/*const mapStateToProps = ({ services, user }) => {
+//  const services = ['chocolate', 'apple', 'banana']
+  console.log(services)
   return {
     services,
     user
   }
-};
+};*/
 
-const styledComponent = withStyles(styles)(IntegrationReactSelect);
+export default withStyles(styles)(IntegrationReactSelect);
 
-export default connect(mapStateToProps)(styledComponent);
+/*const styledComponent = withStyles(styles)(IntegrationReactSelect);
+
+export default connect(mapStatetoProps)(styledComponent);*/

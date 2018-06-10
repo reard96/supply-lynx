@@ -33,7 +33,7 @@ const suggestions = [
   { label: 'Antigua and Barbuda' },
   { label: 'Argentina' },
   { label: 'Armenia' },
-  { label: 'Aruba' }, 
+  { label: 'Aruba' },
   { label: 'Australia' },
   { label: 'Austria' },
   { label: 'Azerbaijan' },
@@ -63,13 +63,13 @@ const suggestions = [
 
 class Option extends React.Component {
 
-  constructor(){
+  constructor() {
     super();
 
     this.handleClick = this.handleClick.bind(this);
   };
 
-  handleClick(event){
+  handleClick(event) {
     this.props.onSelect(this.props.option, event);
   };
 
@@ -114,7 +114,7 @@ function SelectWrapped(props) {
 
         if (onRemove) {
           return (
-            <Chip style={{fontSize: '24px'}}
+            <Chip style={{ fontSize: '24px' }}
               tabIndex={-1}
               label={children}
               className={classes.chip}
@@ -242,11 +242,11 @@ const styles = theme => ({
 
 class IntegrationReactSelect extends React.Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
 //    const { services } = props;
     this.state = {
-     // single: null,
+      // single: null,
       multi: null,
      // multiLabel: null,
       services: []
@@ -256,7 +256,7 @@ class IntegrationReactSelect extends React.Component {
 
   handleChange(value, name) {
 
-    this.setState({ [name ]: value });
+    this.setState({ [name]: value });
 
   };
 
@@ -289,17 +289,17 @@ class IntegrationReactSelect extends React.Component {
 
     return (
       <div className={classes.root}>
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-        <TextField style={{width:'500'}}
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <TextField style={{ width: '500' }}
           fullWidth={false}
           value={this.state.multiLabel}
-          onChange={(e) => this.handleChange(e,'multiLabel')}
+          onChange={(e) => this.handleChange(e, 'multiLabel')}
           placeholder="Select Services"
           name="react-select-chip-label"
           InputLabelProps={{
@@ -317,7 +317,7 @@ class IntegrationReactSelect extends React.Component {
             },
           }}
         />
-        <CustomizedTable />
+        <CustomizedTable orders={this.props.orders} />
       </div>
     );
   }
@@ -332,6 +332,7 @@ IntegrationReactSelect.propTypes = {
   console.log(services)
   return {
     services,
+    orders,
     user
   }
 };*/

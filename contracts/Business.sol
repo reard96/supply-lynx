@@ -170,8 +170,4 @@ contract Business {
             order.seller
         );
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> b48e45698464937ccb2742899c988cb03a781501

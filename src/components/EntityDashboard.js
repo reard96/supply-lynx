@@ -249,22 +249,22 @@ class IntegrationReactSelect extends React.Component {
     this.state = {
      // single: null,
       multi: null,
-      servicesTest: []
+      services: []
      // multiLabel: null,
     };
     this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount(){
-    // this.setState({
-    //   servicesTest: ['jhsdhjsgfhfgj']
-    // });
     return axios.get('/api/services')
-      .then(res => {
-        const test = res.data.map(d =>({
-          value: d.name, label: d.name
-        }));
-        this.setState({ servicesTest: test });
+      .then(res => res.data)
+      .then(data => {
+        const names = data.map(data => data.name);
+        const sortedNames = names.sort();
+        const services = sortedNames.map(name => ({
+          value: name, label: name
+        }))
+        this.setState({ services })
       })
   };
 
@@ -277,7 +277,7 @@ class IntegrationReactSelect extends React.Component {
   render() {
     const { classes } = this.props;
 
-    const suggestions = this.state.servicesTest;
+    const suggestions = this.state.services;
 
     return (
       <div className={classes.root}>
@@ -309,6 +309,7 @@ class IntegrationReactSelect extends React.Component {
             },
           }}
         />
+        {/*<CustomizedTable />*/}
       </div>
     );
   }
@@ -317,14 +318,6 @@ class IntegrationReactSelect extends React.Component {
 IntegrationReactSelect.propTypes = {
   classes: PropTypes.any.isRequired
 };
-
-// const mapStateToProps = ({ /*services,*/ user }) => {
-//   const services = ['chocolate', 'apple', 'banana']
-//   return {
-//     services,
-//     user
-//   }
-// };
 
 // const styledComponent = withStyles(styles)(IntegrationReactSelect);
 

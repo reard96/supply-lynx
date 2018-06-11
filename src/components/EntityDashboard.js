@@ -13,8 +13,9 @@ import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import ClearIcon from '@material-ui/icons/Clear';
 import Chip from '@material-ui/core/Chip';
 import Select from 'react-select';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 import './react-select.css';
+import axios from 'axios';
 
 import CustomizedTable from './ContractsTable';
 
@@ -62,13 +63,14 @@ const suggestions = [
 
 class Option extends React.Component {
 
-  constructor() {
+  constructor(){
     super();
 
     this.handleClick = this.handleClick.bind(this);
   };
 
-  handleClick(event) {
+  handleClick(event){
+    console.log('Option', event, this.props.option);
     this.props.onSelect(this.props.option, event);
   };
 
@@ -114,7 +116,7 @@ function SelectWrapped(props) {
 
         if (onRemove) {
           return (
-            <Chip style={{ fontSize: '24px' }}
+            <Chip style={{fontSize: '24px'}}
               tabIndex={-1}
               label={children}
               className={classes.chip}
@@ -242,46 +244,54 @@ const styles = theme => ({
 
 class IntegrationReactSelect extends React.Component {
 
-  constructor(props) {
-    super(props);
-    const { services } = props;
+  constructor(){
+    super();
     this.state = {
-      // single: null,
+     // single: null,
       multi: null,
-      // multiLabel: null,
+      services: []
+     // multiLabel: null,
     };
     this.handleChange = this.handleChange.bind(this);
   }
 
+  componentDidMount(){
+    return axios.get('/api/services')
+      .then(res => res.data)
+      .then(data => {
+        const names = data.map(data => data.name);
+        const sortedNames = names.sort();
+        const services = sortedNames.map(name => ({
+          value: name, label: name
+        }))
+        this.setState({ services })
+      })
+  };
+
   handleChange(value, name) {
 
-    this.setState({ [name]: value });
+    this.setState({ [name ]: value });
 
   };
 
   render() {
-    const { classes, services } = this.props;
-    //    console.log(services)
-    //    console.log('searches', this.props);
-    console.log(this.state);
-    const suggestions = services.map(suggestion => ({
-      value: suggestion,
-      label: suggestion
-    }));
+    const { classes } = this.props;
+
+    const suggestions = this.state.services;
 
     return (
       <div className={classes.root}>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <TextField style={{ width: '500' }}
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+        <TextField style={{width:'500'}}
           fullWidth={false}
           value={this.state.multiLabel}
-          onChange={(e) => this.handleChange(e, 'multiLabel')}
+          onChange={(e) => this.handleChange(e,'multiLabel')}
           placeholder="Select Services"
           name="react-select-chip-label"
           InputLabelProps={{
@@ -299,25 +309,17 @@ class IntegrationReactSelect extends React.Component {
             },
           }}
         />
-        <CustomizedTable orders={this.props.orders} />
+        {/*<CustomizedTable />*/}
       </div>
     );
   }
 }
 
 IntegrationReactSelect.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.any.isRequired
 };
 
-const mapStateToProps = ({ orders, user }) => {
-  const services = ['chocolate', 'apple', 'banana']
-  return {
-    services,
-    orders,
-    user
-  }
-};
+// const styledComponent = withStyles(styles)(IntegrationReactSelect);
 
-const styledComponent = withStyles(styles)(IntegrationReactSelect);
-
-export default connect(mapStateToProps)(styledComponent);
+// export default connect(mapStateToProps)(styledComponent);
+export default withStyles(styles)(IntegrationReactSelect);

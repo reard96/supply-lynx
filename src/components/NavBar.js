@@ -1,7 +1,7 @@
-import React from "react";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import { logout } from "../store";
+import React from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { logout } from '../store';
 
 class Navbar extends React.Component {
   constructor(props) {
@@ -17,56 +17,56 @@ class Navbar extends React.Component {
   }
 
   componentDidMount() {
-    window.addEventListener("resize", this.handleResize.bind(this));
+    window.addEventListener('resize', this.handleResize.bind(this));
   }
 
   componentWillUnmount() {
-    window.removeEventListener("resize", this.handleResize.bind(this));
+    window.removeEventListener('resize', this.handleResize.bind(this));
   }
   navigationLinks() {
     return (
       <div>
-        <nav className="navBar">
-          <div id="subNav">
+        <nav className='navBar'>
+          <div id='subNav'>
             {this.props.isLoggedIn ? (
-              <div className="dtc v-mid w-75 tr" id="subNavItem">
-                <Link to="/home" className="avenir link dim white f6 f5-ns dib mr3 mr4-ns ">
-                  My Dashboard
+              <div className='dtc v-mid w-75 tr' id='subNavItem'>
+                <Link to='/dashboard' className='avenir link dim white f6 f5-ns dib mr3 mr4-ns '>
+                  Dashboard
                 </Link>
-                <Link to="/services" className="avenir link dim white f6 f5-ns dib mr3 mr4-ns">
+                <Link to='/services' className='avenir link dim white f6 f5-ns dib mr3 mr4-ns'>
                   Marketplace
                 </Link>
-                <Link to="/services/new" className="avenir link dim white f6 f5-ns dib mr3 mr4-ns">
+                <Link to='/services/new' className='avenir link dim white f6 f5-ns dib mr3 mr4-ns'>
                   Create a Post
                 </Link>
-                <Link to="/messages" className="avenir link dim white f6 f5-ns dib mr3 mr4-ns">
+                <Link to='/messages' className='avenir link dim white f6 f5-ns dib mr3 mr4-ns'>
                   Inbox
                 </Link>
-                <Link to="/my-profile" className="avenir link dim white f6 f5-ns dib mr3 mr4-ns">
-                  My Profile
+                <Link to='/profile' className='avenir link dim white f6 f5-ns dib mr3 mr4-ns'>
+                  Profile
                 </Link>
-                <Link to="/faq" className="avenir link dim white f6 f5-ns dib mr3 mr4-ns">
+                <Link to='/faq' className='avenir link dim white f6 f5-ns dib mr3 mr4-ns'>
                   FAQs
                 </Link>
-                <Link to="/about" className="avenir link dim white f6 f5-ns dib mr3 mr4-ns">
+                <Link to='/about' className='avenir link dim white f6 f5-ns dib mr3 mr4-ns'>
                   About the Project
                 </Link>
-                <a href="#" onClick={this.props.handleClick} className="avenir link dim white f6 f5-ns dib mr3 mr4-ns">
+                <a href='#' onClick={this.props.handleClick} className='avenir link dim white f6 f5-ns dib mr3 mr4-ns'>
                   Logout
                 </a>
               </div>
             ) : (
-                <div id="subNav">
-                  <Link to="/signup" className="avenir link dim white f6 f5-ns dib mr3 mr4-ns">
+                <div id='subNav'>
+                  <Link to='/signup' className='avenir link dim white f6 f5-ns dib mr3 mr4-ns'>
                     Sign Up
                 </Link>
-                  <Link to="/faq" className="avenir link dim white f6 f5-ns dib mr3 mr4-ns">
+                  <Link to='/faq' className='avenir link dim white f6 f5-ns dib mr3 mr4-ns'>
                     FAQs
                 </Link>
-                  <Link to="/about" className="avenir link dim white f6 f5-ns dib mr3 mr4-ns">
+                  <Link to='/about' className='avenir link dim white f6 f5-ns dib mr3 mr4-ns'>
                     About the Project
                 </Link>
-                  <Link to="/login" className="avenir link dim white f6 f5-ns dib mr3 mr4-ns">
+                  <Link to='/login' className='avenir link dim white f6 f5-ns dib mr3 mr4-ns'>
                     Login
                 </Link>
                 </div>
@@ -94,11 +94,11 @@ class Navbar extends React.Component {
   renderNavigation() {
     if (this.state.windowWidth <= 414) {
       return (
-        <div className="nav_container2">
+        <div className='nav_container2'>
           <img
-            role="presentation"
-            id="hamburgerLogo"
-            src="https://www.screeninnovations.com/wp-content/themes/screeninnovations/images/icons/menu-icons/misc/icon-hamburger-menu.svg"
+            role='presentation'
+            id='hamburgerLogo'
+            src='https://www.screeninnovations.com/wp-content/themes/screeninnovations/images/icons/menu-icons/misc/icon-hamburger-menu.svg'
             onClick={this.handleNavClick.bind(this)}
           />
           {this.renderMobileNav()}
@@ -107,58 +107,58 @@ class Navbar extends React.Component {
     } else {
       return (
         <div>
-          <nav className="navBar">
-            <div id="subNav">
+          <nav className='navBar'>
+            <div id='subNav'>
               {this.props.isLoggedIn ? (
-                <div className="dtc v-mid w-75 tr" id="subNavItem">
+                <div className='dtc v-mid w-75 tr' id='subNavItem'>
                   <Link
-                    to="/home"
-                    className="avenir link dim white f6 f5-ns dib mr3 mr4-ns "
+                    to='/dashboard'
+                    className='avenir link dim white f6 f5-ns dib mr3 mr4-ns '
                   >
-                    My Dashboard
+                    Dashboard
                   </Link>
                   <Link
-                    to="/services"
-                    className="avenir link dim white f6 f5-ns dib mr3 mr4-ns"
+                    to='/services'
+                    className='avenir link dim white f6 f5-ns dib mr3 mr4-ns'
                   >
                     Marketplace
                   </Link>
                   <Link
-                    to="/about"
-                    className="avenir link dim white f6 f5-ns dib mr3 mr4-ns"
+                    to='/about'
+                    className='avenir link dim white f6 f5-ns dib mr3 mr4-ns'
                   >
                     About
                   </Link>
                   <Link
-                    to="/my-profile"
-                    className="avenir link dim white f6 f5-ns dib mr3 mr4-ns"
+                    to='/profile'
+                    className='avenir link dim white f6 f5-ns dib mr3 mr4-ns'
                   >
-                    My Profile
+                    Profile
                   </Link>
                 </div>
               ) : (
-                  <div id="subNav">
+                  <div id='subNav'>
                     <Link
-                      to="/about"
-                      className="avenir link dim white f6 f5-ns dib mr3 mr4-ns"
+                      to='/about'
+                      className='avenir link dim white f6 f5-ns dib mr3 mr4-ns'
                     >
                       About
                   </Link>
                     <Link
-                      to="/login"
-                      className="avenir link dim white f6 f5-ns dib mr3 mr4-ns"
+                      to='/login'
+                      className='avenir link dim white f6 f5-ns dib mr3 mr4-ns'
                     >
                       Login
                   </Link>
                     <Link
-                      to="/signup"
-                      className="avenir link dim white f6 f5-ns dib mr3 mr4-ns"
+                      to='/signup'
+                      className='avenir link dim white f6 f5-ns dib mr3 mr4-ns'
                     >
                       Sign Up
                   </Link>
                     <Link
-                      to="/faq"
-                      className="avenir link dim white f6 f5-ns dib mr3 mr4-ns"
+                      to='/faq'
+                      className='avenir link dim white f6 f5-ns dib mr3 mr4-ns'
                     >
                       FAQs
                   </Link>
@@ -173,11 +173,11 @@ class Navbar extends React.Component {
 
   render() {
     return (
-      <div className="nav_container">
-        <Link to="/" id="link">
-          <div id="logoTitle">
-            <img id="logo" className="" src="/assets/logo1.png" />
-            <div className="dim avenir white f1 siteTitle" id="link">
+      <div className='nav_container'>
+        <Link to='/' id='link'>
+          <div id='logoTitle'>
+            <img id='logo' className='' src='/assets/logo1.png' />
+            <div className='dim avenir white f1 siteTitle' id='link'>
               Lynx
             </div>
           </div>

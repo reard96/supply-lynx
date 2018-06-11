@@ -61,16 +61,15 @@ const suggestions = [
 
 
 class Option extends React.Component {
-
   constructor() {
     super();
 
     this.handleClick = this.handleClick.bind(this);
-  };
+  }
 
   handleClick(event) {
     this.props.onSelect(this.props.option, event);
-  };
+  }
 
   render() {
     const { children, isFocused, isSelected, onFocus } = this.props;
@@ -80,7 +79,7 @@ class Option extends React.Component {
         onFocus={onFocus}
         selected={isFocused}
         onClick={this.handleClick}
-        component="div"
+        component='div'
         style={{
           fontWeight: isSelected ? 500 : 400,
           fontSize: '32px'
@@ -94,11 +93,10 @@ class Option extends React.Component {
 
 function SelectWrapped(props) {
   const { classes, ...other } = props;
-
   return (
     <Select
       optionComponent={Option}
-      noResultsText={<Typography>{'No results found'}</Typography>}
+      noResultsText={<Typography>No results found</Typography>}
       arrowRenderer={arrowProps => {
         return arrowProps.isOpen ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />;
       }}
@@ -114,7 +112,8 @@ function SelectWrapped(props) {
 
         if (onRemove) {
           return (
-            <Chip style={{ fontSize: '24px' }}
+            <Chip
+              style={{ fontSize: '24px' }}
               tabIndex={-1}
               label={children}
               className={classes.chip}
@@ -123,7 +122,7 @@ function SelectWrapped(props) {
             />
           );
         }
-        return <div className="Select-value">{children}</div>;
+        return <div className='Select-value'>{children}</div>;
       }}
       {...other}
     />
@@ -228,7 +227,6 @@ const styles = theme => ({
       width: 21,
       zIndex: 1,
     },
-    // Only for screen readers. We can't use display none.
     '.Select-aria-only': {
       position: 'absolute',
       overflow: 'hidden',
@@ -241,7 +239,6 @@ const styles = theme => ({
 });
 
 class IntegrationReactSelect extends React.Component {
-
   constructor(props) {
     super(props);
     const { services } = props;
@@ -257,16 +254,13 @@ class IntegrationReactSelect extends React.Component {
 
     this.setState({ [name]: value });
 
-  };
+  }
 
   render() {
-    const { classes, services } = this.props;
-    //    console.log(services)
-    //    console.log('searches', this.props);
-    console.log(this.state);
-    const suggestions = services.map(suggestion => ({
-      value: suggestion,
-      label: suggestion
+    const { classes, users, orders, services } = this.props;
+    const suggestions = services.map(service => ({
+      value: service.id,
+      label: service.name
     }));
 
     return (
@@ -278,12 +272,13 @@ class IntegrationReactSelect extends React.Component {
         <br />
         <br />
         <br />
-        <TextField style={{ width: '500' }}
+        <TextField
+          style={{ width: '500' }}
           fullWidth={false}
           value={this.state.multiLabel}
           onChange={(e) => this.handleChange(e, 'multiLabel')}
-          placeholder="Select Services"
-          name="react-select-chip-label"
+          placeholder='Select Services'
+          name='react-select-chip-label'
           InputLabelProps={{
             shrink: true,
           }}
@@ -299,7 +294,7 @@ class IntegrationReactSelect extends React.Component {
             },
           }}
         />
-        <CustomizedTable orders={this.props.orders} />
+        <CustomizedTable users={users} orders={orders} services={services} />
       </div>
     );
   }
@@ -309,13 +304,8 @@ IntegrationReactSelect.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = ({ orders, user }) => {
-  const services = ['chocolate', 'apple', 'banana']
-  return {
-    services,
-    orders,
-    user
-  }
+const mapStateToProps = ({ orders, user, users, services }) => {
+  return { orders, user, users, services };
 };
 
 const styledComponent = withStyles(styles)(IntegrationReactSelect);

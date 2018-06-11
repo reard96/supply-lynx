@@ -1,36 +1,36 @@
-import React, { Component } from "react"
-import { connect } from "react-redux"
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 class About extends Component {
   constructor() {
     super();
     this.state = {
       address: ''
-    }
+    };
     this.submitQuote = this.submitQuote.bind(this);
     this.submitBid = this.submitBid.bind(this);
   }
 
   submitQuote() {
-    this.props.contract.createQuote(2, 3, 6, "kg", {
+    this.props.contract.createQuote(4, 5, 8, 'lb', {
       from: web3.eth.accounts[0]
-    })
+    });
   }
 
   submitBid() {
-    this.props.contract.createQuote(1, 2, 5, "kg", {
+    this.props.contract.createQuote(1, 2, 5, 'kg', {
       from: web3.eth.accounts[0],
       value: 10
-    })
+    });
   }
 
   render() {
     // NODE_ENV BABEL_ENV
-    const { orders } = this.props
+    const { orders } = this.props;
     return (
       <div>
-        <div className="home" id="background">
-          <div id="homeText">
+        <div className='home' id='background'>
+          <div id='homeText'>
             {orders && orders.map((order, id) => {
               return (<div key={id}>
                 <p>
@@ -44,7 +44,7 @@ class About extends Component {
                   / buyer: {order.buyer}
                   / seller: {order.seller}
                 </p>
-              </div>)
+              </div>);
             })}
             <button onClick={this.submitQuote}>Create Quote</button>
             <button onClick={this.submitBid}>Create Bid</button>

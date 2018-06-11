@@ -44,23 +44,21 @@ const styles = theme => ({
   },
 });
 
-let id = 0;
-function createData(name, calories, fat, carbs, protein) {
-  id += 1;
-  return { id, name, calories, fat, carbs, protein };
-}
+// let id = 0;
+// function createData(name, calories, fat, carbs, protein) {
+//   id += 1;
+//   return { id, name, calories, fat, carbs, protein };
+// }
 
-const data = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
+// const data = [
+//   createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+//   createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
+//   createData('Eclair', 262, 16.0, 24, 6.0),
+//   createData('Cupcake', 305, 3.7, 67, 4.3),
+//   createData('Gingerbread', 356, 16.0, 49, 3.9),
+// ];
 
-function CustomizedTable(props) {
-  const { classes } = props;
-  console.log(props.orders)
+function CustomizedTable({ classes, orders }) {
   return (
     <Paper className={classes.root}>
       <Table className={classes.table}>
@@ -69,30 +67,37 @@ function CustomizedTable(props) {
             <CustomTableCell padding="checkbox">
               <Checkbox />
             </CustomTableCell>
-            <CustomTableCell>Dessert (100g serving)</CustomTableCell>
-            <CustomTableCell numeric>Calories</CustomTableCell>
-            <CustomTableCell numeric>Fat (g)</CustomTableCell>
-            <CustomTableCell numeric>Carbs (g)</CustomTableCell>
-            <CustomTableCell numeric>Protein (g)</CustomTableCell>
+            <CustomTableCell numeric>ID</CustomTableCell>
+            <CustomTableCell numeric>Product</CustomTableCell>
+            <CustomTableCell numeric>Quantity</CustomTableCell>
+            <CustomTableCell>Unit</CustomTableCell>
+            <CustomTableCell numeric>Unit Price</CustomTableCell>
+            <CustomTableCell>Buyer</CustomTableCell>
+            <CustomTableCell>Seller</CustomTableCell>
             <CustomTableCell>Status</CustomTableCell>
+            <CustomTableCell></CustomTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map(n => {
+          {orders.map((order, id) => {
             return (
-              <TableRow className={classes.row} key={n.id}>
+              <TableRow className={classes.row} key={id}>
                 <CustomTableCell padding="checkbox">
                   <Checkbox />
                 </CustomTableCell>
-                <CustomTableCell component="th" scope="row">
-                  {n.name}
-                </CustomTableCell>
-                <CustomTableCell numeric>{n.calories}</CustomTableCell>
-                <CustomTableCell numeric>{n.fat}</CustomTableCell>
-                <CustomTableCell numeric>{n.carbs}</CustomTableCell>
-                <CustomTableCell numeric>{n.protein}</CustomTableCell>
+                {/* <CustomTableCell component="th" scope="row">
+                  {product.name}
+                </CustomTableCell> */}
+                <CustomTableCell numeric>{id}</CustomTableCell>
+                <CustomTableCell numeric>{order.productId}</CustomTableCell>
+                <CustomTableCell numeric>{order.quantity}</CustomTableCell>
+                <CustomTableCell>{order.unit}</CustomTableCell>
+                <CustomTableCell numeric>{order.price}</CustomTableCell>
+                <CustomTableCell>{order.buyer}</CustomTableCell>
+                <CustomTableCell>{order.seller}</CustomTableCell>
+                <CustomTableCell>{order.status}</CustomTableCell>
                 <CustomTableCell>
-                  <CircularProgress value={ Math.floor(Math.random() * 100) } />
+                  <CircularProgress value={Math.floor(Math.random() * 100)} />
                 </CustomTableCell>
               </TableRow>
             );

@@ -23,4 +23,5 @@ Thumbs.db
 .vscode
 
 # Bundled files
-dist/
+public/bundle.js.map
+public/bundle.js

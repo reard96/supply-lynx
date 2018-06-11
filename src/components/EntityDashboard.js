@@ -13,9 +13,9 @@ import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import ClearIcon from '@material-ui/icons/Clear';
 import Chip from '@material-ui/core/Chip';
 import Select from 'react-select';
-import { connect } from 'react-redux';
-import axios from 'axios';
+// import { connect } from 'react-redux';
 import './react-select.css';
+import axios from 'axios';
 
 import CustomizedTable from './ContractsTable';
 
@@ -63,18 +63,20 @@ const suggestions = [
 
 class Option extends React.Component {
 
-  constructor() {
+  constructor(){
     super();
 
     this.handleClick = this.handleClick.bind(this);
   };
 
-  handleClick(event) {
+  handleClick(event){
+    console.log('Option', event, this.props.option);
     this.props.onSelect(this.props.option, event);
   };
 
   render() {
     const { children, isFocused, isSelected, onFocus } = this.props;
+
     return (
       <MenuItem
         onFocus={onFocus}
@@ -114,7 +116,7 @@ function SelectWrapped(props) {
 
         if (onRemove) {
           return (
-            <Chip style={{ fontSize: '24px' }}
+            <Chip style={{fontSize: '24px'}}
               tabIndex={-1}
               label={children}
               className={classes.chip}
@@ -242,64 +244,54 @@ const styles = theme => ({
 
 class IntegrationReactSelect extends React.Component {
 
-  constructor(props) {
-    super(props);
-//    const { services } = props;
+  constructor(){
+    super();
     this.state = {
-      // single: null,
+     // single: null,
       multi: null,
+      servicesTest: []
      // multiLabel: null,
-      services: []
     };
     this.handleChange = this.handleChange.bind(this);
   }
 
+  componentDidMount(){
+    // this.setState({
+    //   servicesTest: ['jhsdhjsgfhfgj']
+    // });
+    return axios.get('/api/services')
+      .then(res => {
+        const test = res.data.map(d =>({
+          value: d.name, label: d.name
+        }));
+        this.setState({ servicesTest: test });
+      })
+  };
+
   handleChange(value, name) {
 
-    this.setState({ [name]: value });
+    this.setState({ [name ]: value });
 
   };
 
-
-
-  componentDidMount() {
-    axios.get('/api/services')
-      .then(result => result.data)
-      .then(services => {
-        this.setState({ services })
-      })
-      /*store.subscribe(() => {
-        this.setState({
-          services: store.getState().services
-        })
-      })*/
-      console.log(this.state.services)
-  }
-
   render() {
-    const { classes/*, services*/ } = this.props;
-    const { services } = this.state;
-//    console.log(services)
-//    console.log('searches', this.props);
-    console.log(this.state);
-    const suggestions = services.map(suggestion => ({
-      value: suggestion,
-      label: suggestion
-    }));
+    const { classes } = this.props;
+
+    const suggestions = this.state.servicesTest;
 
     return (
       <div className={classes.root}>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <TextField style={{ width: '500' }}
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+        <TextField style={{width:'500'}}
           fullWidth={false}
           value={this.state.multiLabel}
-          onChange={(e) => this.handleChange(e, 'multiLabel')}
+          onChange={(e) => this.handleChange(e,'multiLabel')}
           placeholder="Select Services"
           name="react-select-chip-label"
           InputLabelProps={{
@@ -317,28 +309,24 @@ class IntegrationReactSelect extends React.Component {
             },
           }}
         />
-        <CustomizedTable orders={this.props.orders} />
       </div>
     );
   }
 }
 
 IntegrationReactSelect.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.any.isRequired
 };
 
-/*const mapStateToProps = ({ services, user }) => {
-//  const services = ['chocolate', 'apple', 'banana']
-  console.log(services)
-  return {
-    services,
-    orders,
-    user
-  }
-};*/
+// const mapStateToProps = ({ /*services,*/ user }) => {
+//   const services = ['chocolate', 'apple', 'banana']
+//   return {
+//     services,
+//     user
+//   }
+// };
 
+// const styledComponent = withStyles(styles)(IntegrationReactSelect);
+
+// export default connect(mapStateToProps)(styledComponent);
 export default withStyles(styles)(IntegrationReactSelect);
-
-/*const styledComponent = withStyles(styles)(IntegrationReactSelect);
-
-export default connect(mapStatetoProps)(styledComponent);*/

@@ -56,21 +56,21 @@ class Navbar extends React.Component {
                 </a>
               </div>
             ) : (
-              <div id="subNav">
-                <Link to="/signup" className="avenir link dim white f6 f5-ns dib mr3 mr4-ns">
-                  Sign Up
+                <div id="subNav">
+                  <Link to="/signup" className="avenir link dim white f6 f5-ns dib mr3 mr4-ns">
+                    Sign Up
                 </Link>
-                <Link to="/faq" className="avenir link dim white f6 f5-ns dib mr3 mr4-ns">
-                  FAQs
+                  <Link to="/faq" className="avenir link dim white f6 f5-ns dib mr3 mr4-ns">
+                    FAQs
                 </Link>
-                <Link to="/about" className="avenir link dim white f6 f5-ns dib mr3 mr4-ns">
-                  About the Project
+                  <Link to="/about" className="avenir link dim white f6 f5-ns dib mr3 mr4-ns">
+                    About the Project
                 </Link>
-                <Link to="/login" className="avenir link dim white f6 f5-ns dib mr3 mr4-ns">
-                  Login
+                  <Link to="/login" className="avenir link dim white f6 f5-ns dib mr3 mr4-ns">
+                    Login
                 </Link>
-              </div>
-            )}
+                </div>
+              )}
           </div>
         </nav>
       </div>
@@ -156,33 +156,33 @@ class Navbar extends React.Component {
                   </a>
                 </div>
               ) : (
-                <div id="subNav">
-                  <Link
-                    to="/about"
-                    className="avenir link dim white f6 f5-ns dib mr3 mr4-ns"
-                  >
-                    About
+                  <div id="subNav">
+                    <Link
+                      to="/about"
+                      className="avenir link dim white f6 f5-ns dib mr3 mr4-ns"
+                    >
+                      About
                   </Link>
-                  <Link
-                    to="/login"
-                    className="avenir link dim white f6 f5-ns dib mr3 mr4-ns"
-                  >
-                    Login
+                    <Link
+                      to="/login"
+                      className="avenir link dim white f6 f5-ns dib mr3 mr4-ns"
+                    >
+                      Login
                   </Link>
-                  <Link
-                    to="/signup"
-                    className="avenir link dim white f6 f5-ns dib mr3 mr4-ns"
-                  >
-                    Sign Up
+                    <Link
+                      to="/signup"
+                      className="avenir link dim white f6 f5-ns dib mr3 mr4-ns"
+                    >
+                      Sign Up
                   </Link>
-                  <Link
-                    to="/faq"
-                    className="avenir link dim white f6 f5-ns dib mr3 mr4-ns"
-                  >
-                    FAQs
+                    <Link
+                      to="/faq"
+                      className="avenir link dim white f6 f5-ns dib mr3 mr4-ns"
+                    >
+                      FAQs
                   </Link>
-                </div>
-              )}
+                  </div>
+                )}
             </div>
           </nav>
         </div>
@@ -207,13 +207,13 @@ class Navbar extends React.Component {
   }
 }
 
-const mapState = state => {
+const mapStateToProps = ({ user }) => {
   return {
-    isLoggedIn: !!state.currentUser.id
+    isLoggedIn: true
   };
 };
 
-const mapDispatch = dispatch => {
+const mapDispatchToProps = dispatch => {
   return {
     handleClick() {
       dispatch(logout());
@@ -221,4 +221,4 @@ const mapDispatch = dispatch => {
   };
 };
 
-export default connect(mapState, mapDispatch)(Navbar);
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

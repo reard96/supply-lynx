@@ -8,11 +8,11 @@ import contract from './contract'
 import services from './services'
 import users from './users'
 import singleService from './singleService'
-import currentUser from './currentUser'
-import singleUser from './singleUser'
+import user from './user'
 import orders from './orders'
 
-export const reducer = combineReducers({ web3, orders, accounts, contract, services, users, singleService, currentUser, singleUser })
+export const reducer = combineReducers({ web3, orders, accounts, contract, services, users, singleService, user })
+
 const middleware = composeWithDevTools(applyMiddleware(
   thunkMiddleware,
   createLogger({ collapsed: true })
@@ -27,5 +27,4 @@ export * from './contract'
 export * from './services'
 export * from './users'
 export * from './singleService'
-export * from './currentUser'
-export * from './singleUser'
+export * from './user'

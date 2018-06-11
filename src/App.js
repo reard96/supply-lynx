@@ -2,9 +2,10 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import {
   fetchWeb3,
-  fetchAccounts,
   fetchContract,
-  fetchOrders
+  fetchOrders,
+  fetchUsers,
+  fetchUser
 } from "./store"
 import Routes from './components/Routes'
 import { withRouter } from 'react-router-dom'
@@ -55,9 +56,11 @@ class App extends Component {
   async collectBlockchainInfo() {
     try {
       await this.props.fetchWeb3();
+      await this.props.fetchUsers();
       const web3 = this.props.web3;
-      this.props.fetchAccounts(web3);
+      const users = this.props.users;
       this.props.fetchContract(web3);
+      this.props.fetchUser(web3.eth.accounts[0])
     } catch (e) {
       console.log(e, "await collectBlockchainInfo did not succeed");
     }
@@ -72,8 +75,8 @@ class App extends Component {
   }
 }
 
-function mapStateToProps({ web3, contract, accounts }) {
-  return { web3, contract, accounts }
+function mapStateToProps({ web3, contract, users }) {
+  return { web3, contract, users }
 }
 
 function mapDispatchToProps(dispatch) {
@@ -84,12 +87,15 @@ function mapDispatchToProps(dispatch) {
     fetchContract: function (web3) {
       return dispatch(fetchContract(web3));
     },
-    fetchAccounts: function (web3) {
-      return dispatch(fetchAccounts(web3));
+    fetchOrders: function (orders) {
+      return dispatch(fetchOrders(orders));
     },
-    fetchOrders: function (web3) {
-      return dispatch(fetchOrders(web3));
+    fetchUsers: function () {
+      return dispatch(fetchUsers());
     },
+    fetchUser: function (address) {
+      return dispatch(fetchUser(address));
+    }
   }
 }
 

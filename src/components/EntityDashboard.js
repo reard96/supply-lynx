@@ -261,8 +261,6 @@ class IntegrationReactSelect extends React.Component {
 
   render() {
     const { classes, services } = this.props;
-    //    console.log(services)
-    //    console.log('searches', this.props);
     console.log(this.state);
     const suggestions = services.map(suggestion => ({
       value: suggestion,

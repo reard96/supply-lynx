@@ -17,10 +17,8 @@ const Homepage = () => (
   </div>
 );
 
-const mapState = ({ user }) => {
-  return {
-    isLoggedIn: !!user.id
-  };
+const mapStateToProps = ({ user }) => {
+  return { user };
 };
 
-export default connect(mapState, null)(Homepage);
+export default connect(mapStateToProps)(Homepage);

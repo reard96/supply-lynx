@@ -15,9 +15,6 @@ import './index.css'
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      orders: []
-    }
     this.collectBlockchainInfo = this.collectBlockchainInfo.bind(this)
   }
 
@@ -58,11 +55,10 @@ class App extends Component {
       await this.props.fetchWeb3();
       await this.props.fetchUsers();
       const web3 = this.props.web3;
-      const users = this.props.users;
       this.props.fetchContract(web3);
-      this.props.fetchUser(web3.eth.accounts[0])
-    } catch (e) {
-      console.log(e, "await collectBlockchainInfo did not succeed");
+      this.props.fetchUser(web3.eth.accounts[0]);
+    } catch (err) {
+      console.log(err);
     }
   }
 

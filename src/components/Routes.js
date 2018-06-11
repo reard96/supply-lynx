@@ -26,7 +26,7 @@ class Routes extends Component {
 
   render() {
     const { isLoggedIn } = this.props;
-    console.log('isLoggedIn', isLoggedIn)
+    console.log('logged in:', isLoggedIn)
     return (
       <div>
         <NavBar />
@@ -60,7 +60,7 @@ class Routes extends Component {
 
 const mapState = ({ user }) => {
   return {
-    isLoggedIn: true,
+    isLoggedIn: !!user.id
   }
 }
 

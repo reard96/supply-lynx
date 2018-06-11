@@ -209,7 +209,7 @@ class Navbar extends React.Component {
 
 const mapStateToProps = ({ user }) => {
   return {
-    isLoggedIn: true
+    isLoggedIn: !!user.id
   };
 };
 

@@ -1,0 +1,9 @@
+{
+  "extends": "fullstack",
+  "parser": "babel-eslint",
+  "rules": {
+    "semi": [1, "always"],
+    "default-case": 0,
+    "function-paren-newline": 0
+  }
+}

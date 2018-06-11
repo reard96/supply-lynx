@@ -124,22 +124,10 @@ class Navbar extends React.Component {
                     Marketplace
                   </Link>
                   <Link
-                    to="/services/new"
+                    to="/about"
                     className="avenir link dim white f6 f5-ns dib mr3 mr4-ns"
                   >
-                    Create a Post
-                  </Link>
-                  <Link
-                    to="/messages"
-                    className="avenir link dim white f6 f5-ns dib mr3 mr4-ns"
-                  >
-                    Inbox
-                  </Link>
-                  <Link
-                    to="/faq"
-                    className="avenir link dim white f6 f5-ns dib mr3 mr4-ns"
-                  >
-                    FAQs
+                    About
                   </Link>
                   <Link
                     to="/my-profile"
@@ -147,13 +135,6 @@ class Navbar extends React.Component {
                   >
                     My Profile
                   </Link>
-                  <a
-                    href="#"
-                    onClick={this.props.handleClick}
-                    className="avenir link dim white f6 f5-ns dib mr3 mr4-ns"
-                  >
-                    Logout
-                  </a>
                 </div>
               ) : (
                   <div id="subNav">
@@ -197,7 +178,7 @@ class Navbar extends React.Component {
           <div id="logoTitle">
             <img id="logo" className="" src="/assets/logo1.png" />
             <div className="dim avenir white f1 siteTitle" id="link">
-              Block &amp; Mortar
+              Lynx
             </div>
           </div>
         </Link>

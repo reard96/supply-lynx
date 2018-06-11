@@ -1,29 +1,31 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   fetchWeb3,
   fetchContract,
   fetchOrders,
+  fetchServices,
   fetchUsers,
   fetchUser
-} from "./store"
-import Routes from './components/Routes'
-import { withRouter } from 'react-router-dom'
-import './App.css'
-import './index.css'
+} from './store';
+import Routes from './components/Routes';
+import { withRouter } from 'react-router-dom';
+import './App.css';
+import './index.css';
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.collectBlockchainInfo = this.collectBlockchainInfo.bind(this)
+    this.collectBlockchainInfo = this.collectBlockchainInfo.bind(this);
   }
 
   componentDidMount() {
-    window.scroll(0, 0)
+    window.scroll(0, 0);
   }
 
   componentWillMount() {
-    this.collectBlockchainInfo()
+    this.collectBlockchainInfo();
+    this.props.fetchServices();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -42,11 +44,10 @@ class App extends Component {
               status: order[6],
               buyer: order[7],
               seller: order[8],
-            }
-          })
-        )
-        await this.props.fetchOrders(orders)
-      })
+            };
+          }));
+        await this.props.fetchOrders(orders);
+      });
     }
   }
 
@@ -64,7 +65,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
+      <div className='App'>
         <Routes />
       </div>
     );
@@ -72,7 +73,7 @@ class App extends Component {
 }
 
 function mapStateToProps({ web3, contract, users }) {
-  return { web3, contract, users }
+  return { web3, contract, users };
 }
 
 function mapDispatchToProps(dispatch) {
@@ -86,13 +87,16 @@ function mapDispatchToProps(dispatch) {
     fetchOrders: function (orders) {
       return dispatch(fetchOrders(orders));
     },
+    fetchServices: function (orders) {
+      return dispatch(fetchServices(orders));
+    },
     fetchUsers: function () {
       return dispatch(fetchUsers());
     },
     fetchUser: function (address) {
       return dispatch(fetchUser(address));
     }
-  }
+  };
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

@@ -1,9 +1,9 @@
-import axios from "axios"
+import axios from 'axios';
 
-const GET_USER = "GET_USER"
+const GET_USER = 'GET_USER';
 
 export function getUser(user) {
-  return { type: GET_USER, user }
+  return { type: GET_USER, user };
 }
 
 export function fetchUser(address) {
@@ -12,7 +12,7 @@ export function fetchUser(address) {
       .then(res => res.data)
       .then(user => dispatch(getUser(user)))
       .catch(err => console.log(err));
-  }
+  };
 }
 
 export default function reducer(user = {}, action) {

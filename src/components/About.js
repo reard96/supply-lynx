@@ -9,14 +9,14 @@ class About extends Component {
   }
 
   submitQuote() {
-    this.props.contract.createQuote(3, 1, 7, 'lb', {
-      from: this.props.web3.eth.accounts[0]
+    this.props.contract.createQuote(8, 5, 13, 'kg', {
+      from: web3.eth.accounts[0]
     });
   }
 
   submitBid() {
     this.props.contract.createBid(1, 2, 5, 'kg', {
-      from: this.props.web3.eth.accounts[0],
+      from: web3.eth.accounts[0],
       value: '10'
     });
   }

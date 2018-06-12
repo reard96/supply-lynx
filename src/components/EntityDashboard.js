@@ -226,8 +226,8 @@ class IntegrationReactSelect extends React.Component {
   showOnlyOwn() {
     const { onlyOwn } = this.state;
     let { orders } = this.props;
-    if (onlyOwn) {
-      orders = orders.filter(order => order.buyer || order.seller);
+    if (!onlyOwn) {
+      orders = orders.filter(order => order.buyer === web3.eth.accounts[0] || order.seller === web3.eth.accounts[0]);
     }
     this.setState({ onlyOwn: !onlyOwn, search: [], orders });
   }
@@ -318,7 +318,7 @@ class IntegrationReactSelect extends React.Component {
               }}
             />
             <FormControlLabel
-              style={{ marginLeft: 15 }}
+              style={{ marginLeft: 10 }}
               control={
                 <Switch
                   checked={this.state.onlyOwn}

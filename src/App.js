@@ -1,31 +1,31 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   fetchWeb3,
-  fetchAccounts,
   fetchContract,
-  fetchOrders
-} from "./store"
-import Routes from './components/Routes'
-import { withRouter } from 'react-router-dom'
-import './App.css'
-import './index.css'
+  fetchOrders,
+  fetchServices,
+  fetchUsers,
+  fetchUser
+} from './store';
+import Routes from './components/Routes';
+import { withRouter } from 'react-router-dom';
+import './App.css';
+import './index.css';
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      orders: []
-    }
-    this.collectBlockchainInfo = this.collectBlockchainInfo.bind(this)
+    this.collectBlockchainInfo = this.collectBlockchainInfo.bind(this);
   }
 
   componentDidMount() {
-    window.scroll(0, 0)
+    window.scroll(0, 0);
   }
 
   componentWillMount() {
-    this.collectBlockchainInfo()
+    this.collectBlockchainInfo();
+    this.props.fetchServices();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -44,36 +44,36 @@ class App extends Component {
               status: order[6],
               buyer: order[7],
               seller: order[8],
-            }
-          })
-        )
-        await this.props.fetchOrders(orders)
-      })
+            };
+          }));
+        await this.props.fetchOrders(orders);
+      });
     }
   }
 
   async collectBlockchainInfo() {
     try {
       await this.props.fetchWeb3();
+      await this.props.fetchUsers();
       const web3 = this.props.web3;
-      this.props.fetchAccounts(web3);
       this.props.fetchContract(web3);
-    } catch (e) {
-      console.log(e, "await collectBlockchainInfo did not succeed");
+      this.props.fetchUser(web3.eth.accounts[0]);
+    } catch (err) {
+      console.log(err);
     }
   }
 
   render() {
     return (
-      <div className="App">
+      <div className='App'>
         <Routes />
       </div>
     );
   }
 }
 
-function mapStateToProps({ web3, contract, accounts }) {
-  return { web3, contract, accounts }
+function mapStateToProps({ web3, contract, users }) {
+  return { web3, contract, users };
 }
 
 function mapDispatchToProps(dispatch) {
@@ -84,13 +84,19 @@ function mapDispatchToProps(dispatch) {
     fetchContract: function (web3) {
       return dispatch(fetchContract(web3));
     },
-    fetchAccounts: function (web3) {
-      return dispatch(fetchAccounts(web3));
+    fetchOrders: function (orders) {
+      return dispatch(fetchOrders(orders));
     },
-    fetchOrders: function (web3) {
-      return dispatch(fetchOrders(web3));
+    fetchServices: function (orders) {
+      return dispatch(fetchServices(orders));
     },
-  }
+    fetchUsers: function () {
+      return dispatch(fetchUsers());
+    },
+    fetchUser: function (address) {
+      return dispatch(fetchUser(address));
+    }
+  };
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

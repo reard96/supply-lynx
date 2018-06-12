@@ -4,7 +4,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Input from '@material-ui/core/Input';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Paper from '@material-ui/core/Paper';
+// import PhoneIcon from '@material-ui/icons/PhoneIcon';
+// import FavoriteIcon from '@material-ui/icons/FavoriteIcon';
+// import PersonalPinIcon from '@material-ui/icons/PersonalPinIcon';
+// import CloudIcon from '@material-ui/icons/CloudIcon';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
@@ -19,60 +25,22 @@ import axios from 'axios';
 
 import CustomizedTable from './ContractsTable';
 
-/*
-const suggestions = [
-  { label: 'Afghanistan' },
-  { label: 'Aland Islands' },
-  { label: 'Albania' },
-  { label: 'Algeria' },
-  { label: 'American Samoa' },
-  { label: 'Andorra' },
-  { label: 'Angola' },
-  { label: 'Anguilla' },
-  { label: 'Antarctica' },
-  { label: 'Antigua and Barbuda' },
-  { label: 'Argentina' },
-  { label: 'Armenia' },
-  { label: 'Aruba' },
-  { label: 'Australia' },
-  { label: 'Austria' },
-  { label: 'Azerbaijan' },
-  { label: 'Bahamas' },
-  { label: 'Bahrain' },
-  { label: 'Bangladesh' },
-  { label: 'Barbados' },
-  { label: 'Belarus' },
-  { label: 'Belgium' },
-  { label: 'Belize' },
-  { label: 'Benin' },
-  { label: 'Bermuda' },
-  { label: 'Bhutan' },
-  { label: 'Bolivia, Plurinational State of' },
-  { label: 'Bonaire, Sint Eustatius and Saba' },
-  { label: 'Bosnia and Herzegovina' },
-  { label: 'Botswana' },
-  { label: 'Bouvet Island' },
-  { label: 'Brazil' },
-  { label: 'British Indian Ocean Territory' },
-  { label: 'Brunei Darussalam' },
-].map(suggestion => ({
-  value: suggestion.label,
-  label: suggestion.label,
-}));*/
-
-
 class Option extends React.Component {
+<<<<<<< HEAD
 
   constructor(){
+=======
+  constructor() {
+>>>>>>> 24b5d8a77561acad7e188ee3299963079abbab28
     super();
 
     this.handleClick = this.handleClick.bind(this);
-  };
+  }
 
   handleClick(event){
     console.log('Option', event, this.props.option);
     this.props.onSelect(this.props.option, event);
-  };
+  }
 
   render() {
     const { children, isFocused, isSelected, onFocus } = this.props;
@@ -82,7 +50,7 @@ class Option extends React.Component {
         onFocus={onFocus}
         selected={isFocused}
         onClick={this.handleClick}
-        component="div"
+        component='div'
         style={{
           fontWeight: isSelected ? 500 : 400,
           fontSize: '32px'
@@ -96,11 +64,10 @@ class Option extends React.Component {
 
 function SelectWrapped(props) {
   const { classes, ...other } = props;
-
   return (
     <Select
       optionComponent={Option}
-      noResultsText={<Typography>{'No results found'}</Typography>}
+      noResultsText={<Typography>No results found</Typography>}
       arrowRenderer={arrowProps => {
         return arrowProps.isOpen ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />;
       }}
@@ -116,7 +83,12 @@ function SelectWrapped(props) {
 
         if (onRemove) {
           return (
+<<<<<<< HEAD
             <Chip style={{fontSize: '24px'}}
+=======
+            <Chip
+              style={{ fontSize: '24px' }}
+>>>>>>> 24b5d8a77561acad7e188ee3299963079abbab28
               tabIndex={-1}
               label={children}
               className={classes.chip}
@@ -125,7 +97,7 @@ function SelectWrapped(props) {
             />
           );
         }
-        return <div className="Select-value">{children}</div>;
+        return <div className='Select-value'>{children}</div>;
       }}
       {...other}
     />
@@ -230,7 +202,6 @@ const styles = theme => ({
       width: 21,
       zIndex: 1,
     },
-    // Only for screen readers. We can't use display none.
     '.Select-aria-only': {
       position: 'absolute',
       overflow: 'hidden',
@@ -243,57 +214,91 @@ const styles = theme => ({
 });
 
 class IntegrationReactSelect extends React.Component {
-
-  constructor(){
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-     // single: null,
-      multi: null,
-      servicesTest: []
-     // multiLabel: null,
+      search: [],
+      tab: 0,
+      orders: []
     };
-    this.handleChange = this.handleChange.bind(this);
+    this.addSearchTerm = this.addSearchTerm.bind(this);
+    this.changeTab = this.changeTab.bind(this);
   }
 
-  componentDidMount(){
-    // this.setState({
-    //   servicesTest: ['jhsdhjsgfhfgj']
-    // });
-    return axios.get('/api/services')
-      .then(res => {
-        const test = res.data.map(d =>({
-          value: d.name, label: d.name
-        }));
-        this.setState({ servicesTest: test });
-      })
-  };
+  componentWillReceiveProps(nextProps) {
+    const { orders } = nextProps;
+    this.setState({ orders })
+  }
 
-  handleChange(value, name) {
+  addSearchTerm(value) {
+    let { orders } = this.props;
+    const { tab } = this.state;
+    const search = !value ? [] : value.split(',');
+    const status = ['all', 'requested', 'accepted', 'completed', 'cancelled'];
+    let filtered = []
+    if (tab !== 0) {
+      orders = orders.filter(order => order.status === status[tab]);
+    }
+    if (search.length !== 0) {
+      for (let term of search) {
+        const results = orders.filter(order => order.productId == term);
+        filtered = [...filtered, ...results];
+      }
+    }
+    else {
+      filtered = orders;
+    }
+    this.setState({ search, orders: filtered });
+  }
 
-    this.setState({ [name ]: value });
-
-  };
+  changeTab(event, value) {
+    let { orders } = this.props;
+    const { search } = this.state;
+    let filtered = []
+    const status = ['all', 'requested', 'accepted', 'completed', 'cancelled'];
+    if (value !== 0) {
+      orders = orders.filter(order => order.status === status[value]);
+    }
+    if (search.length !== 0) {
+      for (let term of search) {
+        const results = orders.filter(order => order.productId == term);
+        filtered = [...filtered, ...results];
+      }
+    }
+    else {
+      filtered = orders;
+    }
+    this.setState({ tab: value, orders: filtered });
+  }
 
   render() {
-    const { classes } = this.props;
-
-    const suggestions = this.state.servicesTest;
+    const { classes, users, services } = this.props;
+    const { orders } = this.state;
+    const suggestions = services.sort((a, b) => {
+      if (a.name < b.name) return -1;
+      if (a.name > b.name) return 1;
+      return 0;
+    }).map(service => ({
+      value: service.id,
+      label: service.name
+    }));
 
     return (
       <div className={classes.root}>
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-        <TextField style={{width:'500'}}
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <TextField
+          style={{ width: '500' }}
           fullWidth={false}
-          value={this.state.multiLabel}
-          onChange={(e) => this.handleChange(e,'multiLabel')}
-          placeholder="Select Services"
-          name="react-select-chip-label"
+          value={this.state.search}
+          onChange={this.addSearchTerm}
+          placeholder='Select Services'
+          name='react-select-chip-label'
           InputLabelProps={{
             shrink: true,
           }}
@@ -309,6 +314,22 @@ class IntegrationReactSelect extends React.Component {
             },
           }}
         />
+        <Paper>
+          <Tabs
+            value={this.state.tab}
+            onChange={this.changeTab}
+            fullWidth
+            indicatorColor='secondary'
+            textColor='secondary'
+          >
+            <Tab label='ALL' />
+            <Tab label='REQUESTED' />
+            <Tab label='ACCEPTED' />
+            <Tab label='COMPLETED' />
+            <Tab label='CANCELLED' />
+          </Tabs>
+          <CustomizedTable users={users} orders={orders} services={services} />
+        </Paper>
       </div>
     );
   }
@@ -318,15 +339,11 @@ IntegrationReactSelect.propTypes = {
   classes: PropTypes.any.isRequired
 };
 
-// const mapStateToProps = ({ /*services,*/ user }) => {
-//   const services = ['chocolate', 'apple', 'banana']
-//   return {
-//     services,
-//     user
-//   }
-// };
+const mapStateToProps = ({ orders, user, users, services }) => {
+  return { orders, user, users, services };
+};
 
-// const styledComponent = withStyles(styles)(IntegrationReactSelect);
+const styledComponent = withStyles(styles)(IntegrationReactSelect);
 
-// export default connect(mapStateToProps)(styledComponent);
-export default withStyles(styles)(IntegrationReactSelect);
+export default connect(mapStateToProps)(styledComponent);
+//export default withStyles(styles)(IntegrationReactSelect);

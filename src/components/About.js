@@ -1,29 +1,36 @@
-import React, { Component } from "react"
-import { connect } from "react-redux"
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-class Homepage extends Component {
+class About extends Component {
   constructor() {
     super();
-    this.handleClick = this.handleClick.bind(this);
+    this.state = {
+      address: ''
+    };
+    this.submitQuote = this.submitQuote.bind(this);
+    this.submitBid = this.submitBid.bind(this);
   }
 
-  handleClick() {
-    this.props.contract.createQuote(2, 3, 6, "kg", {
+  submitQuote() {
+    this.props.contract.createQuote(4, 5, 8, 'lb', {
       from: web3.eth.accounts[0]
-    })
-    // this.props.contract.createBid(1, 4, 5, "kg", {
-    //   from: web3.eth.accounts[0],
-    //   value: web3.toWei(20, "ether")
-    // })
+    });
+  }
+
+  submitBid() {
+    this.props.contract.createQuote(1, 2, 5, 'kg', {
+      from: web3.eth.accounts[0],
+      value: 10
+    });
   }
 
   render() {
     // NODE_ENV BABEL_ENV
-    const { orders } = this.props
+    const { orders } = this.props;
     return (
       <div>
-        <div className="home" id="background">
-          <div id="homeText">
+        <div className='home' id='background'>
+          <div id='homeText'>
             {orders && orders.map((order, id) => {
               return (<div key={id}>
                 <p>
@@ -37,9 +44,10 @@ class Homepage extends Component {
                   / buyer: {order.buyer}
                   / seller: {order.seller}
                 </p>
-              </div>)
+              </div>);
             })}
-            <button onClick={this.handleClick} />
+            <button onClick={this.submitQuote}>Create Quote</button>
+            <button onClick={this.submitBid}>Create Bid</button>
           </div>
         </div>
       </div>
@@ -47,8 +55,8 @@ class Homepage extends Component {
   }
 }
 
-const mapStateToProps = ({ web3, contract, orders }) => ({
-  web3, contract, orders
+const mapStateToProps = ({ web3, contract, orders, user }) => ({
+  web3, contract, orders, user
 });
 
-export default connect(mapStateToProps)(Homepage);
+export default connect(mapStateToProps)(About);

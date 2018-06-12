@@ -36,7 +36,7 @@ const Selected = ({ classes, ...other }) => {
             />
           );
         }
-        return <div className="Select-value">{children}</div>;
+        return <div className='Select-value'>{children}</div>;
       }}
       {...other}
     />

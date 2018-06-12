@@ -1,11 +1,11 @@
-import React, { Component } from "react"
-import { Link, withRouter } from "react-router-dom"
-import { connect } from "react-redux"
-import { fetchUserById, fetchServices } from "../store"
+import React, { Component } from 'react';
+import { Link, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { fetchUserById, fetchServices } from '../store';
 
-class MyProfile extends Component {
+class Profile extends Component {
   componentDidMount() {
-    window.scroll(0,0)
+    window.scroll(0, 0);
     this.props.handleFetchUserById(this.props.currentUser.id);
     this.props.fetchServices();
   }
@@ -20,36 +20,35 @@ class MyProfile extends Component {
       item => item.isAvailable === false
     );
     const servicesCompleted = pastServices.filter(
-      item => item.status === "Completed"
+      item => item.status === 'Completed'
     );
 
-    if (!user.id)
-      return (
+    if (!user.id) {return (
         <div className="avenir dark-red">
           <h2>Oh no! No user found.</h2>
         </div>
-      );
+      );}
     return user.id ? (
-      <div className="home" id="background">
-        <div className="avenir mw5 mw7-ns center bg-light-gray pa3 ph5-ns" id="topMarginLogin">
-        <div id="profileVisual">
-          <div className="avenir flex items-center justify-center pa1 bg-teal" id="calloutBox">
-            <p className="avenir lh-title ml3">
+      <div className='home' id='background'>
+        <div className='avenir mw5 mw7-ns center bg-light-gray pa3 ph5-ns' id='topMarginLogin'>
+        <div id='profileVisual'>
+          <div className='avenir flex items-center justify-center pa1 bg-teal' id='calloutBox'>
+            <p className='avenir lh-title ml3'>
               This is how your profile will appear to visitors!
             </p>
           </div>
-          <img alt="profile img" className="tc" src={user.imageURL} />
-          <div className="f2">Hi, I'm {user.userName}!</div>
+          <img alt='profile img' className='tc' src={user.imageURL} />
+          <div className='f2'>Hi, I'm {user.userName}!</div>
         </div>
-        <div className="containerInner bt">
-          <div className="f3">My Goods & Services: </div>
+        <div className='containerInner bt'>
+          <div className='f3'>My Goods & Services: </div>
           <div>
             {availableServices.length ? (
               availableServices.map(service => {
                 return (
                   <div key={service.id}>
                     <Link to={`/services/${service.id}`}>
-                      <div className="f4 b dim">{service.name}</div>
+                      <div className='f4 b dim'>{service.name}</div>
                     </Link>
                     <p><b>Description:</b> {service.description}</p>
                     <p><b>Category:</b> {service.category}</p>
@@ -61,13 +60,13 @@ class MyProfile extends Component {
             )}
           </div>
         </div>
-          <div className="containerInner bt">
-            <div className="f3"> Seller History: </div>
+          <div className='containerInner bt'>
+            <div className='f3'> Seller History: </div>
             <div>
               {pastServices.length ? (
                 <h3>
-                  {pastServices.length} transactions, {servicesCompleted.length}{" "}
-                  fulfilled{" "}
+                  {pastServices.length} transactions, {servicesCompleted.length}{' '}
+                  fulfilled{' '}
                 </h3>
               ) : (
                 <p>No past transactions.</p>
@@ -99,5 +98,5 @@ const mapStateToDispatch = dispatch => {
 };
 
 export default withRouter(
-  connect(mapStateToProps, mapStateToDispatch)(MyProfile)
+  connect(mapStateToProps, mapStateToDispatch)(Profile)
 );

@@ -18,7 +18,7 @@ class SearchTerm extends Component {
         onFocus={onFocus}
         selected={isFocused}
         onClick={this.handleClick}
-        component="div"
+        component='div'
         style={{
           fontWeight: isSelected ? 500 : 400,
           fontSize: '24px'

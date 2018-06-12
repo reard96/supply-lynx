@@ -17,8 +17,6 @@ import Selected from './Selected';
 import OrderTable from './OrderTable';
 import StatusTabs from './StatusTabs';
 
-const ITEM_HEIGHT = 48;
-
 const styles = theme => ({
   root: {
     flexGrow: 1,
@@ -64,7 +62,7 @@ const styles = theme => ({
       cursor: 'default',
       display: 'inline-block',
       fontFamily: 'inherit',
-      fontSize: '42px',
+      fontSize: '48px',
       margin: 0,
       outline: 0,
     },
@@ -92,13 +90,13 @@ const styles = theme => ({
       top: `calc(100% + ${theme.spacing.unit}px)`,
       width: '100%',
       zIndex: 2,
-      maxHeight: ITEM_HEIGHT * 4.5,
+      maxHeight: 200,
     },
     '.Select.is-focused:not(.is-open) > .Select-control': {
       boxShadow: 'none',
     },
     '.Select-menu': {
-      maxHeight: ITEM_HEIGHT * 4.5,
+      maxHeight: 200,
       overflowY: 'auto',
     },
     '.Select-menu div': {
@@ -192,7 +190,7 @@ class Dashboard extends Component {
     }
     if (search.length !== 0) {
       for (let term of search) {
-        const results = orders.filter(order => order.productId == term);
+        const results = orders.filter(order => order.productId === term * 1);
         filtered = [...filtered, ...results];
       }
     }
@@ -228,8 +226,8 @@ class Dashboard extends Component {
               fullWidth={false}
               value={this.state.search}
               onChange={this.addSearchTerm}
-              placeholder="Select Services"
-              name="react-select-chip-label"
+              placeholder='Select Services'
+              name='react-select-chip-label'
               InputLabelProps={{
                 shrink: true,
               }}
@@ -246,19 +244,19 @@ class Dashboard extends Component {
               }}
             />
             <FormControlLabel
-              style={{ marginLeft: 10 }}
+              style={{ marginLeft: 50, marginRight: 50 }}
               control={
                 <Switch
                   checked={this.state.onlyOwn}
                   onChange={this.showOnlyOwn}
                 />
               }
-              label="Own Orders Only"
+              label='Own Orders Only'
             />
             <Button
               style={{ flex: 1 }}
               onClick={this.openForm}
-              color="secondary"
+              color='secondary'
             >
               Create Request
               <LibraryAdd style={{ marginLeft: 10 }} />

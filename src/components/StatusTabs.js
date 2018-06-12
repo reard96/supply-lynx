@@ -13,14 +13,14 @@ const StatusTabs = ({ tab, changeTab }) => {
       value={tab}
       onChange={changeTab}
       fullWidth
-      indicatorColor="secondary"
-      textColor="secondary"
+      indicatorColor='secondary'
+      textColor='secondary'
     >
-      <Tab icon={<Cloud />} label="ALL" />
-      <Tab icon={<CloudQueue />} label="REQUESTED" />
-      <Tab icon={<CloudUpload />} label="ACCEPTED" />
-      <Tab icon={<CloudDone />} label="COMPLETED" />
-      <Tab icon={<CloudOff />} label="CANCELLED" />
+      <Tab icon={<Cloud />} label='ALL' />
+      <Tab icon={<CloudQueue />} label='REQUESTED' />
+      <Tab icon={<CloudUpload />} label='ACCEPTED' />
+      <Tab icon={<CloudDone />} label='COMPLETED' />
+      <Tab icon={<CloudOff />} label='CANCELLED' />
     </Tabs>
   );
 };

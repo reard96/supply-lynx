@@ -1,108 +1,21 @@
 /* eslint-disable react/prop-types */
 
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import MenuItem from '@material-ui/core/MenuItem';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
-import Chip from '@material-ui/core/Chip';
 import LibraryAdd from '@material-ui/icons/LibraryAdd';
-import Cloud from '@material-ui/icons/Cloud';
-import CloudDone from '@material-ui/icons/CloudDone';
-import CloudUpload from '@material-ui/icons/CloudUpload';
-import CloudQueue from '@material-ui/icons/CloudQueue';
-import CloudOff from '@material-ui/icons/CloudOff';
-import Cancel from '@material-ui/icons/Cancel';
-import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
-import ArrowDropUp from '@material-ui/icons/ArrowDropUp';
-import Clear from '@material-ui/icons/Clear';
-import Select from 'react-select';
 import { connect } from 'react-redux';
 import './react-select.css';
-
-import CustomizedTable from './ContractsTable';
-
-class Option extends React.Component {
-  constructor() {
-    super();
-
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleClick(event) {
-    this.props.onSelect(this.props.option, event);
-  }
-
-  render() {
-    const { children, isFocused, isSelected, onFocus } = this.props;
-
-    return (
-      <MenuItem
-        onFocus={onFocus}
-        selected={isFocused}
-        onClick={this.handleClick}
-        component="div"
-        style={{
-          fontWeight: isSelected ? 500 : 400,
-          fontSize: '32px'
-        }}
-      >
-        {children}
-      </MenuItem>
-    );
-  }
-}
-
-function SelectWrapped(props) {
-  const { classes, ...other } = props;
-  return (
-    <Select
-      optionComponent={Option}
-      noResultsText={<Typography>No results found</Typography>}
-      arrowRenderer={arrowProps => {
-        return arrowProps.isOpen ? <ArrowDropUp /> : <ArrowDropDown />;
-      }}
-      clearRenderer={() => <Clear />}
-      valueComponent={valueProps => {
-        const { value, children, onRemove } = valueProps;
-
-        const onDelete = event => {
-          event.preventDefault();
-          event.stopPropagation();
-          onRemove(value);
-        };
-
-        if (onRemove) {
-          return (
-            <Chip
-              style={{ fontSize: '24px' }}
-              tabIndex={-1}
-              label={children}
-              className={classes.chip}
-              deleteIcon={<Cancel onTouchEnd={onDelete} />}
-              onDelete={onDelete}
-            />
-          );
-        }
-        return <div className="Select-value">{children}</div>;
-      }}
-      {...other}
-    />
-  );
-}
+import Request from './Request';
+import Selected from './Selected';
+import OrderTable from './OrderTable';
+import StatusTabs from './StatusTabs';
 
 const ITEM_HEIGHT = 48;
 
@@ -209,7 +122,7 @@ const styles = theme => ({
   },
 });
 
-class IntegrationReactSelect extends React.Component {
+class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -232,11 +145,11 @@ class IntegrationReactSelect extends React.Component {
   }
 
   openForm() {
-    this.setState({ formOpen: true })
+    this.setState({ formOpen: true });
   }
 
   closeForm() {
-    this.setState({ formOpen: false })
+    this.setState({ formOpen: false });
   }
 
   showOnlyOwn() {
@@ -321,7 +234,7 @@ class IntegrationReactSelect extends React.Component {
                 shrink: true,
               }}
               InputProps={{
-                inputComponent: SelectWrapped,
+                inputComponent: Selected,
                 inputProps: {
                   classes,
                   multi: true,
@@ -338,7 +251,6 @@ class IntegrationReactSelect extends React.Component {
                 <Switch
                   checked={this.state.onlyOwn}
                   onChange={this.showOnlyOwn}
-                  value="checkedA"
                 />
               }
               label="Own Orders Only"
@@ -352,74 +264,16 @@ class IntegrationReactSelect extends React.Component {
               <LibraryAdd style={{ marginLeft: 10 }} />
             </Button>
           </FormGroup>
-          <Dialog
-            open={this.state.formOpen}
-            onClose={this.closeForm}
-          >
-            <DialogContent>
-              <DialogContentText>
-                Please enter the details of your bid or quote. Once submitted, it will be sent to the blockchain.
-              </DialogContentText>
-              <TextField
-                autoFocus
-                margin="dense"
-                id="productId"
-                label="Product ID"
-                type="text"
-                fullWidth
-              />
-              <TextField
-                autoFocus
-                margin="dense"
-                id="price"
-                label="Unit Price"
-                type="text"
-                fullWidth
-              />
-              <TextField
-                autoFocus
-                margin="dense"
-                id="quantity"
-                label="Quantity"
-                type="text"
-                fullWidth
-              />
-              <TextField
-                autoFocus
-                margin="dense"
-                id="unit"
-                label="Unit"
-                type="text"
-                fullWidth
-              />
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={this.closeForm} color="secondary">Cancel</Button>
-              <Button onClick={this.closeForm} color="primary">Submit Bid</Button>
-              <Button onClick={this.closeForm} color="primary">Submit Quote</Button>
-            </DialogActions>
-          </Dialog>
-          <Tabs
-            value={this.state.tab}
-            onChange={this.changeTab}
-            fullWidth
-            indicatorColor="secondary"
-            textColor="secondary"
-          >
-            <Tab icon={<Cloud />} label="ALL" />
-            <Tab icon={<CloudQueue />} label="REQUESTED" />
-            <Tab icon={<CloudUpload />} label="ACCEPTED" />
-            <Tab icon={<CloudDone />} label="COMPLETED" />
-            <Tab icon={<CloudOff />} label="CANCELLED" />
-          </Tabs>
-          <CustomizedTable users={users} orders={orders} services={services} />
+          <Request formOpen={this.state.formOpen} closeForm={this.closeForm} />
+          <StatusTabs tab={this.state.tab} changeTab={this.changeTab} />
+          <OrderTable users={users} orders={orders} services={services} />
         </Paper>
       </div>
     );
   }
 }
 
-IntegrationReactSelect.propTypes = {
+Dashboard.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
@@ -427,6 +281,6 @@ const mapStateToProps = ({ orders, user, users, services }) => {
   return { orders, user, users, services };
 };
 
-const styledComponent = withStyles(styles)(IntegrationReactSelect);
+const styledComponent = withStyles(styles)(Dashboard);
 
 export default connect(mapStateToProps)(styledComponent);

@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import AllServices from './AllServices';
 import SingleService from './SingleService';
 import AddService from './AddService';
-import SingleUser from './SingleUser';
 import SingleUserPublic from './SingleUserPublic';
 import Homepage from './Homepage';
 import { Login, Signup } from './SignUp';
@@ -13,7 +12,7 @@ import FAQ from './FAQ';
 import About from './About';
 import MyProfile from './MyProfile';
 
-import IntegrationReactSelect from './EntityDashboard';
+import Dashboard from './Dashboard';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 //Needed for onTouchTap
@@ -36,7 +35,7 @@ class Routes extends Component {
           <Route exact path='/' component={Homepage} />
           <Route exact path='/faq' component={FAQ} />
           <Route exact path='/about' component={About} />
-          <MuiThemeProvider><Route exact path='/dashboard' component={IntegrationReactSelect} /></MuiThemeProvider>
+          <MuiThemeProvider><Route exact path='/dashboard' component={Dashboard} /></MuiThemeProvider>
           <Route path='/users/:id' component={SingleUserPublic} />
           <Route exact path='/services' component={AllServices} />
           <Route exact path='/services/new' component={AddService} />

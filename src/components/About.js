@@ -4,23 +4,20 @@ import { connect } from 'react-redux';
 class About extends Component {
   constructor() {
     super();
-    this.state = {
-      address: ''
-    };
     this.submitQuote = this.submitQuote.bind(this);
     this.submitBid = this.submitBid.bind(this);
   }
 
   submitQuote() {
-    this.props.contract.createQuote(4, 5, 8, 'lb', {
+    this.props.contract.createQuote(8, 5, 13, 'kg', {
       from: web3.eth.accounts[0]
     });
   }
 
   submitBid() {
-    this.props.contract.createQuote(1, 2, 5, 'kg', {
+    this.props.contract.createBid(1, 2, 5, 'kg', {
       from: web3.eth.accounts[0],
-      value: 10
+      value: '10'
     });
   }
 
@@ -29,6 +26,12 @@ class About extends Component {
     const { orders } = this.props;
     return (
       <div>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
         <div className='home' id='background'>
           <div id='homeText'>
             {orders && orders.map((order, id) => {

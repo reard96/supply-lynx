@@ -72,11 +72,11 @@ class App extends Component {
   }
 }
 
-function mapStateToProps({ web3, contract, users }) {
+const mapStateToProps = ({ web3, contract, users }) => {
   return { web3, contract, users };
-}
+};
 
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = (dispatch) => {
   return {
     fetchWeb3: function () {
       return dispatch(fetchWeb3());
@@ -97,6 +97,6 @@ function mapDispatchToProps(dispatch) {
       return dispatch(fetchUser(address));
     }
   };
-}
+};
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

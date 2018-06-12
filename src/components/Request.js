@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { fetchOrders } from '../store';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -48,6 +49,7 @@ class Request extends Component {
     const { formOpen, closeForm } = this.props;
     const { changeForm, submitBid, submitQuote } = this;
     const { productId, quantity, price, unit } = this.state;
+    const inputEmpty = Object.keys(this.state).some(field => !this.state[field].length);
     return (
       <Dialog
         open={formOpen}
@@ -97,8 +99,8 @@ class Request extends Component {
         </DialogContent>
         <DialogActions>
           <Button onClick={closeForm} color='secondary'>Cancel</Button>
-          <Button onClick={submitBid} color='primary'>Submit Bid</Button>
-          <Button onClick={submitQuote} color='primary'>Submit Quote</Button>
+          <Button disabled={inputEmpty} onClick={submitBid} color='primary'>Submit Bid</Button>
+          <Button disabled={inputEmpty} onClick={submitQuote} color='primary'>Submit Quote</Button>
         </DialogActions>
       </Dialog>
     );
@@ -109,4 +111,12 @@ const mapStateToProps = ({ web3, contract }) => ({
   web3, contract
 });
 
-export default connect(mapStateToProps)(Request);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchOrders: function (orders) {
+      return dispatch(fetchOrders(orders));
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Request);

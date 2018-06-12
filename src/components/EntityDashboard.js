@@ -8,13 +8,18 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
-import Icon from '@material-ui/core/Icon';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
 import Chip from '@material-ui/core/Chip';
+import LibraryAdd from '@material-ui/icons/LibraryAdd';
 import Cloud from '@material-ui/icons/Cloud';
 import CloudDone from '@material-ui/icons/CloudDone';
 import CloudUpload from '@material-ui/icons/CloudUpload';
@@ -211,16 +216,27 @@ class IntegrationReactSelect extends React.Component {
       tab: 0,
       search: [],
       orders: [],
-      onlyOwn: false
+      onlyOwn: false,
+      formOpen: false
     };
     this.addSearchTerm = this.addSearchTerm.bind(this);
     this.changeTab = this.changeTab.bind(this);
     this.showOnlyOwn = this.showOnlyOwn.bind(this);
+    this.openForm = this.openForm.bind(this);
+    this.closeForm = this.closeForm.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
     const { orders } = nextProps;
     this.setState({ orders });
+  }
+
+  openForm() {
+    this.setState({ formOpen: true })
+  }
+
+  closeForm() {
+    this.setState({ formOpen: false })
   }
 
   showOnlyOwn() {
@@ -284,7 +300,6 @@ class IntegrationReactSelect extends React.Component {
       value: service.id,
       label: service.name
     }));
-
     return (
       <div className={classes.root}>
         <br />
@@ -296,7 +311,7 @@ class IntegrationReactSelect extends React.Component {
         <Paper>
           <FormGroup row>
             <TextField
-              style={{ width: '500' }}
+              style={{ width: 500 }}
               fullWidth={false}
               value={this.state.search}
               onChange={this.addSearchTerm}
@@ -328,7 +343,62 @@ class IntegrationReactSelect extends React.Component {
               }
               label="Own Orders Only"
             />
+            <Button
+              style={{ flex: 1 }}
+              onClick={this.openForm}
+              color="secondary"
+            >
+              Create Request
+              <LibraryAdd style={{ marginLeft: 10 }} />
+            </Button>
           </FormGroup>
+          <Dialog
+            open={this.state.formOpen}
+            onClose={this.closeForm}
+          >
+            <DialogContent>
+              <DialogContentText>
+                Please enter the details of your bid or quote. Once submitted, it will be sent to the blockchain.
+              </DialogContentText>
+              <TextField
+                autoFocus
+                margin="dense"
+                id="productId"
+                label="Product ID"
+                type="text"
+                fullWidth
+              />
+              <TextField
+                autoFocus
+                margin="dense"
+                id="price"
+                label="Unit Price"
+                type="text"
+                fullWidth
+              />
+              <TextField
+                autoFocus
+                margin="dense"
+                id="quantity"
+                label="Quantity"
+                type="text"
+                fullWidth
+              />
+              <TextField
+                autoFocus
+                margin="dense"
+                id="unit"
+                label="Unit"
+                type="text"
+                fullWidth
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={this.closeForm} color="secondary">Cancel</Button>
+              <Button onClick={this.closeForm} color="primary">Submit Bid</Button>
+              <Button onClick={this.closeForm} color="primary">Submit Quote</Button>
+            </DialogActions>
+          </Dialog>
           <Tabs
             value={this.state.tab}
             onChange={this.changeTab}

@@ -7,18 +7,23 @@ import Typography from '@material-ui/core/Typography';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
+import Icon from '@material-ui/core/Icon';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
+import TextField from '@material-ui/core/TextField';
+import Chip from '@material-ui/core/Chip';
 import Cloud from '@material-ui/icons/Cloud';
 import CloudDone from '@material-ui/icons/CloudDone';
 import CloudUpload from '@material-ui/icons/CloudUpload';
 import CloudQueue from '@material-ui/icons/CloudQueue';
 import CloudOff from '@material-ui/icons/CloudOff';
-import TextField from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import CancelIcon from '@material-ui/icons/Cancel';
-import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
-import ClearIcon from '@material-ui/icons/Clear';
-import Chip from '@material-ui/core/Chip';
+import Cancel from '@material-ui/icons/Cancel';
+import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
+import ArrowDropUp from '@material-ui/icons/ArrowDropUp';
+import Clear from '@material-ui/icons/Clear';
 import Select from 'react-select';
 import { connect } from 'react-redux';
 import './react-select.css';
@@ -44,7 +49,7 @@ class Option extends React.Component {
         onFocus={onFocus}
         selected={isFocused}
         onClick={this.handleClick}
-        component='div'
+        component="div"
         style={{
           fontWeight: isSelected ? 500 : 400,
           fontSize: '32px'
@@ -63,9 +68,9 @@ function SelectWrapped(props) {
       optionComponent={Option}
       noResultsText={<Typography>No results found</Typography>}
       arrowRenderer={arrowProps => {
-        return arrowProps.isOpen ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />;
+        return arrowProps.isOpen ? <ArrowDropUp /> : <ArrowDropDown />;
       }}
-      clearRenderer={() => <ClearIcon />}
+      clearRenderer={() => <Clear />}
       valueComponent={valueProps => {
         const { value, children, onRemove } = valueProps;
 
@@ -82,12 +87,12 @@ function SelectWrapped(props) {
               tabIndex={-1}
               label={children}
               className={classes.chip}
-              deleteIcon={<CancelIcon onTouchEnd={onDelete} />}
+              deleteIcon={<Cancel onTouchEnd={onDelete} />}
               onDelete={onDelete}
             />
           );
         }
-        return <div className='Select-value'>{children}</div>;
+        return <div className="Select-value">{children}</div>;
       }}
       {...other}
     />
@@ -203,17 +208,28 @@ class IntegrationReactSelect extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      search: [],
       tab: 0,
-      orders: []
+      search: [],
+      orders: [],
+      onlyOwn: false
     };
     this.addSearchTerm = this.addSearchTerm.bind(this);
     this.changeTab = this.changeTab.bind(this);
+    this.showOnlyOwn = this.showOnlyOwn.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
     const { orders } = nextProps;
-    this.setState({ orders })
+    this.setState({ orders });
+  }
+
+  showOnlyOwn() {
+    const { onlyOwn } = this.state;
+    let { orders } = this.props;
+    if (onlyOwn) {
+      orders = orders.filter(order => order.buyer || order.seller);
+    }
+    this.setState({ onlyOwn: !onlyOwn, search: [], orders });
   }
 
   addSearchTerm(value) {
@@ -221,7 +237,7 @@ class IntegrationReactSelect extends React.Component {
     const { tab } = this.state;
     const search = !value ? [] : value.split(',');
     const status = ['all', 'requested', 'accepted', 'completed', 'cancelled'];
-    let filtered = []
+    let filtered = [];
     if (tab !== 0) {
       orders = orders.filter(order => order.status === status[tab]);
     }
@@ -240,7 +256,7 @@ class IntegrationReactSelect extends React.Component {
   changeTab(event, value) {
     let { orders } = this.props;
     const { search } = this.state;
-    let filtered = []
+    let filtered = [];
     const status = ['all', 'requested', 'accepted', 'completed', 'cancelled'];
     if (value !== 0) {
       orders = orders.filter(order => order.status === status[value]);
@@ -278,40 +294,53 @@ class IntegrationReactSelect extends React.Component {
         <br />
         <br />
         <Paper>
-          <TextField
-            style={{ width: '500' }}
-            fullWidth={false}
-            value={this.state.search}
-            onChange={this.addSearchTerm}
-            placeholder='Select Services'
-            name='react-select-chip-label'
-            InputLabelProps={{
-              shrink: true,
-            }}
-            InputProps={{
-              inputComponent: SelectWrapped,
-              inputProps: {
-                classes,
-                multi: true,
-                instanceId: 'react-select-chip-label',
-                id: 'react-select-chip-label',
-                simpleValue: true,
-                options: suggestions
-              },
-            }}
-          />
+          <FormGroup row>
+            <TextField
+              style={{ width: '500' }}
+              fullWidth={false}
+              value={this.state.search}
+              onChange={this.addSearchTerm}
+              placeholder="Select Services"
+              name="react-select-chip-label"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              InputProps={{
+                inputComponent: SelectWrapped,
+                inputProps: {
+                  classes,
+                  multi: true,
+                  instanceId: 'react-select-chip-label',
+                  id: 'react-select-chip-label',
+                  simpleValue: true,
+                  options: suggestions
+                },
+              }}
+            />
+            <FormControlLabel
+              style={{ marginLeft: 15 }}
+              control={
+                <Switch
+                  checked={this.state.onlyOwn}
+                  onChange={this.showOnlyOwn}
+                  value="checkedA"
+                />
+              }
+              label="Own Orders Only"
+            />
+          </FormGroup>
           <Tabs
             value={this.state.tab}
             onChange={this.changeTab}
             fullWidth
-            indicatorColor='secondary'
-            textColor='secondary'
+            indicatorColor="secondary"
+            textColor="secondary"
           >
-            <Tab icon={<Cloud />} label='ALL' />
-            <Tab icon={<CloudQueue />} label='REQUESTED' />
-            <Tab icon={<CloudUpload />} label='ACCEPTED' />
-            <Tab icon={<CloudDone />} label='COMPLETED' />
-            <Tab icon={<CloudOff />} label='CANCELLED' />
+            <Tab icon={<Cloud />} label="ALL" />
+            <Tab icon={<CloudQueue />} label="REQUESTED" />
+            <Tab icon={<CloudUpload />} label="ACCEPTED" />
+            <Tab icon={<CloudDone />} label="COMPLETED" />
+            <Tab icon={<CloudOff />} label="CANCELLED" />
           </Tabs>
           <CustomizedTable users={users} orders={orders} services={services} />
         </Paper>

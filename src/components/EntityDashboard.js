@@ -7,10 +7,11 @@ import Typography from '@material-ui/core/Typography';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Paper from '@material-ui/core/Paper';
-// import PhoneIcon from '@material-ui/icons/PhoneIcon';
-// import FavoriteIcon from '@material-ui/icons/FavoriteIcon';
-// import PersonalPinIcon from '@material-ui/icons/PersonalPinIcon';
-// import CloudIcon from '@material-ui/icons/CloudIcon';
+import Cloud from '@material-ui/icons/Cloud';
+import CloudDone from '@material-ui/icons/CloudDone';
+import CloudUpload from '@material-ui/icons/CloudUpload';
+import CloudQueue from '@material-ui/icons/CloudQueue';
+import CloudOff from '@material-ui/icons/CloudOff';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
@@ -103,10 +104,6 @@ const styles = theme => ({
   chip: {
     margin: theme.spacing.unit / 4,
   },
-  // We had to use a lot of global selectors in order to style react-select.
-  // We are waiting on https://github.com/JedWatson/react-select/issues/1679
-  // to provide a much better implementation.
-  // Also, we had to reset the default style injected by the library.
   '@global': {
     '.Select-control': {
       display: 'flex',
@@ -280,30 +277,29 @@ class IntegrationReactSelect extends React.Component {
         <br />
         <br />
         <br />
-        <br />
-        <TextField
-          style={{ width: '500' }}
-          fullWidth={false}
-          value={this.state.search}
-          onChange={this.addSearchTerm}
-          placeholder='Select Services'
-          name='react-select-chip-label'
-          InputLabelProps={{
-            shrink: true,
-          }}
-          InputProps={{
-            inputComponent: SelectWrapped,
-            inputProps: {
-              classes,
-              multi: true,
-              instanceId: 'react-select-chip-label',
-              id: 'react-select-chip-label',
-              simpleValue: true,
-              options: suggestions
-            },
-          }}
-        />
         <Paper>
+          <TextField
+            style={{ width: '500' }}
+            fullWidth={false}
+            value={this.state.search}
+            onChange={this.addSearchTerm}
+            placeholder='Select Services'
+            name='react-select-chip-label'
+            InputLabelProps={{
+              shrink: true,
+            }}
+            InputProps={{
+              inputComponent: SelectWrapped,
+              inputProps: {
+                classes,
+                multi: true,
+                instanceId: 'react-select-chip-label',
+                id: 'react-select-chip-label',
+                simpleValue: true,
+                options: suggestions
+              },
+            }}
+          />
           <Tabs
             value={this.state.tab}
             onChange={this.changeTab}
@@ -311,11 +307,11 @@ class IntegrationReactSelect extends React.Component {
             indicatorColor='secondary'
             textColor='secondary'
           >
-            <Tab label='ALL' />
-            <Tab label='REQUESTED' />
-            <Tab label='ACCEPTED' />
-            <Tab label='COMPLETED' />
-            <Tab label='CANCELLED' />
+            <Tab icon={<Cloud />} label='ALL' />
+            <Tab icon={<CloudQueue />} label='REQUESTED' />
+            <Tab icon={<CloudUpload />} label='ACCEPTED' />
+            <Tab icon={<CloudDone />} label='COMPLETED' />
+            <Tab icon={<CloudOff />} label='CANCELLED' />
           </Tabs>
           <CustomizedTable users={users} orders={orders} services={services} />
         </Paper>

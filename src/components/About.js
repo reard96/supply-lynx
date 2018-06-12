@@ -26,6 +26,12 @@ class About extends Component {
     const { orders } = this.props;
     return (
       <div>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
         <div className='home' id='background'>
           <div id='homeText'>
             {orders && orders.map((order, id) => {

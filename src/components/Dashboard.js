@@ -62,7 +62,7 @@ const styles = theme => ({
       cursor: 'default',
       display: 'inline-block',
       fontFamily: 'inherit',
-      fontSize: '48px',
+      fontSize: '42px',
       margin: 0,
       outline: 0,
     },
@@ -170,7 +170,7 @@ class Dashboard extends Component {
     }
     if (search.length !== 0) {
       for (let term of search) {
-        const results = orders.filter(order => order.productId == term);
+        const results = orders.filter(order => order.productId === term * 1);
         filtered = [...filtered, ...results];
       }
     }

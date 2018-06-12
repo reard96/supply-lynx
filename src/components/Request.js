@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -11,8 +12,8 @@ class Request extends Component {
     super();
     this.state = {
       productId: '',
-      price: '',
       quantity: '',
+      price: '',
       unit: ''
     };
     this.changeForm = this.changeForm.bind(this);
@@ -20,20 +21,24 @@ class Request extends Component {
     this.submitQuote = this.submitQuote.bind(this);
   }
 
-  changeForm() {
-
+  changeForm = name => (event) => {
+    const { value } = event.target;
+    this.setState({ [name]: value });
   }
 
   submitBid() {
-    this.props.contract.createBid(1, 2, 5, 'kg', {
+    const { productId, quantity, price, unit } = this.state;
+    const total = quantity * price;
+    this.props.contract.createBid(productId, quantity, price, unit, {
       from: web3.eth.accounts[0],
-      value: '10'
+      value: total
     });
     this.props.closeForm();
   }
 
   submitQuote() {
-    this.props.contract.createQuote(8, 5, 13, 'kg', {
+    const { productId, quantity, price, unit } = this.state;
+    this.props.contract.createQuote(productId, quantity, price, unit, {
       from: web3.eth.accounts[0]
     });
     this.props.closeForm();
@@ -42,6 +47,7 @@ class Request extends Component {
   render() {
     const { formOpen, closeForm } = this.props;
     const { changeForm, submitBid, submitQuote } = this;
+    const { productId, quantity, price, unit } = this.state;
     return (
       <Dialog
         open={formOpen}
@@ -57,34 +63,35 @@ class Request extends Component {
             id='productId'
             label='Product ID'
             type='text'
-            onChange={changeForm}
+            onChange={changeForm('productId')}
+            value={productId}
             fullWidth
           />
           <TextField
-            autoFocus
-            margin='dense'
-            id='price'
-            label='Unit Price'
-            type='text'
-            onChange={changeForm}
-            fullWidth
-          />
-          <TextField
-            autoFocus
             margin='dense'
             id='quantity'
             label='Quantity'
             type='text'
-            onChange={changeForm}
+            onChange={changeForm('quantity')}
+            value={quantity}
             fullWidth
           />
           <TextField
-            autoFocus
+            margin='dense'
+            id='price'
+            label='Unit Price'
+            type='text'
+            onChange={changeForm('price')}
+            value={price}
+            fullWidth
+          />
+          <TextField
             margin='dense'
             id='unit'
             label='Unit'
             type='text'
-            onChange={changeForm}
+            onChange={changeForm('unit')}
+            value={unit}
             fullWidth
           />
         </DialogContent>
@@ -98,4 +105,8 @@ class Request extends Component {
   }
 }
 
-export default Request;
+const mapStateToProps = ({ web3, contract }) => ({
+  web3, contract
+});
+
+export default connect(mapStateToProps)(Request);

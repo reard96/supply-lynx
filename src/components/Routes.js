@@ -25,13 +25,13 @@ class Routes extends Component {
       <div>
         <NavBar />
         <Switch>
-          <MuiThemeProvider>
-            <Route exact path='/dashboard' component={Dashboard} />
-          </MuiThemeProvider>
           <Route exact path='/' component={Homepage} />
           <Route exact path='/faq' component={FAQ} />
           <Route exact path='/about' component={About} />
           <Route exact path='/profile' component={Profile} />
+          <MuiThemeProvider>
+            <Route exact path='/dashboard' component={Dashboard} />
+          </MuiThemeProvider>
         </Switch>
       </div>
     );

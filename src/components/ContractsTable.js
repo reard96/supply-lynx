@@ -60,53 +60,49 @@ const styles = theme => ({
 
 function CustomizedTable({ classes, users, orders, services }) {
   return (
-    <Paper className={classes.root}>
-      <Table className={classes.table}>
-        <TableHead>
-          <TableRow>
-            <CustomTableCell padding='checkbox'>
-              <Checkbox />
-            </CustomTableCell>
-            <CustomTableCell numeric>Order ID</CustomTableCell>
-            <CustomTableCell>Product</CustomTableCell>
-            <CustomTableCell numeric>Quantity</CustomTableCell>
-            <CustomTableCell>Unit</CustomTableCell>
-            <CustomTableCell numeric>Unit Price</CustomTableCell>
-            <CustomTableCell>Buyer</CustomTableCell>
-            <CustomTableCell>Seller</CustomTableCell>
-            <CustomTableCell>Status</CustomTableCell>
-            <CustomTableCell />
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {orders.map((order, id) => {
-            const product = services && services.find(service => service.id === order.productId);
-            const buyer = users && users.find(user => user.address === order.buyer);
-            const seller = users && users.find(user => user.address === order.seller);
-            return (
-              <TableRow className={classes.row} key={id}>
-                <CustomTableCell padding='checkbox'>
-                  <Checkbox />
-                </CustomTableCell>
-                <CustomTableCell numeric>{id}</CustomTableCell>
-                <CustomTableCell component='th' scope='row'>
-                  {product.name}
-                </CustomTableCell>
-                <CustomTableCell numeric>{order.quantity}</CustomTableCell>
-                <CustomTableCell>{order.unit}</CustomTableCell>
-                <CustomTableCell numeric>{order.price}</CustomTableCell>
-                <CustomTableCell>{buyer && buyer.name || '(none)'}</CustomTableCell>
-                <CustomTableCell>{seller && seller.name || '(none)'}</CustomTableCell>
-                <CustomTableCell>{order.status}</CustomTableCell>
-                <CustomTableCell>
-                  <CircularProgress value={Math.floor(Math.random() * 100)} />
-                </CustomTableCell>
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
-    </Paper>
+    <Table className={classes.table}>
+      <TableHead>
+        <TableRow>
+          <CustomTableCell padding='checkbox'>
+            <Checkbox />
+          </CustomTableCell>
+          <CustomTableCell numeric>Order ID</CustomTableCell>
+          <CustomTableCell>Product</CustomTableCell>
+          <CustomTableCell numeric>Quantity</CustomTableCell>
+          <CustomTableCell>Unit</CustomTableCell>
+          <CustomTableCell numeric>Unit Price</CustomTableCell>
+          <CustomTableCell>Buyer</CustomTableCell>
+          <CustomTableCell>Seller</CustomTableCell>
+          <CustomTableCell>Status</CustomTableCell>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {orders.map((order, id) => {
+          const product = services && services.find(service => service.id === order.productId);
+          const buyer = users && users.find(user => user.address === order.buyer);
+          const seller = users && users.find(user => user.address === order.seller);
+          return (
+            <TableRow className={classes.row} key={id}>
+              <CustomTableCell padding='checkbox'>
+                <Checkbox />
+              </CustomTableCell>
+              <CustomTableCell numeric>{id}</CustomTableCell>
+              <CustomTableCell component='th' scope='row'>
+                {product.name}
+              </CustomTableCell>
+              <CustomTableCell numeric>{order.quantity}</CustomTableCell>
+              <CustomTableCell>{order.unit}</CustomTableCell>
+              <CustomTableCell numeric>{order.price}</CustomTableCell>
+              <CustomTableCell>{buyer && buyer.name || '(none)'}</CustomTableCell>
+              <CustomTableCell>{seller && seller.name || '(none)'}</CustomTableCell>
+              <CustomTableCell>
+                <CircularProgress value={Math.floor(Math.random() * 100)} />
+              </CustomTableCell>
+            </TableRow>
+          );
+        })}
+      </TableBody>
+    </Table>
   );
 }
 

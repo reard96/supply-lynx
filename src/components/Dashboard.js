@@ -1,99 +1,21 @@
 /* eslint-disable react/prop-types */
 
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
 import Paper from '@material-ui/core/Paper';
-// import PhoneIcon from '@material-ui/icons/PhoneIcon';
-// import FavoriteIcon from '@material-ui/icons/FavoriteIcon';
-// import PersonalPinIcon from '@material-ui/icons/PersonalPinIcon';
-// import CloudIcon from '@material-ui/icons/CloudIcon';
+import Button from '@material-ui/core/Button';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import CancelIcon from '@material-ui/icons/Cancel';
-import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
-import ClearIcon from '@material-ui/icons/Clear';
-import Chip from '@material-ui/core/Chip';
-import Select from 'react-select';
+import LibraryAdd from '@material-ui/icons/LibraryAdd';
 import { connect } from 'react-redux';
 import './react-select.css';
-
-import CustomizedTable from './ContractsTable';
-
-class Option extends React.Component {
-  constructor() {
-    super();
-
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleClick(event) {
-    this.props.onSelect(this.props.option, event);
-  }
-
-  render() {
-    const { children, isFocused, isSelected, onFocus } = this.props;
-
-    return (
-      <MenuItem
-        onFocus={onFocus}
-        selected={isFocused}
-        onClick={this.handleClick}
-        component='div'
-        style={{
-          fontWeight: isSelected ? 500 : 400,
-          fontSize: '32px'
-        }}
-      >
-        {children}
-      </MenuItem>
-    );
-  }
-}
-
-function SelectWrapped(props) {
-  const { classes, ...other } = props;
-  return (
-    <Select
-      optionComponent={Option}
-      noResultsText={<Typography>No results found</Typography>}
-      arrowRenderer={arrowProps => {
-        return arrowProps.isOpen ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />;
-      }}
-      clearRenderer={() => <ClearIcon />}
-      valueComponent={valueProps => {
-        const { value, children, onRemove } = valueProps;
-
-        const onDelete = event => {
-          event.preventDefault();
-          event.stopPropagation();
-          onRemove(value);
-        };
-
-        if (onRemove) {
-          return (
-            <Chip
-              style={{ fontSize: '24px' }}
-              tabIndex={-1}
-              label={children}
-              className={classes.chip}
-              deleteIcon={<CancelIcon onTouchEnd={onDelete} />}
-              onDelete={onDelete}
-            />
-          );
-        }
-        return <div className='Select-value'>{children}</div>;
-      }}
-      {...other}
-    />
-  );
-}
-
-const ITEM_HEIGHT = 48;
+import Request from './Request';
+import Selected from './Selected';
+import OrderTable from './OrderTable';
+import StatusTabs from './StatusTabs';
 
 const styles = theme => ({
   root: {
@@ -103,10 +25,6 @@ const styles = theme => ({
   chip: {
     margin: theme.spacing.unit / 4,
   },
-  // We had to use a lot of global selectors in order to style react-select.
-  // We are waiting on https://github.com/JedWatson/react-select/issues/1679
-  // to provide a much better implementation.
-  // Also, we had to reset the default style injected by the library.
   '@global': {
     '.Select-control': {
       display: 'flex',
@@ -172,13 +90,13 @@ const styles = theme => ({
       top: `calc(100% + ${theme.spacing.unit}px)`,
       width: '100%',
       zIndex: 2,
-      maxHeight: ITEM_HEIGHT * 4.5,
+      maxHeight: 200,
     },
     '.Select.is-focused:not(.is-open) > .Select-control': {
       boxShadow: 'none',
     },
     '.Select-menu': {
-      maxHeight: ITEM_HEIGHT * 4.5,
+      maxHeight: 200,
       overflowY: 'auto',
     },
     '.Select-menu div': {
@@ -202,21 +120,43 @@ const styles = theme => ({
   },
 });
 
-class IntegrationReactSelect extends React.Component {
+class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      search: [],
       tab: 0,
-      orders: []
+      search: [],
+      orders: [],
+      onlyOwn: false,
+      formOpen: false
     };
     this.addSearchTerm = this.addSearchTerm.bind(this);
     this.changeTab = this.changeTab.bind(this);
+    this.showOnlyOwn = this.showOnlyOwn.bind(this);
+    this.openForm = this.openForm.bind(this);
+    this.closeForm = this.closeForm.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
     const { orders } = nextProps;
-    this.setState({ orders })
+    this.setState({ orders });
+  }
+
+  openForm() {
+    this.setState({ formOpen: true });
+  }
+
+  closeForm() {
+    this.setState({ formOpen: false });
+  }
+
+  showOnlyOwn() {
+    const { onlyOwn } = this.state;
+    let { orders } = this.props;
+    if (!onlyOwn) {
+      orders = orders.filter(order => order.buyer === web3.eth.accounts[0] || order.seller === web3.eth.accounts[0]);
+    }
+    this.setState({ onlyOwn: !onlyOwn, search: [], orders });
   }
 
   addSearchTerm(value) {
@@ -224,13 +164,13 @@ class IntegrationReactSelect extends React.Component {
     const { tab } = this.state;
     const search = !value ? [] : value.split(',');
     const status = ['all', 'requested', 'accepted', 'completed', 'cancelled'];
-    let filtered = []
+    let filtered = [];
     if (tab !== 0) {
       orders = orders.filter(order => order.status === status[tab]);
     }
     if (search.length !== 0) {
       for (let term of search) {
-        const results = orders.filter(order => order.productId == term);
+        const results = orders.filter(order => order.productId === term * 1);
         filtered = [...filtered, ...results];
       }
     }
@@ -243,14 +183,14 @@ class IntegrationReactSelect extends React.Component {
   changeTab(event, value) {
     let { orders } = this.props;
     const { search } = this.state;
-    let filtered = []
+    let filtered = [];
     const status = ['all', 'requested', 'accepted', 'completed', 'cancelled'];
     if (value !== 0) {
       orders = orders.filter(order => order.status === status[value]);
     }
     if (search.length !== 0) {
       for (let term of search) {
-        const results = orders.filter(order => order.productId == term);
+        const results = orders.filter(order => order.productId === term * 1);
         filtered = [...filtered, ...results];
       }
     }
@@ -271,7 +211,6 @@ class IntegrationReactSelect extends React.Component {
       value: service.id,
       label: service.name
     }));
-
     return (
       <div className={classes.root}>
         <br />
@@ -280,51 +219,59 @@ class IntegrationReactSelect extends React.Component {
         <br />
         <br />
         <br />
-        <br />
-        <TextField
-          style={{ width: '500' }}
-          fullWidth={false}
-          value={this.state.search}
-          onChange={this.addSearchTerm}
-          placeholder='Select Services'
-          name='react-select-chip-label'
-          InputLabelProps={{
-            shrink: true,
-          }}
-          InputProps={{
-            inputComponent: SelectWrapped,
-            inputProps: {
-              classes,
-              multi: true,
-              instanceId: 'react-select-chip-label',
-              id: 'react-select-chip-label',
-              simpleValue: true,
-              options: suggestions
-            },
-          }}
-        />
         <Paper>
-          <Tabs
-            value={this.state.tab}
-            onChange={this.changeTab}
-            fullWidth
-            indicatorColor='secondary'
-            textColor='secondary'
-          >
-            <Tab label='ALL' />
-            <Tab label='REQUESTED' />
-            <Tab label='ACCEPTED' />
-            <Tab label='COMPLETED' />
-            <Tab label='CANCELLED' />
-          </Tabs>
-          <CustomizedTable users={users} orders={orders} services={services} />
+          <FormGroup row>
+            <TextField
+              style={{ width: 500 }}
+              fullWidth={false}
+              value={this.state.search}
+              onChange={this.addSearchTerm}
+              placeholder='Select Services'
+              name='react-select-chip-label'
+              InputLabelProps={{
+                shrink: true,
+              }}
+              InputProps={{
+                inputComponent: Selected,
+                inputProps: {
+                  classes,
+                  multi: true,
+                  instanceId: 'react-select-chip-label',
+                  id: 'react-select-chip-label',
+                  simpleValue: true,
+                  options: suggestions
+                },
+              }}
+            />
+            <FormControlLabel
+              style={{ marginLeft: 50, marginRight: 50 }}
+              control={
+                <Switch
+                  checked={this.state.onlyOwn}
+                  onChange={this.showOnlyOwn}
+                />
+              }
+              label='Own Orders Only'
+            />
+            <Button
+              style={{ flex: 1 }}
+              onClick={this.openForm}
+              color='secondary'
+            >
+              Create Request
+              <LibraryAdd style={{ marginLeft: 10 }} />
+            </Button>
+          </FormGroup>
+          <Request formOpen={this.state.formOpen} closeForm={this.closeForm} />
+          <StatusTabs tab={this.state.tab} changeTab={this.changeTab} />
+          <OrderTable users={users} orders={orders} services={services} />
         </Paper>
       </div>
     );
   }
 }
 
-IntegrationReactSelect.propTypes = {
+Dashboard.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
@@ -332,6 +279,6 @@ const mapStateToProps = ({ orders, user, users, services }) => {
   return { orders, user, users, services };
 };
 
-const styledComponent = withStyles(styles)(IntegrationReactSelect);
+const styledComponent = withStyles(styles)(Dashboard);
 
 export default connect(mapStateToProps)(styledComponent);

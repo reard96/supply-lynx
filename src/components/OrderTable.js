@@ -42,7 +42,7 @@ const styles = theme => ({
     },
   },
 });
-class CustomizedTable extends Component {
+class OrderTable extends Component {
   constructor() {
     super();
     this.state = {
@@ -76,7 +76,7 @@ class CustomizedTable extends Component {
         <Table className={classes.table}>
           <TableHead>
             <TableRow>
-              <Tooltip placement='top' title='Table is sorted by order ID.'>
+              <Tooltip placement='top' title='Orders are sorted by order ID.'>
                 <CustomTableCell numeric>Order ID</CustomTableCell>
               </Tooltip>
               <Tooltip placement='top' title='Orders can be filtered by product name.'>
@@ -95,7 +95,7 @@ class CustomizedTable extends Component {
               <Tooltip placement='top' title='No seller listed indicates an open quote'>
                 <CustomTableCell>Seller</CustomTableCell>
               </Tooltip>
-              <Tooltip placement='top' title='An order can be requested, accepted, completed, or cancelled.'>
+              <Tooltip placement='top' title='Order status can be requested, accepted, completed, or cancelled.'>
                 <CustomTableCell>Status</CustomTableCell>
               </Tooltip>
             </TableRow>
@@ -139,8 +139,8 @@ class CustomizedTable extends Component {
   }
 }
 
-CustomizedTable.propTypes = {
+OrderTable.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(CustomizedTable);
+export default withStyles(styles)(OrderTable);

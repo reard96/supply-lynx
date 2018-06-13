@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -14,10 +12,10 @@ import LibraryAdd from '@material-ui/icons/LibraryAdd';
 import { connect } from 'react-redux';
 import './react-select.css';
 import Request from './Request';
+import Order from './Order';
 import Selected from './Selected';
 import OrderTable from './OrderTable';
 import StatusTabs from './StatusTabs';
-import Order from './Order';
 
 const styles = theme => ({
   root: {

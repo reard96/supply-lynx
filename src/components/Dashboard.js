@@ -127,6 +127,9 @@ class Dashboard extends Component {
     this.state = {
       tab: 0,
       order: {},
+      product: {},
+      buyer: {},
+      seller: {},
       search: [],
       orders: [],
       onlyOwn: false,
@@ -148,8 +151,8 @@ class Dashboard extends Component {
     this.setState({ orders });
   }
 
-  setOrder(order) {
-    this.setState({ order });
+  setOrder(order, product, buyer, seller) {
+    this.setState({ order, product, buyer, seller });
   }
 
   openRequest() {
@@ -222,7 +225,7 @@ class Dashboard extends Component {
 
   render() {
     const { classes, users, services } = this.props;
-    const { orders, order, search, onlyOwn, orderOpen, requestOpen, tab } = this.state;
+    const { orders, order, product, buyer, seller, search, onlyOwn, orderOpen, requestOpen, tab } = this.state;
     const { addSearchTerm, showOnlyOwn, openRequest, closeOrder, closeRequest, changeTab, openOrder, setOrder } = this;
     const suggestions = services.sort((a, b) => {
       if (a.name < b.name) return -1;
@@ -283,7 +286,7 @@ class Dashboard extends Component {
               <LibraryAdd style={{ marginLeft: 10 }} />
             </Button>
           </FormGroup>
-          <Order order={order} orderOpen={orderOpen} closeOrder={closeOrder} />
+          <Order order={order} product={product} buyer={buyer} seller={seller} orderOpen={orderOpen} closeOrder={closeOrder} />
           <Request requestOpen={requestOpen} closeRequest={closeRequest} />
           <StatusTabs tab={tab} changeTab={changeTab} />
           <OrderTable users={users} orders={orders} services={services} openOrder={openOrder} setOrder={setOrder} />

@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchOrders } from '../store';
 import Button from '@material-ui/core/Button';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -56,8 +59,9 @@ class Order extends Component {
   }
 
   render() {
-    const { order, user, orderOpen, closeOrder } = this.props;
-    const { id, productId, quantity, price, unit, status, buyer, seller } = order;
+    const { order, user, orderOpen, closeOrder, product, buyer, seller } = this.props;
+    const { id, quantity, price, unit, status } = order;
+    const total = quantity * price;
     const { acceptBid, acceptQuote, completeOrder, cancelOrder } = this;
     const requested = status === 'requested';
     const accepted = status === 'accepted';
@@ -71,17 +75,42 @@ class Order extends Component {
         onClose={closeOrder}
       >
         <DialogContent>
-          <DialogTitle>Order: {id}</DialogTitle>
-          <DialogContentText>
-            order -
-            productId: {productId}
-            / price: {price}
-            / quantity: {quantity}
-            / unit: {unit}
-            / status: {status}
-            / buyer: {buyer}
-            / seller: {seller}
-          </DialogContentText>
+          <FormControl disabled style={{ marginRight: 15 }} margin='dense'>
+            <InputLabel>Order ID</InputLabel>
+            <Input value={id} />
+          </FormControl>
+          <FormControl disabled style={{ marginRight: 15 }} margin='dense'>
+            <InputLabel>Buyer</InputLabel>
+            <Input value={buyer && buyer.name || '(none)'} />
+          </FormControl>
+          <FormControl disabled style={{ marginRight: 15 }} margin='dense'>
+            <InputLabel>Seller</InputLabel>
+            <Input value={seller && seller.name || '(none)'} />
+          </FormControl>
+          <FormControl disabled style={{ marginRight: 15 }} margin='dense'>
+            <InputLabel>Product</InputLabel>
+            <Input value={product && product.name || '(none)'} />
+          </FormControl>
+          <FormControl disabled style={{ marginRight: 15 }} margin='dense'>
+            <InputLabel>Quantity</InputLabel>
+            <Input value={quantity} />
+          </FormControl>
+          <FormControl disabled style={{ marginRight: 15 }} margin='dense'>
+            <InputLabel>Unit</InputLabel>
+            <Input value={unit} />
+          </FormControl>
+          <FormControl disabled style={{ marginRight: 15 }} margin='dense'>
+            <InputLabel>Unit Price</InputLabel>
+            <Input value={price} />
+          </FormControl>
+          <FormControl disabled style={{ marginRight: 15 }} margin='dense'>
+            <InputLabel>Total Price</InputLabel>
+            <Input value={total} />
+          </FormControl>
+          <FormControl disabled style={{ marginRight: 15 }} margin='dense'>
+            <InputLabel>Status</InputLabel>
+            <Input value={status} />
+          </FormControl>
         </DialogContent>
         <DialogActions>
           {
@@ -110,9 +139,11 @@ class Order extends Component {
   }
 }
 
-const mapStateToProps = ({ web3, contract, user }) => ({
-  web3, contract, user
-});
+const mapStateToProps = ({ web3, contract, user }) => {
+  return {
+    web3, contract, user
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {

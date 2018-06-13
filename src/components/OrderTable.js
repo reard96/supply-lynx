@@ -46,8 +46,8 @@ class CustomizedTable extends Component {
     this.selectRow = this.selectRow.bind(this);
   }
 
-  selectRow(order) {
-    this.props.setOrder(order);
+  selectRow(order, product, buyer, seller) {
+    this.props.setOrder(order, product, buyer, seller);
     this.props.openOrder();
   }
 
@@ -75,20 +75,20 @@ class CustomizedTable extends Component {
             const buyer = users && users.find(user => user.address === order.buyer);
             const seller = users && users.find(user => user.address === order.seller);
             return (
-              <TableRow onClick={() => selectRow(order)} className={classes.row} hover selected={true} key={id}>
+              <TableRow
+                onClick={() => selectRow(order, product, buyer, seller)}
+                className={classes.row}
+                key={id}
+                hover
+              >
                 <CustomTableCell numeric>{id}</CustomTableCell>
-                <CustomTableCell>
-                  {product.name}
-                </CustomTableCell>
+                <CustomTableCell>{product && product.name || '(none)'}</CustomTableCell>
                 <CustomTableCell numeric>{quantity}</CustomTableCell>
                 <CustomTableCell>{unit}</CustomTableCell>
                 <CustomTableCell numeric>{price}</CustomTableCell>
                 <CustomTableCell>{buyer && buyer.name || '(none)'}</CustomTableCell>
                 <CustomTableCell>{seller && seller.name || '(none)'}</CustomTableCell>
-                <CustomTableCell>
-                  {/* <CircularProgress value={Math.floor(Math.random() * 100)} /> */}
-                  {status}
-                </CustomTableCell>
+                <CustomTableCell>{status}</CustomTableCell>
               </TableRow>
             );
           })}

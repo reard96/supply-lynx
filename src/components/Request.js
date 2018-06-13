@@ -17,7 +17,6 @@ class Request extends Component {
       price: '',
       unit: ''
     };
-    this.changeForm = this.changeForm.bind(this);
     this.createBid = this.createBid.bind(this);
     this.createQuote = this.createQuote.bind(this);
   }

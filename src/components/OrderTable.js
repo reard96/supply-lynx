@@ -6,6 +6,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import TablePagination from '@material-ui/core/TablePagination';
 
 const CustomTableCell = withStyles(theme => ({
   head: {
@@ -43,7 +44,13 @@ const styles = theme => ({
 class CustomizedTable extends Component {
   constructor() {
     super();
+    this.state = {
+      page: 0,
+      rowsPerPage: 5
+    };
     this.selectRow = this.selectRow.bind(this);
+    this.changePage = this.changePage.bind(this);
+    this.changeRowsPerPage = this.changeRowsPerPage.bind(this);
   }
 
   selectRow(order, product, buyer, seller) {
@@ -51,49 +58,68 @@ class CustomizedTable extends Component {
     this.props.openOrder();
   }
 
+  changePage(event, page) {
+    this.setState({ page });
+  };
+
+  changeRowsPerPage(event) {
+    this.setState({ rowsPerPage: event.target.value });
+  };
+
   render() {
+    const { rowsPerPage, page } = this.state;
     const { classes, users, orders, services } = this.props;
-    const { selectRow } = this;
+    const { selectRow, changePage, changeRowsPerPage } = this;
     return (
-      <Table className={classes.table}>
-        <TableHead>
-          <TableRow>
-            <CustomTableCell numeric>Order ID</CustomTableCell>
-            <CustomTableCell>Product</CustomTableCell>
-            <CustomTableCell numeric>Quantity</CustomTableCell>
-            <CustomTableCell>Unit</CustomTableCell>
-            <CustomTableCell numeric>Unit Price in Wei</CustomTableCell>
-            <CustomTableCell>Buyer</CustomTableCell>
-            <CustomTableCell>Seller</CustomTableCell>
-            <CustomTableCell>Status</CustomTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {orders.map(order => {
-            const { id, productId, quantity, price, unit, status } = order;
-            const product = services && services.find(service => service.id === productId);
-            const buyer = users && users.find(user => user.address === order.buyer);
-            const seller = users && users.find(user => user.address === order.seller);
-            return (
-              <TableRow
-                onClick={() => selectRow(order, product, buyer, seller)}
-                className={classes.row}
-                key={id}
-                hover
-              >
-                <CustomTableCell numeric>{id}</CustomTableCell>
-                <CustomTableCell>{product && product.name || '(none)'}</CustomTableCell>
-                <CustomTableCell numeric>{quantity}</CustomTableCell>
-                <CustomTableCell>{unit}</CustomTableCell>
-                <CustomTableCell numeric>{price}</CustomTableCell>
-                <CustomTableCell>{buyer && buyer.name || '(none)'}</CustomTableCell>
-                <CustomTableCell>{seller && seller.name || '(none)'}</CustomTableCell>
-                <CustomTableCell>{status}</CustomTableCell>
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
+      <div>
+        <Table className={classes.table}>
+          <TableHead>
+            <TableRow>
+              <CustomTableCell numeric>Order ID</CustomTableCell>
+              <CustomTableCell>Product</CustomTableCell>
+              <CustomTableCell numeric>Quantity</CustomTableCell>
+              <CustomTableCell>Unit</CustomTableCell>
+              <CustomTableCell numeric>Unit Price in Wei</CustomTableCell>
+              <CustomTableCell>Buyer</CustomTableCell>
+              <CustomTableCell>Seller</CustomTableCell>
+              <CustomTableCell>Status</CustomTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {orders.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(order => {
+              const { id, productId, quantity, price, unit, status } = order;
+              const product = services && services.find(service => service.id === productId);
+              const buyer = users && users.find(user => user.address === order.buyer);
+              const seller = users && users.find(user => user.address === order.seller);
+              return (
+                <TableRow
+                  onClick={() => selectRow(order, product, buyer, seller)}
+                  className={classes.row}
+                  key={id}
+                  hover
+                >
+                  <CustomTableCell numeric>{id}</CustomTableCell>
+                  <CustomTableCell>{product && product.name || '(none)'}</CustomTableCell>
+                  <CustomTableCell numeric>{quantity}</CustomTableCell>
+                  <CustomTableCell>{unit}</CustomTableCell>
+                  <CustomTableCell numeric>{price}</CustomTableCell>
+                  <CustomTableCell>{buyer && buyer.name || '(none)'}</CustomTableCell>
+                  <CustomTableCell>{seller && seller.name || '(none)'}</CustomTableCell>
+                  <CustomTableCell>{status}</CustomTableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+        <TablePagination
+          component='div'
+          count={orders.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onChangePage={changePage}
+          onChangeRowsPerPage={changeRowsPerPage}
+        />
+      </div>
     );
   }
 }

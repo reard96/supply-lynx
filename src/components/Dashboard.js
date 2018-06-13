@@ -16,6 +16,7 @@ import Request from './Request';
 import Selected from './Selected';
 import OrderTable from './OrderTable';
 import StatusTabs from './StatusTabs';
+import Order from './Order';
 
 const styles = theme => ({
   root: {
@@ -128,13 +129,16 @@ class Dashboard extends Component {
       search: [],
       orders: [],
       onlyOwn: false,
-      formOpen: false
+      requestOpen: false,
+      orderOpen: false
     };
     this.addSearchTerm = this.addSearchTerm.bind(this);
     this.changeTab = this.changeTab.bind(this);
     this.showOnlyOwn = this.showOnlyOwn.bind(this);
-    this.openForm = this.openForm.bind(this);
-    this.closeForm = this.closeForm.bind(this);
+    this.openRequest = this.openRequest.bind(this);
+    this.closeRequest = this.closeRequest.bind(this);
+    this.openOrder = this.openOrder.bind(this);
+    this.closeOrder = this.closeOrder.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -142,12 +146,20 @@ class Dashboard extends Component {
     this.setState({ orders });
   }
 
-  openForm() {
-    this.setState({ formOpen: true });
+  openRequest() {
+    this.setState({ requestOpen: true });
   }
 
-  closeForm() {
-    this.setState({ formOpen: false });
+  closeRequest() {
+    this.setState({ requestOpen: false });
+  }
+
+  openOrder() {
+    this.setState({ orderOpen: true });
+  }
+
+  closeOrder() {
+    this.setState({ orderOpen: false });
   }
 
   showOnlyOwn() {
@@ -202,7 +214,7 @@ class Dashboard extends Component {
 
   render() {
     const { classes, users, services } = this.props;
-    const { orders } = this.state;
+    const { orders, search, onlyOwn, orderOpen, requestOpen, tab } = this.state;
     const suggestions = services.sort((a, b) => {
       if (a.name < b.name) return -1;
       if (a.name > b.name) return 1;
@@ -222,9 +234,9 @@ class Dashboard extends Component {
         <Paper>
           <FormGroup row>
             <TextField
-              style={{ width: 500 }}
+              style={{ flex: 1 }}
               fullWidth={false}
-              value={this.state.search}
+              value={search}
               onChange={this.addSearchTerm}
               placeholder='Select Services'
               name='react-select-chip-label'
@@ -244,10 +256,10 @@ class Dashboard extends Component {
               }}
             />
             <FormControlLabel
-              style={{ marginLeft: 50, marginRight: 50 }}
+              style={{ marginLeft: 100, marginRight: 100 }}
               control={
                 <Switch
-                  checked={this.state.onlyOwn}
+                  checked={onlyOwn}
                   onChange={this.showOnlyOwn}
                 />
               }
@@ -255,16 +267,17 @@ class Dashboard extends Component {
             />
             <Button
               style={{ flex: 1 }}
-              onClick={this.openForm}
+              onClick={this.openRequest}
               color='secondary'
             >
               Create Request
               <LibraryAdd style={{ marginLeft: 10 }} />
             </Button>
           </FormGroup>
-          <Request formOpen={this.state.formOpen} closeForm={this.closeForm} />
-          <StatusTabs tab={this.state.tab} changeTab={this.changeTab} />
-          <OrderTable users={users} orders={orders} services={services} />
+          <Order orderOpen={orderOpen} closeOrder={this.closeOrder} />
+          <Request requestOpen={requestOpen} closeRequest={this.closeRequest} />
+          <StatusTabs tab={tab} changeTab={this.changeTab} />
+          <OrderTable users={users} orders={orders} services={services} openOrder={this.openOrder} />
         </Paper>
       </div>
     );

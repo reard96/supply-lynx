@@ -46,7 +46,8 @@ class CustomizedTable extends Component {
     this.selectRow = this.selectRow.bind(this);
   }
 
-  selectRow() {
+  selectRow(order) {
+    this.props.setOrder(order);
     this.props.openOrder();
   }
 
@@ -61,15 +62,16 @@ class CustomizedTable extends Component {
             <CustomTableCell>Product</CustomTableCell>
             <CustomTableCell numeric>Quantity</CustomTableCell>
             <CustomTableCell>Unit</CustomTableCell>
-            <CustomTableCell numeric>Unit Price</CustomTableCell>
+            <CustomTableCell numeric>Unit Price in Wei</CustomTableCell>
             <CustomTableCell>Buyer</CustomTableCell>
             <CustomTableCell>Seller</CustomTableCell>
             <CustomTableCell>Status</CustomTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {orders.map((order, id) => {
-            const product = services && services.find(service => service.id === order.productId);
+          {orders.map(order => {
+            const { id, productId, quantity, price, unit, status } = order;
+            const product = services && services.find(service => service.id === productId);
             const buyer = users && users.find(user => user.address === order.buyer);
             const seller = users && users.find(user => user.address === order.seller);
             return (
@@ -78,14 +80,14 @@ class CustomizedTable extends Component {
                 <CustomTableCell>
                   {product.name}
                 </CustomTableCell>
-                <CustomTableCell numeric>{order.quantity}</CustomTableCell>
-                <CustomTableCell>{order.unit}</CustomTableCell>
-                <CustomTableCell numeric>{order.price}</CustomTableCell>
+                <CustomTableCell numeric>{quantity}</CustomTableCell>
+                <CustomTableCell>{unit}</CustomTableCell>
+                <CustomTableCell numeric>{price}</CustomTableCell>
                 <CustomTableCell>{buyer && buyer.name || '(none)'}</CustomTableCell>
                 <CustomTableCell>{seller && seller.name || '(none)'}</CustomTableCell>
                 <CustomTableCell>
                   {/* <CircularProgress value={Math.floor(Math.random() * 100)} /> */}
-                  {order.status}
+                  {status}
                 </CustomTableCell>
               </TableRow>
             );

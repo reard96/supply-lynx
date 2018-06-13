@@ -16,8 +16,8 @@ class Order extends Component {
   }
 
   acceptBid() {
-    const { order, id } = this.props;
-    const { productId, quantity, price, unit } = order;
+    const { order } = this.props;
+    const { id } = order;
     this.props.contract.acceptBid(id, {
       from: web3.eth.accounts[0]
     });
@@ -25,8 +25,8 @@ class Order extends Component {
   }
 
   acceptQuote() {
-    const { order, id } = this.props;
-    const { productId, quantity, price, unit } = order;
+    const { order } = this.props;
+    const { id, quantity, price } = order;
     const total = quantity * price;
     this.props.contract.acceptQuote(id, {
       from: web3.eth.accounts[0],
@@ -36,7 +36,9 @@ class Order extends Component {
   }
 
   render() {
-    const { orderOpen, closeOrder } = this.props;
+    const { order } = this.props;
+    const { id, productId, quantity, price, unit, status } = order;
+    const { user, orderOpen, closeOrder } = this.props;
     const { acceptBid, acceptQuote } = this;
     return (
       <Dialog
@@ -44,23 +46,33 @@ class Order extends Component {
         onClose={closeOrder}
       >
         <DialogContent>
-          <DialogTitle>Order</DialogTitle>
+          <DialogTitle>Order: {id}</DialogTitle>
           <DialogContentText>
             Please review the details.
+            {order.class}
+            {status}
+            {productId}
+            {quantity}
+            {price}
+            {unit}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={closeOrder} color='secondary'>Cancel</Button>
-          <Button onClick={acceptBid} color='primary'>Accept Bid</Button>
-          <Button onClick={acceptQuote} color='primary'>Accept Quote</Button>
+          {!!user.id && status === 'requested' && order.class === 'bid' &&
+            <Button onClick={acceptBid} color='primary'>Accept Bid</Button>
+          }
+          {!!user.id && status === 'requested' && order.class === 'quote' &&
+            <Button onClick={acceptQuote} color='primary'>Accept Quote</Button>
+          }
         </DialogActions>
       </Dialog>
     );
   }
 }
 
-const mapStateToProps = ({ web3, contract }) => ({
-  web3, contract
+const mapStateToProps = ({ web3, contract, user }) => ({
+  web3, contract, user
 });
 
 const mapDispatchToProps = (dispatch) => {

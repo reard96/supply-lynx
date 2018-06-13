@@ -126,6 +126,7 @@ class Dashboard extends Component {
     super(props);
     this.state = {
       tab: 0,
+      order: {},
       search: [],
       orders: [],
       onlyOwn: false,
@@ -139,11 +140,16 @@ class Dashboard extends Component {
     this.closeRequest = this.closeRequest.bind(this);
     this.openOrder = this.openOrder.bind(this);
     this.closeOrder = this.closeOrder.bind(this);
+    this.setOrder = this.setOrder.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
     const { orders } = nextProps;
     this.setState({ orders });
+  }
+
+  setOrder(order) {
+    this.setState({ order });
   }
 
   openRequest() {
@@ -214,7 +220,8 @@ class Dashboard extends Component {
 
   render() {
     const { classes, users, services } = this.props;
-    const { orders, search, onlyOwn, orderOpen, requestOpen, tab } = this.state;
+    const { orders, order, search, onlyOwn, orderOpen, requestOpen, tab } = this.state;
+    const { addSearchTerm, showOnlyOwn, openRequest, closeOrder, closeRequest, changeTab, openOrder, setOrder } = this;
     const suggestions = services.sort((a, b) => {
       if (a.name < b.name) return -1;
       if (a.name > b.name) return 1;
@@ -237,7 +244,7 @@ class Dashboard extends Component {
               style={{ flex: 1 }}
               fullWidth={false}
               value={search}
-              onChange={this.addSearchTerm}
+              onChange={addSearchTerm}
               placeholder='Select Services'
               name='react-select-chip-label'
               InputLabelProps={{
@@ -260,24 +267,24 @@ class Dashboard extends Component {
               control={
                 <Switch
                   checked={onlyOwn}
-                  onChange={this.showOnlyOwn}
+                  onChange={showOnlyOwn}
                 />
               }
-              label='Own Orders Only'
+              label='MY ORDERS'
             />
             <Button
               style={{ flex: 1 }}
-              onClick={this.openRequest}
+              onClick={openRequest}
               color='secondary'
             >
               Create Request
               <LibraryAdd style={{ marginLeft: 10 }} />
             </Button>
           </FormGroup>
-          <Order orderOpen={orderOpen} closeOrder={this.closeOrder} />
-          <Request requestOpen={requestOpen} closeRequest={this.closeRequest} />
-          <StatusTabs tab={tab} changeTab={this.changeTab} />
-          <OrderTable users={users} orders={orders} services={services} openOrder={this.openOrder} />
+          <Order order={order} orderOpen={orderOpen} closeOrder={closeOrder} />
+          <Request requestOpen={requestOpen} closeRequest={closeRequest} />
+          <StatusTabs tab={tab} changeTab={changeTab} />
+          <OrderTable users={users} orders={orders} services={services} openOrder={openOrder} setOrder={setOrder} />
         </Paper>
       </div>
     );

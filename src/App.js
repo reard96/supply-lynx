@@ -36,6 +36,7 @@ class App extends Component {
           .map(async (element, index) => {
             const order = await this.props.contract.orders(index);
             return {
+              id: index,
               productId: order[1].toNumber(),
               quantity: order[2].toNumber(),
               price: order[3].toNumber(),

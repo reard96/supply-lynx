@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
+import Tooltip from '@material-ui/core/Tooltip';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
@@ -60,11 +61,11 @@ class CustomizedTable extends Component {
 
   changePage(event, page) {
     this.setState({ page });
-  };
+  }
 
   changeRowsPerPage(event) {
     this.setState({ rowsPerPage: event.target.value });
-  };
+  }
 
   render() {
     const { rowsPerPage, page } = this.state;
@@ -75,14 +76,28 @@ class CustomizedTable extends Component {
         <Table className={classes.table}>
           <TableHead>
             <TableRow>
-              <CustomTableCell numeric>Order ID</CustomTableCell>
-              <CustomTableCell>Product</CustomTableCell>
+              <Tooltip placement='top' title='Table is sorted by order ID.'>
+                <CustomTableCell numeric>Order ID</CustomTableCell>
+              </Tooltip>
+              <Tooltip placement='top' title='Orders can be filtered by product name.'>
+                <CustomTableCell>Product</CustomTableCell>
+              </Tooltip>
               <CustomTableCell numeric>Quantity</CustomTableCell>
-              <CustomTableCell>Unit</CustomTableCell>
-              <CustomTableCell numeric>Unit Price in Wei</CustomTableCell>
-              <CustomTableCell>Buyer</CustomTableCell>
-              <CustomTableCell>Seller</CustomTableCell>
-              <CustomTableCell>Status</CustomTableCell>
+              <Tooltip placement='top' title='Products are measured by kilogram (kg) or pound (lb).'>
+                <CustomTableCell>Unit</CustomTableCell>
+              </Tooltip>
+              <Tooltip placement='top' title='Price is in Ether measured by Wei.'>
+                <CustomTableCell numeric>Unit Price</CustomTableCell>
+              </Tooltip>
+              <Tooltip placement='top' title='No buyer listed indicates an open bid'>
+                <CustomTableCell>Buyer</CustomTableCell>
+              </Tooltip>
+              <Tooltip placement='top' title='No seller listed indicates an open quote'>
+                <CustomTableCell>Seller</CustomTableCell>
+              </Tooltip>
+              <Tooltip placement='top' title='An order can be requested, accepted, completed, or cancelled.'>
+                <CustomTableCell>Status</CustomTableCell>
+              </Tooltip>
             </TableRow>
           </TableHead>
           <TableBody>

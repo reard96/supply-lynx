@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
+import Tooltip from '@material-ui/core/Tooltip';
 import TextField from '@material-ui/core/TextField';
 import LibraryAdd from '@material-ui/icons/LibraryAdd';
 import { connect } from 'react-redux';
@@ -179,7 +180,7 @@ class Dashboard extends Component {
         return order.buyer === web3.eth.accounts[0] || order.seller === web3.eth.accounts[0];
       });
     }
-    this.setState({ onlyOwn: !onlyOwn, search: [], orders });
+    this.setState({ onlyOwn: !onlyOwn, search: [], tab: 0, orders });
   }
 
   addSearchTerm(value) {
@@ -188,6 +189,12 @@ class Dashboard extends Component {
     const search = !value ? [] : value.split(',');
     const status = ['all', 'requested', 'accepted', 'completed', 'cancelled'];
     let filtered = [];
+    const { onlyOwn } = this.state;
+    if (onlyOwn) {
+      orders = orders.filter(order => {
+        return order.buyer === web3.eth.accounts[0] || order.seller === web3.eth.accounts[0];
+      });
+    }
     if (tab !== 0) {
       orders = orders.filter(order => order.status === status[tab]);
     }
@@ -208,6 +215,12 @@ class Dashboard extends Component {
     const { search } = this.state;
     let filtered = [];
     const status = ['all', 'requested', 'accepted', 'completed', 'cancelled'];
+    const { onlyOwn } = this.state;
+    if (onlyOwn) {
+      orders = orders.filter(order => {
+        return order.buyer === web3.eth.accounts[0] || order.seller === web3.eth.accounts[0];
+      });
+    }
     if (value !== 0) {
       orders = orders.filter(order => order.status === status[value]);
     }
@@ -267,16 +280,18 @@ class Dashboard extends Component {
                 },
               }}
             />
-            <FormControlLabel
-              style={{ marginLeft: 100, marginRight: 100 }}
-              control={
-                <Switch
-                  checked={onlyOwn}
-                  onChange={showOnlyOwn}
-                />
-              }
-              label='MY ORDERS'
-            />
+            <Tooltip placement='top' title='Toggle between own orders and all orders.'>
+              <FormControlLabel
+                style={{ marginLeft: 100, marginRight: 100 }}
+                control={
+                  <Switch
+                    checked={onlyOwn}
+                    onChange={showOnlyOwn}
+                  />
+                }
+                label='MY ORDERS'
+              />
+            </Tooltip>
             <Button
               style={{ flex: 1 }}
               onClick={openRequest}

@@ -13,6 +13,8 @@ class Order extends Component {
     super();
     this.acceptBid = this.acceptBid.bind(this);
     this.acceptQuote = this.acceptQuote.bind(this);
+    this.completeOrder = this.completeOrder.bind(this);
+    this.cancelOrder = this.cancelOrder.bind(this);
   }
 
   acceptBid() {
@@ -30,16 +32,39 @@ class Order extends Component {
     const total = quantity * price;
     this.props.contract.acceptQuote(id, {
       from: web3.eth.accounts[0],
-      value: total
+      value: total + ''
+    });
+    this.props.closeOrder();
+  }
+
+  completeOrder() {
+    const { order } = this.props;
+    const { id } = order;
+    this.props.contract.completeOrder(id, {
+      from: web3.eth.accounts[0]
+    });
+    this.props.closeOrder();
+  }
+
+  cancelOrder() {
+    const { order } = this.props;
+    const { id } = order;
+    this.props.contract.cancelOrder(id, {
+      from: web3.eth.accounts[0]
     });
     this.props.closeOrder();
   }
 
   render() {
-    const { order } = this.props;
-    const { id, productId, quantity, price, unit, status } = order;
-    const { user, orderOpen, closeOrder } = this.props;
-    const { acceptBid, acceptQuote } = this;
+    const { order, user, orderOpen, closeOrder } = this.props;
+    const { id, productId, quantity, price, unit, status, buyer, seller } = order;
+    const { acceptBid, acceptQuote, completeOrder, cancelOrder } = this;
+    const requested = status === 'requested';
+    const accepted = status === 'accepted';
+    const bid = order.class === 'bid';
+    const quote = order.class === 'quote';
+    const admin = user.category === 'admin';
+    const involved = order.buyer === web3.eth.accounts[0] || order.seller === web3.eth.accounts[0];
     return (
       <Dialog
         open={orderOpen}
@@ -48,21 +73,35 @@ class Order extends Component {
         <DialogContent>
           <DialogTitle>Order: {id}</DialogTitle>
           <DialogContentText>
-            Please review the details.
-            {order.class}
-            {status}
-            {productId}
-            {quantity}
-            {price}
-            {unit}
+            order -
+            productId: {productId}
+            / price: {price}
+            / quantity: {quantity}
+            / unit: {unit}
+            / status: {status}
+            / buyer: {buyer}
+            / seller: {seller}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={closeOrder} color='secondary'>Cancel</Button>
-          {!!user.id && status === 'requested' && order.class === 'bid' &&
+          {
+            !!user.id && requested && involved &&
+            <Button onClick={cancelOrder} color='secondary'>Cancel Request</Button>
+          }
+          {
+            !!user.id && accepted && involved &&
+            <Button onClick={cancelOrder} color='secondary'>Cancel Order</Button>
+          }
+          {
+            !!user.id && accepted && (involved || admin) &&
+            <Button onClick={completeOrder} color='primary'>Complete Order</Button>
+          }
+          {
+            !!user.id && requested && bid &&
             <Button onClick={acceptBid} color='primary'>Accept Bid</Button>
           }
-          {!!user.id && status === 'requested' && order.class === 'quote' &&
+          {
+            !!user.id && requested && quote &&
             <Button onClick={acceptQuote} color='primary'>Accept Quote</Button>
           }
         </DialogActions>

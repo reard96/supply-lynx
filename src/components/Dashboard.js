@@ -172,7 +172,9 @@ class Dashboard extends Component {
     const { onlyOwn } = this.state;
     let { orders } = this.props;
     if (!onlyOwn) {
-      orders = orders.filter(order => order.buyer === web3.eth.accounts[0] || order.seller === web3.eth.accounts[0]);
+      orders = orders.filter(order => {
+        return order.buyer === web3.eth.accounts[0] || order.seller === web3.eth.accounts[0];
+      });
     }
     this.setState({ onlyOwn: !onlyOwn, search: [], orders });
   }

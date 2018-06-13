@@ -98,7 +98,6 @@ class Request extends Component {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={closeRequest} color='secondary'>Cancel</Button>
           <Button disabled={inputEmpty} onClick={createBid} color='primary'>Submit Bid</Button>
           <Button disabled={inputEmpty} onClick={createQuote} color='primary'>Submit Quote</Button>
         </DialogActions>

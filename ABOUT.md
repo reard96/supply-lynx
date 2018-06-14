@@ -58,6 +58,10 @@ Ethereum is a cryptocurrency that easily allows smart contracts to be coded into
 ## Advantages of blockchain in the supply chain
 Because a blockchain is immutable, it increases the transparency of the supply chain. Blockchain technology also has a built-in ownership record, making it easy to see the chain of command of any particular asset.
 
+For example, a diamond company could use blockchain to track diamonds from the ground to the end consumer, ensuring the stones are genuine and that any conflict/blood diamonds are avoided.[[1]](https://www.forbes.com/sites/bernardmarr/2018/03/14/how-blockchain-could-end-the-trade-in-blood-diamonds-an-incredible-use-case-everyone-should-read/#599ccb1f387d)
+
+Blockchain technology is also being used to track tuna in order to try to combat illegal fishing practices.[[2]](http://theconversation.com/how-blockchain-is-strengthening-tuna-traceability-to-combat-illegal-fishing-89965)
+
 While blockchain works great in the digital world, crossing the chasm from the world of bits to the world of atoms sheds light on some outstanding issues. For goods to be tracked through the supply chain on the blockchain, it is important that the information actually _reaches_ the blockchain. The goods need to be scanned or the information needs to be otherwise uploaded by humans - this is still a weak point in the system.
 
 ## Lynx's implementation

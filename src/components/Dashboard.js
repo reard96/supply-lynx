@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import './react-select.css';
 import { withStyles } from '@material-ui/core/styles';
+import Divider from '@material-ui/core/Divider';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import Tooltip from '@material-ui/core/Tooltip';
 import TextField from '@material-ui/core/TextField';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import LibraryAdd from '@material-ui/icons/LibraryAdd';
-import { connect } from 'react-redux';
-import './react-select.css';
 import Request from './Request';
 import Order from './Order';
 import Selected from './Selected';
@@ -295,14 +296,16 @@ class Dashboard extends Component {
               onClick={openRequest}
               color='secondary'
             >
+              <LibraryAdd style={{ marginRight: 10 }} />
               Create Request
-              <LibraryAdd style={{ marginLeft: 10 }} />
             </Button>
           </FormGroup>
           <Order order={order} product={product} buyer={buyer} seller={seller} orderOpen={orderOpen} closeOrder={closeOrder} />
           <Request requestOpen={requestOpen} closeRequest={closeRequest} />
+          <br />
           <StatusTabs tab={tab} changeTab={changeTab} />
-          <OrderTable users={users} orders={orders} services={services} openOrder={openOrder} setOrder={setOrder} />
+          <Divider />
+          <OrderTable users={users} orders={orders} search={search} services={services} openOrder={openOrder} setOrder={setOrder} />
         </Paper>
       </div>
     );

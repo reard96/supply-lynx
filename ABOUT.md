@@ -29,7 +29,8 @@ The key innovations of a blockchain are:
 - Transparency - everyone can see the transactions
 - Disintermediation - no need for a trusted third party
 
-
+Further reading:
+- https://www.youtube.com/watch?v=bBC-nXj3Ng4&vl=en
 - Link to 3b1b video
 - Links to Satoshi's white paper
 - Link to Ethereum white paper
@@ -37,7 +38,16 @@ The key innovations of a blockchain are:
 ### The difference between blockchain and cryptocurrency
 
 But isn't all of this just contrived? Does it actually have any value?
-#### A history of money
+### Sidenote regarding money
+Since we normally transact in currencies issued by governments, it is a common misconception that those [fiat currencies](https://en.wikipedia.org/wiki/Fiat_money) are the only form of money. However, these are a relatively recent technology and are not synonomous with the concept of money.
+
+Money has three neccesisary components. It is:
+1. A [medium of exchange](https://en.wikipedia.org/wiki/Medium_of_exchange)
+2. A [unit of account](https://en.wikipedia.org/wiki/Unit_of_account)
+3. A [store of value](https://en.wikipedia.org/wiki/Store_of_value)
+
+If something fulfills these three criteria, it is money. In short, _if a sufficient number of people believe something to be money - and use it as a medium of exchange, a unit of account, and a store of value - it **is** money._
+
 
 ## Intro to smart contracts
 

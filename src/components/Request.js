@@ -31,7 +31,7 @@ class Request extends Component {
     const total = quantity * price;
     this.props.contract.createBid(productId, quantity, price, unit, {
       from: web3.eth.accounts[0],
-      value: total
+      value: web3.toWei(total, 'ether')
     });
     this.props.closeRequest();
   }

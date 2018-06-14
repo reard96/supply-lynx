@@ -16,7 +16,7 @@ import './index.css';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.collectBlockchainInfo = this.collectBlockchainInfo.bind(this);
+    this.fetchBlockchainInfo = this.fetchBlockchainInfo.bind(this);
   }
 
   componentDidMount() {
@@ -24,7 +24,7 @@ class App extends Component {
   }
 
   componentWillMount() {
-    this.collectBlockchainInfo();
+    this.fetchBlockchainInfo();
     this.props.fetchServices();
   }
 
@@ -52,11 +52,10 @@ class App extends Component {
     }
   }
 
-  async collectBlockchainInfo() {
+  async fetchBlockchainInfo() {
     try {
       await this.props.fetchWeb3();
       await this.props.fetchUsers();
-      const web3 = this.props.web3;
       this.props.fetchContract(web3);
       this.props.fetchUser(web3.eth.accounts[0]);
     } catch (err) {

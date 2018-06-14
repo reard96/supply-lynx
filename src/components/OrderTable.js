@@ -8,7 +8,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TablePagination from '@material-ui/core/TablePagination';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 const CustomTableCell = withStyles(theme => ({
   head: {
@@ -48,7 +48,7 @@ class OrderTable extends Component {
     super();
     this.state = {
       page: 0,
-      rowsPerPage: 5
+      rowsPerPage: 10
     };
     this.selectRow = this.selectRow.bind(this);
     this.changePage = this.changePage.bind(this);
@@ -75,21 +75,21 @@ class OrderTable extends Component {
     return (
       <div>
         {!orders.length ?
-          <CircularProgress size={150} /> :
+          <LinearProgress /> :
           <Table className={classes.table}>
             <TableHead>
               <TableRow>
-                <Tooltip placement='top' title='Orders are sorted by order ID.'>
+                <Tooltip placement='top' title='Orders are sorted by ID.'>
                   <CustomTableCell numeric>Order ID</CustomTableCell>
                 </Tooltip>
                 <Tooltip placement='top' title='Orders can be filtered by product name.'>
                   <CustomTableCell>Product</CustomTableCell>
                 </Tooltip>
                 <CustomTableCell numeric>Quantity</CustomTableCell>
-                <Tooltip placement='top' title='Products are measured by kilogram (kg) or pound (lb).'>
+                <Tooltip placement='top' title='Orders are in kilograms (kg) or pounds (lb).'>
                   <CustomTableCell>Unit</CustomTableCell>
                 </Tooltip>
-                <Tooltip placement='top' title='Price is in Ether measured by Wei.'>
+                <Tooltip placement='top' title='Order price is shown as Ether.'>
                   <CustomTableCell numeric>Unit Price</CustomTableCell>
                 </Tooltip>
                 <Tooltip placement='top' title='No buyer listed indicates an open quote.'>

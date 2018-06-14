@@ -33,7 +33,7 @@ class Order extends Component {
     const total = quantity * price;
     this.props.contract.acceptQuote(id, {
       from: web3.eth.accounts[0],
-      value: total + ''
+      value: web3.toWei(total, 'ether')
     });
     this.props.closeOrder();
   }

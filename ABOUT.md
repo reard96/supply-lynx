@@ -22,11 +22,15 @@ The key innovations of a blockchain are:
 
 ### The difference between blockchain and cryptocurrency
 
-REWORD THIS: A blockchain is a distributed ledger technology that forms a “chain of blocks.” Each block includes information and data that are bundled together and verified. These blocks are then validated and strung onto the chain of transactions and information in previous blocks. These blocks of transactions are permanently recorded in the distributed ledger that is the blockchain.
+**_THIS SECTION NEEDS TO BE REWORDED...I NEED TO TALK TO SOME PEOPLE AND THINK ABOUT THIS A LITTLE BIT_**
 
-REWORD THIS: Contrasted with blockchain, cryptocurrency has to do with the use of tokens based on the distributed ledger technology. Cryptocurrency can be seen as a tool or resource on a blockchain network. Anything dealing with buying, selling, investing, trading, microtipping, or other monetary aspects deals with a blockchain native token or subtoken.
+A blockchain is a copy of all of the transactions made in a network, which all network participants (can) have a copy of. Each block contains a record of transactions, which are then cryptographically verified as a "bundle". Once a given number of network participants agree on this "block of transactions", the block is added to the ledger, or chain.
 
-It is a token based on the distributed ledger that is a blockchain. Cryptocurrency is a digital currency formed on the basis of cryptography, or by definition, “the art of solving or writing codes.” Although all are considered cryptocurrencies, these tokens can serve different purposes on these networks.
+A cryptocurrency is a form of digital currency built using blockchain technology. In the physical realm, it is easy to ensure that one person paying another actually has the money necessary to facilitate the transaction. If you hand me $10 in cash, I now possess one more $10 bill, and you possess one fewer.
+
+However, this becomes more difficult in the digital realm. With a digital currency, I could conceivably copy my "digital $10" an infinite number of times and use it for many transactions. A "trusted third party" (generally a bank) is needed to ensure that I do not do this. When I use my debit card on Amazon, my bank deducts the balance from my account. Both Amazon and I trust the bank to ensure that the $10 is credited and debited correctly.
+
+Cryptocurrencies eliminate the need for a trusted third party. Because everyone has a copy of the ledger, we all know exactly how much "digital money" is in each account. Through a cryptographic protocol, all of the transactions are verified and the correct accounts are debited and credited.
 
 But aren't cryptocurrencies just contrived? Do they actually have any value?
 

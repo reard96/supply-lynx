@@ -15,10 +15,23 @@ Because Lynx is not intended for commercial use (yet!), the Ganache test blockch
 - [JC Mauras](https://github.com/jmauras24)
 - [Dan Reardon](https://github.com/reard96)
 
-
 ## App Functionality
 
-Lynx allows users to blah blah
+Lynx allows users to post goods for sale and purchase the goods that other users are selling.
+
+When a user posts goods for sale, they create a smart contract that is deployed to the Ethereum network. Once this contract is accepted by another user, the smart contract executes. 
+
+All transactions can be viewed using our intuitive dashboard. Users can check the status of their existing orders, as well as see all of the orders that have taken place on the platform.
+
+_INSERT A SCREENSHOT OR TWO HERE_
+
+Interested buyers can browse goods or services for sale, view specific item details, view the seller's public profile (which includes a transaction history), as well as message a seller regarding an item. Once a buyer places an order, the existing transaction on the blockchain is updated to include the buyer's information, along with the status of the order.
+
+When an order is fulfilled, the buyer can complete the order, which will update the status on the blockchain one final time and trigger the transfer of funds. Both the buyer and seller will then be able to view their transaction ID on the blockchain.
+
+Users can also access all of their pending orders and completed transactions easily from their user dashboard.
+
+_INSERT SENTENCE ABOUT ANALYTIC DASHBOARD ONCE THAT IS ADDED_
 
 ## Tech Stack
 
@@ -31,14 +44,29 @@ Lynx allows users to blah blah
 * [Express](https://expressjs.com/)
 * [React](https://reactjs.org/) and [Redux](https://redux.js.org/)
 
+_INSERT d3 if we're using this for dashboards..._
+
 ## Implementation
 
-INPUT RUN INSTRUCTIONS HERE
+The core logic of our application is in the smart contract, which was written in Solidity. Our contract included
+
+This app is deployed live at _LINK_. However, since 
+
+INPUT RUN INSTRUCTIONS HERE <br />
 INPUT STACK AND TESTING INFO HERE
 
 ## Further Development
 
-INPUT WHAT WE'D LIKE TO BUILD OUT HERE
+
+## Implementation
+
+All of our user transactions were facilitated by a smart contract written in a language called Solidity. Our contract included three functions: one to create a new agreement, which is called when a user posts something for sale; a function to update the transaction when a buyer places an order; and a third function to complete the transaction after the order is fulfilled.
+
+In addition to the NERD stack (Node.js, Express, React, Databases using SQL), we used a suite of new technologies to incorporate the blockchain into our app. Web3 allowed us to interact with our blockchain node behind the scenes. We used Truffle and Ganache to spin up a development blockchain to test our smart contract functions. Each instance of Ganache provided us with 10 user accounts with 100 fake ether. Once we imported these test user accounts into MetaMask, a plugin that served as a digital wallet, we were able to simulate transactions among users.
+
+With scalability in mind, we made the conscious choice to keep only the most pertinent information relating to transactions on the blockchain, and to store the rest of our data in a PostgreSQL database. Not only does it take more time to query the blockchain, but every function call costs a small amount of ether ("gas"), so we wanted to minimize calls to the blockchain. To protect the integrity of our database, we used promises to ensure that we would post to our database ONLY after receiving a successful response from the blockchain. We believe that this decision would lead to a more seamless and less costly experience for our users.
+
+
 
 ---
 Built with ❤️ in New York City

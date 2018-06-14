@@ -56,24 +56,24 @@ The core logic of our application is in the smart contract, which was written in
 - order status
 - etc.
 
-In addition to stack that we learned in class (Node.js, Express, React), we had to learn several new technologies in order to incorporate the blockchain into our application. Web3 was used to interact with the blockchain. Truffle & Ganache were used in conjunction in order to test our contracts. Ganache provides 10 test user accounts, each with a digital wallet balance of 100 ETH. We then imported those accounts into MetaMask, a Chrome plugin that serves as an in-browser digital wallet. From there we were able to simulate transactions between users.
+In addition to stack that we learned in class (Node.js, Express, React), we had to learn several new technologies in order to incorporate the blockchain into our application. Web3 was used to send and receive information from the Ethereum blockchain. Truffle & Ganache were used in conjunction in order to test our contracts. Ganache provides 10 test user accounts, each with a digital wallet balance of 100 ETH. We then imported those accounts into MetaMask, a Chrome plugin that serves as an in-browser digital wallet. From there we were able to simulate transactions between users.
 
 This app is deployed live at _LINK_. 
 
 INPUT RUN INSTRUCTIONS HERE ONCE WE HAVE APPLICATION 100% FINISHED 
 
 ## Further Development
+Originally, we wanted to create our own blockchain, track goods across the entire span of the supply chain, and deploy our own cryptocurrency for payments. We quickly realized that this was beyond the scope of a three-week project.
 
+We decided to focus on one specific area in which we could add value: creating a marketplace connecting buyers & sellers, while ensuring transpancy with the Ethereum blockchain.
 
-## Implementation
-
-All of our user transactions were facilitated by a smart contract written in a language called Solidity. Our contract included three functions: one to create a new agreement, which is called when a user posts something for sale; a function to update the transaction when a buyer places an order; and a third function to complete the transaction after the order is fulfilled.
-
-
-
-With scalability in mind, we made the conscious choice to keep only the most pertinent information relating to transactions on the blockchain, and to store the rest of our data in a PostgreSQL database. Not only does it take more time to query the blockchain, but every function call costs a small amount of ether ("gas"), so we wanted to minimize calls to the blockchain. To protect the integrity of our database, we used promises to ensure that we would post to our database ONLY after receiving a successful response from the blockchain. We believe that this decision would lead to a more seamless and less costly experience for our users.
-
-
+Were we to continue this project, we'd love to add more features, such as:
+- Authentication and login through non-MetaMask wallets and/or OAuth
+- A way to send contracts only to certain individuals
+- Identity verification
+- Ratings for buyers & sellers
+- Our own cryptocurrency for payments
+- _ADD MORE FEATURES HERE_
 
 ---
 Built with ❤️ in New York City

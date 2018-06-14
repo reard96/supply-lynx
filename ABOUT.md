@@ -41,10 +41,10 @@ But isn't all of this just contrived? Does it actually have any value?
 ### Sidenote regarding money
 Since we normally transact in currencies issued by governments, it is a common misconception that those [fiat currencies](https://en.wikipedia.org/wiki/Fiat_money) are the only form of money. However, these are a relatively recent technology and are not synonomous with the concept of money.
 
-Money has three neccesisary components. It is:
-1. A [medium of exchange](https://en.wikipedia.org/wiki/Medium_of_exchange)
-2. A [unit of account](https://en.wikipedia.org/wiki/Unit_of_account)
-3. A [store of value](https://en.wikipedia.org/wiki/Store_of_value)
+Money has three neccesisary components. It is a:
+1. [Medium of exchange](https://en.wikipedia.org/wiki/Medium_of_exchange)
+2. [Unit of account](https://en.wikipedia.org/wiki/Unit_of_account)
+3. [Store of value](https://en.wikipedia.org/wiki/Store_of_value)
 
 If something fulfills these three criteria, it is money. In short, _if a sufficient number of people believe something to be money - and use it as a medium of exchange, a unit of account, and a store of value - it **is** money._
 

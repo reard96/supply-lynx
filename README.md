@@ -24,7 +24,7 @@ Lynx allows users to blah blah
 
 * [Solidity](http://solidity.readthedocs.io/en/latest/) for programming smart contracts
 * [Web3](https://web3js.readthedocs.io/en/1.0/) to allow our application to interact with the blockchain 
-* [Truffle](http://truffleframework.com/) and [Ganache](http://truffleframework.com/ganache/) Ethereum dev environment for testing
+* [Truffle](http://truffleframework.com/) and [Ganache](http://truffleframework.com/ganache/) - Ethereum dev environment for testing
 * [MetaMask](https://metamask.io/) for user login; allows interaction with the application using a digital wallet on the Ethereum network 
 * [Material UI](https://material-ui.com/) & CSS for styling
 * [Node.js](https://nodejs.org/en/)

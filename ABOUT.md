@@ -45,6 +45,8 @@ REWORD: Smart contracts help you exchange money, property, shares, or anything o
 
 The best way to describe smart contracts is to compare the technology to a vending machine. Ordinarily, you would go to a lawyer or a notary, pay them, and wait while you get the document. With smart contracts, you simply drop a bitcoin into the vending machine (i.e. ledger), and your escrow, driver’s license, or whatever drops into your account. More so, smart contracts not only define the rules and penalties around an agreement in the same way that a traditional contract does, but also automatically enforce those obligations.
 
+a program enforces the contract built into the code
+
 Ethereum is a cryptocurrency that allows smart contracts to be coded into its blockchain. Ethereum is known as the msot popular blockchain for devlopers because of its ease of use and the many applications that can be built on it.
 
 ### Further reading

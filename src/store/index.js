@@ -3,15 +3,14 @@ import { createLogger } from 'redux-logger';
 import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import web3 from './web3';
-import accounts from './accounts';
 import contract from './contract';
-import services from './services';
+import user from './user';
 import users from './users';
 import service from './service';
-import user from './user';
+import services from './services';
 import orders from './orders';
 
-export const reducer = combineReducers({ web3, orders, accounts, contract, services, users, service, user });
+export const reducer = combineReducers({ web3, orders, contract, services, users, service, user });
 
 const middleware = composeWithDevTools(applyMiddleware(
   thunkMiddleware,
@@ -20,11 +19,10 @@ const middleware = composeWithDevTools(applyMiddleware(
 const store = createStore(reducer, middleware);
 
 export default store;
-export * from './orders';
 export * from './web3';
-export * from './accounts';
 export * from './contract';
-export * from './services';
+export * from './user';
 export * from './users';
 export * from './service';
-export * from './user';
+export * from './services';
+export * from './orders';

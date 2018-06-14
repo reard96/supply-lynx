@@ -30,25 +30,7 @@ class App extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.contract.address) {
-      nextProps.contract.getOrdersCount().then(async (data) => {
-        const orders = await Promise.all(Array(parseInt(data.toNumber()))
-          .fill()
-          .map(async (element, index) => {
-            const order = await this.props.contract.orders(index);
-            return {
-              id: index,
-              productId: order[1].toNumber(),
-              quantity: order[2].toNumber(),
-              price: order[3].toNumber(),
-              unit: order[4],
-              // category
-              status: order[6],
-              buyer: order[7],
-              seller: order[8],
-            };
-          }));
-        await this.props.fetchOrders(orders);
-      });
+      this.props.fetchOrders(nextProps.contract);
     }
   }
 
@@ -84,8 +66,8 @@ const mapDispatchToProps = (dispatch) => {
     fetchContract: function (web3) {
       return dispatch(fetchContract(web3));
     },
-    fetchOrders: function (orders) {
-      return dispatch(fetchOrders(orders));
+    fetchOrders: function (contract) {
+      return dispatch(fetchOrders(contract));
     },
     fetchServices: function (orders) {
       return dispatch(fetchServices(orders));

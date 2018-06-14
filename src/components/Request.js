@@ -30,19 +30,19 @@ class Request extends Component {
     this.setState({ [name]: value });
   }
 
-  createBid() {
+  async createBid() {
     const { productId, quantity, price, unit } = this.state;
     const total = quantity * price;
-    this.props.contract.createBid(productId, quantity, price, unit, {
+    await this.props.contract.createBid(productId, quantity, price, unit, {
       from: web3.eth.accounts[0],
       value: web3.toWei(total, 'ether')
     });
     this.props.closeRequest();
   }
 
-  createQuote() {
+  async createQuote() {
     const { productId, quantity, price, unit } = this.state;
-    this.props.contract.createQuote(productId, quantity, price, unit, {
+    await this.props.contract.createQuote(productId, quantity, price, unit, {
       from: web3.eth.accounts[0]
     });
     this.props.closeRequest();
@@ -93,7 +93,7 @@ class Request extends Component {
             fullWidth
           />
           <FormControl margin='dense' required fullWidth>
-            <InputLabel>Product</InputLabel>
+            <InputLabel>Unit</InputLabel>
             <Select
               onChange={changeForm('unit')}
               value={unit}
@@ -118,8 +118,8 @@ const mapStateToProps = ({ web3, contract, user, services }) => ({
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchOrders: function (orders) {
-      return dispatch(fetchOrders(orders));
+    fetchOrders: function (contract) {
+      return dispatch(fetchOrders(contract));
     }
   };
 };

@@ -34,7 +34,7 @@ function ButtonAppBar(props) {
             <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
               { img }
             </IconButton>
-            <Typography variant="title" color="inherit" className={classes.flex}>
+            <Typography variant='display1' color="inherit" className={classes.flex}>
               Lynx
             </Typography>
             <Link to='/dashboard'>

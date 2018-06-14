@@ -45,13 +45,10 @@ Money has three neccesisary components. It is a:
 If something fulfills these three criteria, it is money. In short, _if a sufficient number of people believe something to be money - and use it as a medium of exchange, a unit of account, and a store of value - it **is** money._
 
 ## Introduction to smart contracts
-REWORD: Smart contracts help you exchange money, property, shares, or anything of value in a transparent, conflict-free way while avoiding the services of a middleman.
+Historically, contracts have been written and interpreted by human beings. Smart contracts are written in code. When certain conditions defined in the contract are met, the contract will automatically execute, and ownership of an asset is transferred, money is distributed...whatever the smart contracts says will happen, happens.
 
-The best way to describe smart contracts is to compare the technology to a vending machine. Ordinarily, you would go to a lawyer or a notary, pay them, and wait while you get the document. With smart contracts, you simply drop a bitcoin into the vending machine (i.e. ledger), and your escrow, driver’s license, or whatever drops into your account. More so, smart contracts not only define the rules and penalties around an agreement in the same way that a traditional contract does, but also automatically enforce those obligations.
-
-a program enforces the contract built into the code
-
-Ethereum is a cryptocurrency that allows smart contracts to be coded into its blockchain. Ethereum is known as the msot popular blockchain for devlopers because of its ease of use and the many applications that can be built on it.
+## Ethereum
+Ethereum is a cryptocurrency that easily allows smart contracts to be coded into its blockchain. For this reason, many applications can be built on it and it is the most popular blockchain for developers. Lynx's smart contract marketplace was built using the Ethereum blockchain.
 
 ### Further reading
 - [3b1b explains how cryptocurrencies work](https://www.youtube.com/watch?v=bBC-nXj3Ng4&vl=en)
@@ -59,6 +56,9 @@ Ethereum is a cryptocurrency that allows smart contracts to be coded into its bl
 - [Ethereum White Paper](https://github.com/ethereum/wiki/wiki/White-Paper)
 
 ## Advantages of blockchain in the supply chain
+Because a blockchain is immutable, it increases the transparency of the supply chain. Blockchain technology also has a built-in ownership record, making it easy to see the chain of command of any particular asset.
+
+While blockchain works great in the digital world, crossing the chasm from the world of bits to the world of atoms sheds light on some outstanding issues. For goods to be tracked through the supply chain on the blockchain, it is important that the information actually _reaches_ the blockchain. The goods need to be scanned or the information needs to be otherwise uploaded by humans - this is still a weak point in the system.
 
 ## Lynx's implementation
 - What we wanted at the outset
@@ -73,8 +73,7 @@ Ethereum is a cryptocurrency that allows smart contracts to be coded into its bl
 ---
 REWORK
 
-While the most prominent use of blockchain is in the cryptocurrency, Bitcoin, the reality is that blockchain—essentially a distributed, digital ledger—has many applications and can be used for any exchange, agreements/contracts, tracking and, of course, payment. Since every transaction is recorded on a block and across multiple copies of the ledger that are distributed over many nodes (computers), it is highly transparent. It’s also highly secure since every block links to the one before it and after it. There is not one central authority over the blockchain, and it’s extremely efficient and scalable. Ultimately, blockchain can increase the efficiency and transparency of supply chains and positively impact everything from warehousing to delivery to payment. Chain of command is essential for many things, and blockchain has the chain of command built in.
-
+While the most prominent use of blockchain is in the cryptocurrency, Bitcoin, the reality is that blockchain—essentially a distributed, digital ledger—has many applications and can be used for any exchange, agreements/contracts, tracking and, of course, payment. Since every transaction is recorded on a block and across multiple copies of the ledger that are distributed over many nodes (computers), it is highly transparent. It’s also highly secure since every block links to the one before it and after it. There is not one central authority over the blockchain, and it’s extremely efficient and scalable. 
 The transparency of blockchain is also crucial to allow consumers to know they are supporting companies who they share the same values of environmental stewardship and sustainable manufacturing. This is what the project Provenance hopes to provide with its blockchain record of transparency.
 
 Diamond-giant De Beers uses blockchain technology to track stones from the point they are minded right up to the point when they are sold to consumers. This ensures the company avoids ‘conflict’ or ‘blood diamonds’ and assures the consumers that they are buying the genuine article.
@@ -86,7 +85,7 @@ To understand the enthusiasm in this modern currency, it helps to think about a 
 
 Bitcoins also don’t move around when they are transferred. They are best understood as entries in a giant ledger, the “blockchain”, which contains the transaction history for every Bitcoin in circulation. It is kept up to date with the help of cryptography and copious computing power, provided by a global network of tens of thousands of computers. Again, openness helps the system remain secure: the blockchain is public so every participant can check whether a transfer comes from the rightful owner.
 
-This set-up is the first workable solution to one of the more nagging problems of the digital realm: how to transfer something of value from one person to another without middlemen having to make sure that the item is not copied or, in the case of money, spent more than once? And Bitcoin does the trick while being open (unlike conventional payment mechanisms, which aim for security by shielding themselves from outsiders). This means that third parties can make use of Bitcoin’s features without having to ask anyone for permission—as is the case with the internet.
+
 
 Such “permissionless innovation”, in the jargon, should in time result in a cornucopia of applications. Bitcoin’s technology could be used to transfer ownership both in other currencies and of any kind of financial asset. This, in turn, would allow the creation of decentralised exchanges which let asset holders trade directly. And money could be “programmed” to come with conditions: for instance, it might be released only if a third person agrees.
 

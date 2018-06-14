@@ -28,7 +28,7 @@ REWORD THIS: Contrasted with blockchain, cryptocurrency has to do with the use o
 
 It is a token based on the distributed ledger that is a blockchain. Cryptocurrency is a digital currency formed on the basis of cryptography, or by definition, “the art of solving or writing codes.” Although all are considered cryptocurrencies, these tokens can serve different purposes on these networks.
 
-But isn't all of this just contrived? Does it actually have any value?
+But aren't cryptocurrencies just contrived? Do they actually have any value?
 
 #### Sidenote regarding money
 Since we normally transact in currencies issued by governments, it is a common misconception that those [fiat currencies](https://en.wikipedia.org/wiki/Fiat_money) are the only form of money. However, these are a relatively recent technology and are not synonomous with the concept of money.
@@ -41,7 +41,11 @@ Money has three neccesisary components. It is a:
 If something fulfills these three criteria, it is money. In short, _if a sufficient number of people believe something to be money - and use it as a medium of exchange, a unit of account, and a store of value - it **is** money._
 
 ## Introduction to smart contracts
-Touch on Ethereum here.
+REWORD: Smart contracts help you exchange money, property, shares, or anything of value in a transparent, conflict-free way while avoiding the services of a middleman.
+
+The best way to describe smart contracts is to compare the technology to a vending machine. Ordinarily, you would go to a lawyer or a notary, pay them, and wait while you get the document. With smart contracts, you simply drop a bitcoin into the vending machine (i.e. ledger), and your escrow, driver’s license, or whatever drops into your account. More so, smart contracts not only define the rules and penalties around an agreement in the same way that a traditional contract does, but also automatically enforce those obligations.
+
+Ethereum is a cryptocurrency that allows smart contracts to be coded into its blockchain. Ethereum is known as the msot popular blockchain for devlopers because of its ease of use and the many applications that can be built on it.
 
 ### Further reading
 - [3b1b explains how cryptocurrencies work](https://www.youtube.com/watch?v=bBC-nXj3Ng4&vl=en)

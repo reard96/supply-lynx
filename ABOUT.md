@@ -92,3 +92,4 @@ Blockchain operations require computational resources, as specific nodes across 
 
 How do I log into MetaMask?
 Download instructions for using Metamask here.
+https://www.blockandmortar.nyc/assets/metamask-instructions.pdf

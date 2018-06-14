@@ -16,7 +16,7 @@ import './index.css';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.collectBlockchainInfo = this.collectBlockchainInfo.bind(this);
+    this.fetchBlockchainInfo = this.fetchBlockchainInfo.bind(this);
   }
 
   componentDidMount() {
@@ -24,7 +24,7 @@ class App extends Component {
   }
 
   componentWillMount() {
-    this.collectBlockchainInfo();
+    this.fetchBlockchainInfo();
     this.props.fetchServices();
   }
 
@@ -36,11 +36,12 @@ class App extends Component {
           .map(async (element, index) => {
             const order = await this.props.contract.orders(index);
             return {
+              id: index,
               productId: order[1].toNumber(),
               quantity: order[2].toNumber(),
               price: order[3].toNumber(),
               unit: order[4],
-              class: order[5],
+              // category
               status: order[6],
               buyer: order[7],
               seller: order[8],
@@ -51,11 +52,10 @@ class App extends Component {
     }
   }
 
-  async collectBlockchainInfo() {
+  async fetchBlockchainInfo() {
     try {
       await this.props.fetchWeb3();
       await this.props.fetchUsers();
-      const web3 = this.props.web3;
       this.props.fetchContract(web3);
       this.props.fetchUser(web3.eth.accounts[0]);
     } catch (err) {
@@ -72,11 +72,11 @@ class App extends Component {
   }
 }
 
-function mapStateToProps({ web3, contract, users }) {
+const mapStateToProps = ({ web3, contract, users }) => {
   return { web3, contract, users };
-}
+};
 
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = (dispatch) => {
   return {
     fetchWeb3: function () {
       return dispatch(fetchWeb3());
@@ -97,6 +97,6 @@ function mapDispatchToProps(dispatch) {
       return dispatch(fetchUser(address));
     }
   };
-}
+};
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

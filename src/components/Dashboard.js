@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -8,11 +6,13 @@ import Button from '@material-ui/core/Button';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
+import Tooltip from '@material-ui/core/Tooltip';
 import TextField from '@material-ui/core/TextField';
 import LibraryAdd from '@material-ui/icons/LibraryAdd';
 import { connect } from 'react-redux';
 import './react-select.css';
 import Request from './Request';
+import Order from './Order';
 import Selected from './Selected';
 import OrderTable from './OrderTable';
 import StatusTabs from './StatusTabs';
@@ -125,16 +125,24 @@ class Dashboard extends Component {
     super(props);
     this.state = {
       tab: 0,
+      order: {},
+      product: {},
+      buyer: {},
+      seller: {},
       search: [],
       orders: [],
       onlyOwn: false,
-      formOpen: false
+      requestOpen: false,
+      orderOpen: false
     };
     this.addSearchTerm = this.addSearchTerm.bind(this);
     this.changeTab = this.changeTab.bind(this);
     this.showOnlyOwn = this.showOnlyOwn.bind(this);
-    this.openForm = this.openForm.bind(this);
-    this.closeForm = this.closeForm.bind(this);
+    this.openRequest = this.openRequest.bind(this);
+    this.closeRequest = this.closeRequest.bind(this);
+    this.openOrder = this.openOrder.bind(this);
+    this.closeOrder = this.closeOrder.bind(this);
+    this.setOrder = this.setOrder.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -142,21 +150,35 @@ class Dashboard extends Component {
     this.setState({ orders });
   }
 
-  openForm() {
-    this.setState({ formOpen: true });
+  setOrder(order, product, buyer, seller) {
+    this.setState({ order, product, buyer, seller });
   }
 
-  closeForm() {
-    this.setState({ formOpen: false });
+  openRequest() {
+    this.setState({ requestOpen: true });
+  }
+
+  closeRequest() {
+    this.setState({ requestOpen: false });
+  }
+
+  openOrder() {
+    this.setState({ orderOpen: true });
+  }
+
+  closeOrder() {
+    this.setState({ orderOpen: false });
   }
 
   showOnlyOwn() {
     const { onlyOwn } = this.state;
     let { orders } = this.props;
     if (!onlyOwn) {
-      orders = orders.filter(order => order.buyer === web3.eth.accounts[0] || order.seller === web3.eth.accounts[0]);
+      orders = orders.filter(order => {
+        return order.buyer === web3.eth.accounts[0] || order.seller === web3.eth.accounts[0];
+      });
     }
-    this.setState({ onlyOwn: !onlyOwn, search: [], orders });
+    this.setState({ onlyOwn: !onlyOwn, search: [], tab: 0, orders });
   }
 
   addSearchTerm(value) {
@@ -165,6 +187,12 @@ class Dashboard extends Component {
     const search = !value ? [] : value.split(',');
     const status = ['all', 'requested', 'accepted', 'completed', 'cancelled'];
     let filtered = [];
+    const { onlyOwn } = this.state;
+    if (onlyOwn) {
+      orders = orders.filter(order => {
+        return order.buyer === web3.eth.accounts[0] || order.seller === web3.eth.accounts[0];
+      });
+    }
     if (tab !== 0) {
       orders = orders.filter(order => order.status === status[tab]);
     }
@@ -185,6 +213,12 @@ class Dashboard extends Component {
     const { search } = this.state;
     let filtered = [];
     const status = ['all', 'requested', 'accepted', 'completed', 'cancelled'];
+    const { onlyOwn } = this.state;
+    if (onlyOwn) {
+      orders = orders.filter(order => {
+        return order.buyer === web3.eth.accounts[0] || order.seller === web3.eth.accounts[0];
+      });
+    }
     if (value !== 0) {
       orders = orders.filter(order => order.status === status[value]);
     }
@@ -202,7 +236,8 @@ class Dashboard extends Component {
 
   render() {
     const { classes, users, services } = this.props;
-    const { orders } = this.state;
+    const { orders, order, product, buyer, seller, search, onlyOwn, orderOpen, requestOpen, tab } = this.state;
+    const { addSearchTerm, showOnlyOwn, openRequest, closeOrder, closeRequest, changeTab, openOrder, setOrder } = this;
     const suggestions = services.sort((a, b) => {
       if (a.name < b.name) return -1;
       if (a.name > b.name) return 1;
@@ -222,10 +257,10 @@ class Dashboard extends Component {
         <Paper>
           <FormGroup row>
             <TextField
-              style={{ width: 500 }}
+              style={{ flex: 1 }}
               fullWidth={false}
-              value={this.state.search}
-              onChange={this.addSearchTerm}
+              value={search}
+              onChange={addSearchTerm}
               placeholder='Select Services'
               name='react-select-chip-label'
               InputLabelProps={{
@@ -243,28 +278,31 @@ class Dashboard extends Component {
                 },
               }}
             />
-            <FormControlLabel
-              style={{ marginLeft: 50, marginRight: 50 }}
-              control={
-                <Switch
-                  checked={this.state.onlyOwn}
-                  onChange={this.showOnlyOwn}
-                />
-              }
-              label='Own Orders Only'
-            />
+            <Tooltip placement='top' title='Toggle between own orders and all orders.'>
+              <FormControlLabel
+                style={{ marginLeft: 100, marginRight: 100 }}
+                control={
+                  <Switch
+                    checked={onlyOwn}
+                    onChange={showOnlyOwn}
+                  />
+                }
+                label='MY ORDERS'
+              />
+            </Tooltip>
             <Button
               style={{ flex: 1 }}
-              onClick={this.openForm}
+              onClick={openRequest}
               color='secondary'
             >
               Create Request
               <LibraryAdd style={{ marginLeft: 10 }} />
             </Button>
           </FormGroup>
-          <Request formOpen={this.state.formOpen} closeForm={this.closeForm} />
-          <StatusTabs tab={this.state.tab} changeTab={this.changeTab} />
-          <OrderTable users={users} orders={orders} services={services} />
+          <Order order={order} product={product} buyer={buyer} seller={seller} orderOpen={orderOpen} closeOrder={closeOrder} />
+          <Request requestOpen={requestOpen} closeRequest={closeRequest} />
+          <StatusTabs tab={tab} changeTab={changeTab} />
+          <OrderTable users={users} orders={orders} services={services} openOrder={openOrder} setOrder={setOrder} />
         </Paper>
       </div>
     );

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { fetchOrders } from '../store';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -16,9 +17,8 @@ class Request extends Component {
       price: '',
       unit: ''
     };
-    this.changeForm = this.changeForm.bind(this);
-    this.submitBid = this.submitBid.bind(this);
-    this.submitQuote = this.submitQuote.bind(this);
+    this.createBid = this.createBid.bind(this);
+    this.createQuote = this.createQuote.bind(this);
   }
 
   changeForm = name => (event) => {
@@ -26,32 +26,33 @@ class Request extends Component {
     this.setState({ [name]: value });
   }
 
-  submitBid() {
+  createBid() {
     const { productId, quantity, price, unit } = this.state;
     const total = quantity * price;
     this.props.contract.createBid(productId, quantity, price, unit, {
       from: web3.eth.accounts[0],
-      value: total
+      value: web3.toWei(total, 'ether')
     });
-    this.props.closeForm();
+    this.props.closeRequest();
   }
 
-  submitQuote() {
+  createQuote() {
     const { productId, quantity, price, unit } = this.state;
     this.props.contract.createQuote(productId, quantity, price, unit, {
       from: web3.eth.accounts[0]
     });
-    this.props.closeForm();
+    this.props.closeRequest();
   }
 
   render() {
-    const { formOpen, closeForm } = this.props;
-    const { changeForm, submitBid, submitQuote } = this;
+    const { requestOpen, closeRequest } = this.props;
+    const { changeForm, createBid, createQuote } = this;
     const { productId, quantity, price, unit } = this.state;
+    const inputEmpty = Object.keys(this.state).some(field => !this.state[field].length);
     return (
       <Dialog
-        open={formOpen}
-        onClose={closeForm}
+        open={requestOpen}
+        onClose={closeRequest}
       >
         <DialogContent>
           <DialogContentText>
@@ -96,9 +97,8 @@ class Request extends Component {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={closeForm} color='secondary'>Cancel</Button>
-          <Button onClick={submitBid} color='primary'>Submit Bid</Button>
-          <Button onClick={submitQuote} color='primary'>Submit Quote</Button>
+          <Button disabled={inputEmpty} onClick={createBid} color='primary'>Submit Bid</Button>
+          <Button disabled={inputEmpty} onClick={createQuote} color='primary'>Submit Quote</Button>
         </DialogActions>
       </Dialog>
     );
@@ -109,4 +109,12 @@ const mapStateToProps = ({ web3, contract }) => ({
   web3, contract
 });
 
-export default connect(mapStateToProps)(Request);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchOrders: function (orders) {
+      return dispatch(fetchOrders(orders));
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Request);

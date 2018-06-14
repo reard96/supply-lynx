@@ -30,11 +30,6 @@ function ButtonAppBar(props) {
   const img = <img src='/lynx-image.jpeg' height='40' width='30' />
   return (
     <div>
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
       <div className={classes.root}>
         <AppBar position="static" color="default" title={img}>
           <Toolbar>
@@ -44,10 +39,15 @@ function ButtonAppBar(props) {
             <Typography variant="title" color="inherit" className={classes.flex}>
               Lynx
             </Typography>
-            <Link to='/About'>
-            <Button color="inherit">About</Button>
+            <Link to='/about'>
+              <Button color="inherit">About</Button>
             </Link>
-            <Button color="inherit">FAQ</Button>
+            <Link to='/dashboard'>
+              <Button color="inherit">Dashboard</Button>
+            </Link>
+            <Link to='/faq'>
+              <Button color="inherit">FAQ</Button>
+            </Link>
           </Toolbar>
         </AppBar>
       </div>

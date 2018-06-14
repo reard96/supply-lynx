@@ -22,10 +22,10 @@ class Routes extends Component {
       <div>
         <NavBar />
         <Switch>
-          {/*<Route exact path='/' component={Homepage} />
+          <Route exact path='/' component={Dashboard} />
           <Route exact path='/faq' component={FAQ} />
           <Route exact path='/about' component={About} />
-    <Route exact path='/profile' component={Profile} />*/}
+          <Route exact path='/profile' component={Profile} />
           {/*<MuiThemeProvider>*/}
           {/*  <Route exact path='/header' component={Header} />*/}
           {/*</MuiThemeProvider>*/}  

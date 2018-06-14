@@ -1,5 +1,5 @@
 # About
-Lynx: A solution for the logistics challenge faced by producers, suppliers, and wholesalers.
+### Lynx: A solution for the logistics challenge faced by producers, suppliers, and wholesalers.
 
 ## Why does Lynx exist?
 Supply chains are incredibly complex. They often span multiple geographies and involve several stakeholders. Goods can take months to flow to the end user.

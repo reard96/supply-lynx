@@ -6,13 +6,9 @@ import NavBar from './NavBar';
 import FAQ from './FAQ';
 import About from './About';
 import Profile from './Profile';
-
 import Dashboard from './Dashboard';
 import Header from './Header';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import injectTapEventPlugin from 'react-tap-event-plugin';
-//Needed for onTouchTap
-// injectTapEventPlugin();
 
 class Routes extends Component {
   componentDidMount() {

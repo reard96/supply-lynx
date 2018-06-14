@@ -1,15 +1,7 @@
-const Sequelize = require('sequelize')
-const db = require('../db')
+const Sequelize = require('sequelize');
+const db = require('../db');
 
 const User = db.define('user', {
-  // username: {
-  //   type: Sequelize.STRING,
-  //   unique: true,
-  //   allowNull: false
-  // },
-  // password: {
-  //   type: Sequelize.STRING
-  // },
   address: {
     type: Sequelize.STRING
   },
@@ -19,6 +11,6 @@ const User = db.define('user', {
   category: {
     type: Sequelize.ENUM('admin', 'buyer', 'seller')
   },
-})
+});
 
-module.exports = User
+module.exports = User;

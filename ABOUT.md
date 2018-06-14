@@ -1,27 +1,32 @@
-# About page
-#### Lynx: A solution for the logistics challenge faced by producers, suppliers, and wholesalers.
+# About
+Lynx: A solution for the logistics challenge faced by producers, suppliers, and wholesalers.
 
 ## Why does Lynx exist?
 Supply chains are incredibly complex. They often span multiple geographies and involve several stakeholders. Goods can take months to flow to the end user.
 
 Currently, there is a lack of transparency in the supply chain. Producers, middlemen, and wholesalers don't know:
-1. Where goods come from - the previous places they've been physically
-2. The timing of the changes made 
+1. Where goods come from - the path they've taken to get to the present location
+2. When goods are moved from place to place
 3. The quality & authenticity of goods
-3. The path 
-ETC ETC ETC
 
-Lynx utilizes blockchain technology to help solve some of these problems.
+Lynx utilizes blockchain technology to help solve some of these problems. The first step: a smart contract marketplace built on the Ethereum blockchain.
 
 ## Introduction to blockchain
 A blockchain is a distributed digital ledger. 
 
 The key innovations of a blockchain are:
-- Immutability / security (no ability to falsify)
-- Transparency - everyone can see the transactions
-- Disintermediation - no need for a trusted third party
+- **Immutability.** Transaction records cannot be changed ex post facto, making information much more difficult to falsify
+- **Transparency.** Everyone can see the previous transactions made.
+- **Disintermediation.** There is no need for a trusted third party to verify transactions.
+- **Security.** A robust decentralized blockchain is much less vulnerable to attack than a centralized (traditional enterprise) system.
 
 ### The difference between blockchain and cryptocurrency
+
+REWORD THIS: A blockchain is a distributed ledger technology that forms a “chain of blocks.” Each block includes information and data that are bundled together and verified. These blocks are then validated and strung onto the chain of transactions and information in previous blocks. These blocks of transactions are permanently recorded in the distributed ledger that is the blockchain.
+
+REWORD THIS: Contrasted with blockchain, cryptocurrency has to do with the use of tokens based on the distributed ledger technology. Cryptocurrency can be seen as a tool or resource on a blockchain network. Anything dealing with buying, selling, investing, trading, microtipping, or other monetary aspects deals with a blockchain native token or subtoken.
+
+It is a token based on the distributed ledger that is a blockchain. Cryptocurrency is a digital currency formed on the basis of cryptography, or by definition, “the art of solving or writing codes.” Although all are considered cryptocurrencies, these tokens can serve different purposes on these networks.
 
 But isn't all of this just contrived? Does it actually have any value?
 
@@ -35,11 +40,28 @@ Money has three neccesisary components. It is a:
 
 If something fulfills these three criteria, it is money. In short, _if a sufficient number of people believe something to be money - and use it as a medium of exchange, a unit of account, and a store of value - it **is** money._
 
+## Introduction to smart contracts
+Touch on Ethereum here.
+
 ### Further reading
 - [3b1b explains how cryptocurrencies work](https://www.youtube.com/watch?v=bBC-nXj3Ng4&vl=en)
-https://github.com/ethereum/wiki/wiki/White-Paper
+- [Bitcoin White Paper](https://bitcoin.org/bitcoin.pdf)
+- [Ethereum White Paper](https://github.com/ethereum/wiki/wiki/White-Paper)
 
 ## Advantages of blockchain in the supply chain
+
+## Lynx's implementation
+- What we wanted at the outset
+- Where we landed
+
+## How to use Lynx
+
+### Download Metamask
+
+### 
+
+---
+REWORK
 
 While the most prominent use of blockchain is in the cryptocurrency, Bitcoin, the reality is that blockchain—essentially a distributed, digital ledger—has many applications and can be used for any exchange, agreements/contracts, tracking and, of course, payment. Since every transaction is recorded on a block and across multiple copies of the ledger that are distributed over many nodes (computers), it is highly transparent. It’s also highly secure since every block links to the one before it and after it. There is not one central authority over the blockchain, and it’s extremely efficient and scalable. Ultimately, blockchain can increase the efficiency and transparency of supply chains and positively impact everything from warehousing to delivery to payment. Chain of command is essential for many things, and blockchain has the chain of command built in.
 
@@ -65,37 +87,11 @@ All that may sound like science fiction, but a growing number of startups are wo
 Although banks have mostly steered clear of Bitcoin as a currency, they too have started exploring how they could use the technology in other ways. They are unlikely to move fast, but there are plenty of possibilities. Global banks could, for instance, use Bitcoin-like systems to move money between subsidiaries. They could even issue their own crypto-currencies.
 
 
-
-Further reading:
-- 
-- Link to 3b1b video
-- Links to Satoshi's white paper
-- Link to Ethereum white paper
-
-
-
-
-## Intro to smart contracts
-
-## Advantages of blockchain for supply chain
-
-## How & we implemented 
-
-## How 
 - to deploy on site
 - theory of blockchain, why we built this, etc.
 
 
-## Further Reading
-[A History of Money](dan.com)
-
 https://nakamotoinstitute.org/shelling-out/
-3b1b video: https://www.youtube.com/watch?v=bBC-nXj3Ng4&vl=en
-
-
-
-
-
 
 
 What is the blockchain?

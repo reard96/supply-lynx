@@ -48,12 +48,19 @@ _INSERT d3 if we're using this for dashboards..._
 
 ## Implementation
 
-The core logic of our application is in the smart contract, which was written in Solidity. Our contract included
+The core logic of our application is in the smart contract, which was written in Solidity. Our contract stored all of the relevant information necessary for an item listing on the blockchain, in lieu of a traditional backend:
+- productId
+- quantity
+- price
+- unit
+- order status
+- etc.
 
-This app is deployed live at _LINK_. However, since 
+In addition to stack that we learned in class (Node.js, Express, React), we had to learn several new technologies in order to incorporate the blockchain into our application. Web3 was used to interact with the blockchain. Truffle & Ganache were used in conjunction in order to test our contracts. Ganache provides 10 test user accounts, each with a digital wallet balance of 100 ETH. We then imported those accounts into MetaMask, a Chrome plugin that serves as an in-browser digital wallet. From there we were able to simulate transactions between users.
 
-INPUT RUN INSTRUCTIONS HERE <br />
-INPUT STACK AND TESTING INFO HERE
+This app is deployed live at _LINK_. 
+
+INPUT RUN INSTRUCTIONS HERE ONCE WE HAVE APPLICATION 100% FINISHED 
 
 ## Further Development
 
@@ -62,7 +69,7 @@ INPUT STACK AND TESTING INFO HERE
 
 All of our user transactions were facilitated by a smart contract written in a language called Solidity. Our contract included three functions: one to create a new agreement, which is called when a user posts something for sale; a function to update the transaction when a buyer places an order; and a third function to complete the transaction after the order is fulfilled.
 
-In addition to the NERD stack (Node.js, Express, React, Databases using SQL), we used a suite of new technologies to incorporate the blockchain into our app. Web3 allowed us to interact with our blockchain node behind the scenes. We used Truffle and Ganache to spin up a development blockchain to test our smart contract functions. Each instance of Ganache provided us with 10 user accounts with 100 fake ether. Once we imported these test user accounts into MetaMask, a plugin that served as a digital wallet, we were able to simulate transactions among users.
+
 
 With scalability in mind, we made the conscious choice to keep only the most pertinent information relating to transactions on the blockchain, and to store the rest of our data in a PostgreSQL database. Not only does it take more time to query the blockchain, but every function call costs a small amount of ether ("gas"), so we wanted to minimize calls to the blockchain. To protect the integrity of our database, we used promises to ensure that we would post to our database ONLY after receiving a successful response from the blockchain. We believe that this decision would lead to a more seamless and less costly experience for our users.
 

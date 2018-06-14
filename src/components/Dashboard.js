@@ -249,8 +249,6 @@ class Dashboard extends Component {
     }));
     return (
       <div className={classes.root}>
-        <br />
-
         <Paper>
           <FormGroup row>
             <TextField

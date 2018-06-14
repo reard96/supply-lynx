@@ -19,10 +19,9 @@ export function fetchOrders(contract) {
             quantity: order[2].toNumber(),
             price: order[3].toNumber(),
             unit: order[4],
-            // category
-            status: order[6],
-            buyer: order[7],
-            seller: order[8],
+            status: order[5],
+            buyer: order[6],
+            seller: order[7],
           };
         }));
       return dispatch(getOrders(orders));

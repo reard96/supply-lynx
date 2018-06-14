@@ -27,9 +27,6 @@ class Routes extends Component {
           <Route exact path='/about' component={About} />
           <Route exact path='/profile' component={Profile} />
           {/*<MuiThemeProvider>*/}
-          {/*  <Route exact path='/header' component={Header} />*/}
-          {/*</MuiThemeProvider>*/}  
-          {/*<MuiThemeProvider>*/}
             <Route exact path='/dashboard' component={Dashboard} />
           {/*</MuiThemeProvider>*/} 
         </Switch>

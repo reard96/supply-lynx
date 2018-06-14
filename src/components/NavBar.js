@@ -39,11 +39,11 @@ function ButtonAppBar(props) {
             <Typography variant="title" color="inherit" className={classes.flex}>
               Lynx
             </Typography>
-            <Link to='/about'>
-              <Button color="inherit">About</Button>
-            </Link>
             <Link to='/dashboard'>
               <Button color="inherit">Dashboard</Button>
+            </Link>
+            <Link to='/about'>
+              <Button color="inherit">About</Button>
             </Link>
             <Link to='/faq'>
               <Button color="inherit">FAQ</Button>

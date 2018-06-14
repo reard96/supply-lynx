@@ -7,7 +7,6 @@ contract Business {
         uint quantity;
         uint price;
         string unit;
-        string category;
         string status;
         address buyer;
         address seller;
@@ -36,7 +35,6 @@ contract Business {
             quantity: quantity,
             price: price,
             unit: unit,
-            category: "bid",
             status: "requested",
             buyer: msg.sender,
             seller: 0x0000
@@ -57,7 +55,6 @@ contract Business {
             quantity: quantity,
             price: price,
             unit: unit,
-            category: "quote",
             status: "requested",
             buyer: 0x0000,
             seller: msg.sender

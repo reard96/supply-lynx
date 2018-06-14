@@ -41,7 +41,7 @@ class App extends Component {
               quantity: order[2].toNumber(),
               price: order[3].toNumber(),
               unit: order[4],
-              class: order[5],
+              // category
               status: order[6],
               buyer: order[7],
               seller: order[8],

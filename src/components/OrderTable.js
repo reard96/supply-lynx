@@ -89,10 +89,10 @@ class OrderTable extends Component {
               <Tooltip placement='top' title='Price is in Ether measured by Wei.'>
                 <CustomTableCell numeric>Unit Price</CustomTableCell>
               </Tooltip>
-              <Tooltip placement='top' title='No buyer listed indicates an open bid'>
+              <Tooltip placement='top' title='No buyer listed indicates an open quote.'>
                 <CustomTableCell>Buyer</CustomTableCell>
               </Tooltip>
-              <Tooltip placement='top' title='No seller listed indicates an open quote'>
+              <Tooltip placement='top' title='No seller listed indicates an open bid.'>
                 <CustomTableCell>Seller</CustomTableCell>
               </Tooltip>
               <Tooltip placement='top' title='Order status can be requested, accepted, completed, or cancelled.'>

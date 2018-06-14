@@ -63,8 +63,8 @@ class Order extends Component {
     const { acceptBid, acceptQuote, completeOrder, cancelOrder } = this;
     const requested = status === 'requested';
     const accepted = status === 'accepted';
-    const bid = order.class === 'bid';
-    const quote = order.class === 'quote';
+    const bid = !seller;
+    const quote = !buyer;
     const admin = user.category === 'admin';
     const involved = order.buyer === web3.eth.accounts[0] || order.seller === web3.eth.accounts[0];
     return (
@@ -73,39 +73,39 @@ class Order extends Component {
         onClose={closeOrder}
       >
         <DialogContent>
-          <FormControl disabled style={{ marginRight: 15 }} margin='dense'>
+          <FormControl disabled style={{ marginRight: 15 }} margin='normal'>
             <InputLabel>Order ID</InputLabel>
             <Input value={id} />
           </FormControl>
-          <FormControl disabled style={{ marginRight: 15 }} margin='dense'>
+          <FormControl disabled style={{ marginRight: 15 }} margin='normal'>
             <InputLabel>Buyer</InputLabel>
             <Input value={buyer && buyer.name || '(none)'} />
           </FormControl>
-          <FormControl disabled style={{ marginRight: 15 }} margin='dense'>
+          <FormControl disabled style={{ marginRight: 15 }} margin='normal'>
             <InputLabel>Seller</InputLabel>
             <Input value={seller && seller.name || '(none)'} />
           </FormControl>
-          <FormControl disabled style={{ marginRight: 15 }} margin='dense'>
+          <FormControl disabled style={{ marginRight: 15 }} margin='normal'>
             <InputLabel>Product</InputLabel>
             <Input value={product && product.name || '(none)'} />
           </FormControl>
-          <FormControl disabled style={{ marginRight: 15 }} margin='dense'>
+          <FormControl disabled style={{ marginRight: 15 }} margin='normal'>
             <InputLabel>Quantity</InputLabel>
             <Input value={quantity} />
           </FormControl>
-          <FormControl disabled style={{ marginRight: 15 }} margin='dense'>
+          <FormControl disabled style={{ marginRight: 15 }} margin='normal'>
             <InputLabel>Unit</InputLabel>
             <Input value={unit} />
           </FormControl>
-          <FormControl disabled style={{ marginRight: 15 }} margin='dense'>
+          <FormControl disabled style={{ marginRight: 15 }} margin='normal'>
             <InputLabel>Unit Price</InputLabel>
             <Input value={price} />
           </FormControl>
-          <FormControl disabled style={{ marginRight: 15 }} margin='dense'>
+          <FormControl disabled style={{ marginRight: 15 }} margin='normal'>
             <InputLabel>Total Price</InputLabel>
             <Input value={total} />
           </FormControl>
-          <FormControl disabled style={{ marginRight: 15 }} margin='dense'>
+          <FormControl disabled style={{ marginRight: 15 }} margin='normal'>
             <InputLabel>Status</InputLabel>
             <Input value={status} />
           </FormControl>

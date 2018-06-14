@@ -8,6 +8,7 @@ import About from './About';
 import Profile from './Profile';
 
 import Dashboard from './Dashboard';
+import Header from './Header';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 //Needed for onTouchTap
@@ -25,13 +26,16 @@ class Routes extends Component {
       <div>
         <NavBar />
         <Switch>
-          <Route exact path='/' component={Homepage} />
+          {/*<Route exact path='/' component={Homepage} />
           <Route exact path='/faq' component={FAQ} />
           <Route exact path='/about' component={About} />
-          <Route exact path='/profile' component={Profile} />
-          <MuiThemeProvider>
+    <Route exact path='/profile' component={Profile} />*/}
+          {/*<MuiThemeProvider>*/}
+          {/*  <Route exact path='/header' component={Header} />*/}
+          {/*</MuiThemeProvider>*/}  
+          {/*<MuiThemeProvider>*/}
             <Route exact path='/dashboard' component={Dashboard} />
-          </MuiThemeProvider>
+          {/*</MuiThemeProvider>*/} 
         </Switch>
       </div>
     );

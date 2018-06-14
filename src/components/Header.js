@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -8,9 +7,6 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-
-import FAQ from './FAQ';
-import About from './About';
 
 const styles = {
   root: {
@@ -28,6 +24,7 @@ const styles = {
 function ButtonAppBar(props) {
   const { classes } = props;
   const img = <img src='/lynx-image.jpeg' height='40' width='30' />
+  console.log(props.classes)
   return (
     <div>
       <br />
@@ -44,9 +41,7 @@ function ButtonAppBar(props) {
             <Typography variant="title" color="inherit" className={classes.flex}>
               Lynx
             </Typography>
-            <Link to='/About'>
             <Button color="inherit">About</Button>
-            </Link>
             <Button color="inherit">FAQ</Button>
           </Toolbar>
         </AppBar>

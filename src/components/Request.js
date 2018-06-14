@@ -17,8 +17,8 @@ class Request extends Component {
     super();
     this.state = {
       productId: 0,
-      quantity: 0,
-      price: 0,
+      quantity: '',
+      price: '',
       unit: ''
     };
     this.createBid = this.createBid.bind(this);
@@ -52,7 +52,7 @@ class Request extends Component {
     const { user, services, requestOpen, closeRequest } = this.props;
     const { changeForm, createBid, createQuote } = this;
     const { productId, quantity, price, unit } = this.state;
-    const inputEmpty = Object.keys(this.state).some(field => !this.state[field]);
+    const empty = Object.keys(this.state).some(field => !this.state[field]);
     return (
       <Dialog
         open={requestOpen}
@@ -62,7 +62,7 @@ class Request extends Component {
           <DialogContentText>
             Please enter the details of your bid or quote. Once submitted, it will be sent to the blockchain.
           </DialogContentText>
-          <FormControl margin='dense' fullWidth>
+          <FormControl margin='dense' required fullWidth>
             <InputLabel>Product</InputLabel>
             <Select
               autoFocus
@@ -79,6 +79,7 @@ class Request extends Component {
             type='text'
             onChange={changeForm('quantity')}
             value={quantity}
+            required
             fullWidth
           />
           <TextField
@@ -88,9 +89,10 @@ class Request extends Component {
             type='text'
             onChange={changeForm('price')}
             value={price}
+            required
             fullWidth
           />
-          <FormControl margin='dense' fullWidth>
+          <FormControl margin='dense' required fullWidth>
             <InputLabel>Product</InputLabel>
             <Select
               onChange={changeForm('unit')}
@@ -102,8 +104,8 @@ class Request extends Component {
           </FormControl>
         </DialogContent>
         <DialogActions>
-          <Button disabled={inputEmpty || !user.id} onClick={createBid} color='primary'>Submit Bid</Button>
-          <Button disabled={inputEmpty || !user.id} onClick={createQuote} color='primary'>Submit Quote</Button>
+          <Button disabled={empty || !user.id} onClick={createBid} color='primary'>Submit Bid</Button>
+          <Button disabled={empty || !user.id} onClick={createQuote} color='primary'>Submit Quote</Button>
         </DialogActions>
       </Dialog>
     );

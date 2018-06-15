@@ -35,9 +35,9 @@ const NavBar = ({ classes }) => {
             <Typography variant='display1' color='inherit' className={classes.flex}>
               Lynx
             </Typography>
-            <Link to='/dashboard'>
+            {/* <Link to='/dashboard'>
               <Button>Dashboard</Button>
-            </Link>
+            </Link> */}
             <Link to='/about'>
               <Button>About</Button>
             </Link>

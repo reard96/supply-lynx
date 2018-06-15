@@ -40,6 +40,7 @@ class App extends Component {
       await this.props.fetchUsers();
       this.props.fetchContract(web3);
       this.props.fetchUser(web3.eth.accounts[0]);
+      console.log(web3.eth.accounts[0])
     } catch (err) {
       console.log(err);
     }

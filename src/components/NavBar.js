@@ -9,7 +9,6 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 
-
 const styles = {
   root: {
     flexGrow: 1,
@@ -26,6 +25,7 @@ const styles = {
 function ButtonAppBar(props) {
   const { classes } = props;
   const img = <img src='/lynx-image.jpeg' height='40' width='30' />
+  const gh = <img src='/GitHub-Mark.png' height='40' width='40' />
   return (
     <div>
       <div className={classes.root}>
@@ -43,9 +43,11 @@ function ButtonAppBar(props) {
             <Link to='/about'>
               <Button color="inherit">About</Button>
             </Link>
-            <Link to='/faq'>
-              <Button color="inherit">FAQ</Button>
-            </Link>
+            <a href="https://github.com/reard96/supply-lynx">
+              <IconButton className={classes.button}>
+                { gh }
+              </IconButton>
+            </a>
           </Toolbar>
         </AppBar>
       </div>

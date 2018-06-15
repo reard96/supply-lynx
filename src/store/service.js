@@ -2,18 +2,18 @@ import axios from 'axios';
 
 const GET_SERVICE = 'GET_SERVICE';
 
-export function getServiceById(service) {
+export function getService(service) {
     return {
         type: GET_SERVICE,
         service
     };
 }
 
-export function fetchServiceById(id) {
+export function fetchService(id) {
     return function thunk(dispatch) {
         return axios.get(`/api/services/${id}`)
             .then(res => res.data)
-            .then(service => dispatch(getServiceById(service)))
+            .then(service => dispatch(getService(service)))
             .catch(err => console.log(err));
     };
 }

@@ -6,9 +6,26 @@ const getOrders = orders => ({ type: GET_ORDERS, orders });
 const addOrder = order => ({ type: ADD_ORDER, order });
 const editOrder = order => ({ type: EDIT_ORDER, order });
 
-export function fetchOrders(orders) {
+export function fetchOrders(contract) {
   return function thunk(dispatch) {
-    return dispatch(getOrders(orders));
+    contract.getOrdersCount().then(async (data) => {
+      const orders = await Promise.all(Array(parseInt(data.toNumber()))
+        .fill()
+        .map(async (element, index) => {
+          const order = await contract.orders(index);
+          return {
+            id: index,
+            productId: order[1].toNumber(),
+            quantity: order[2].toNumber(),
+            price: order[3].toNumber(),
+            unit: order[4],
+            status: order[5],
+            buyer: order[6],
+            seller: order[7],
+          };
+        }));
+      return dispatch(getOrders(orders));
+    });
   };
 }
 

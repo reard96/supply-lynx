@@ -70,12 +70,13 @@ class OrderTable extends Component {
 
   render() {
     const { rowsPerPage, page } = this.state;
-    const { classes, users, orders, services } = this.props;
+    const { classes, users, orders, services, search } = this.props;
     const { selectRow, changePage, changeRowsPerPage } = this;
+    const loaded = !!orders.length;
+    const filtered = !!search.length;
     return (
       <div>
-        {!orders.length ?
-          <LinearProgress /> :
+        {loaded || filtered ?
           <Table className={classes.table}>
             <TableHead>
               <TableRow>
@@ -128,7 +129,9 @@ class OrderTable extends Component {
                 );
               })}
             </TableBody>
-          </Table>}
+          </Table> :
+          <LinearProgress />
+        }
         <TablePagination
           component='div'
           count={orders.length}

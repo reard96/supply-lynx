@@ -25,3 +25,7 @@ Thumbs.db
 # Bundled files
 public/bundle.js.map
 public/bundle.js
+
+# Documentation
+readme.md
+about.md

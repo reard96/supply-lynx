@@ -8,6 +8,9 @@ import FormControl from '@material-ui/core/FormControl';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
+import Stepper from '@material-ui/core/Stepper';
+import Step from '@material-ui/core/Step';
+import StepLabel from '@material-ui/core/StepLabel';
 
 class Order extends Component {
   constructor() {
@@ -61,18 +64,35 @@ class Order extends Component {
     const { id, quantity, price, unit, status } = order;
     const total = quantity * price;
     const { acceptBid, acceptQuote, completeOrder, cancelOrder } = this;
-    const requested = status === 'requested';
-    const accepted = status === 'accepted';
     const bid = !seller;
     const quote = !buyer;
+    const accepted = status === 'accepted';
+    const requested = status === 'requested';
+    const cancelled = status === 'cancelled';
     const admin = user.category === 'admin';
     const involved = order.buyer === web3.eth.accounts[0] || order.seller === web3.eth.accounts[0];
+    const steps = ['accepted', 'requested', 'completed'];
     return (
       <Dialog
         open={orderOpen}
         onClose={closeOrder}
       >
         <DialogContent>
+          <Stepper alternativeLabel nonLinear activeStep={steps.findIndex(step => step === status)}>
+            {steps.map(label => {
+              return (
+                <Step key={label}>
+                  <StepLabel>
+                    {label.toUpperCase()}
+                  </StepLabel>
+                </Step>
+              );
+            })}
+            {cancelled &&
+              <Step>
+                <StepLabel error>CANCELLED</StepLabel>
+              </Step>}
+          </Stepper>
           <FormControl disabled style={{ marginRight: 15 }} margin='normal'>
             <InputLabel>Order ID</InputLabel>
             <Input value={id} />
@@ -105,10 +125,6 @@ class Order extends Component {
             <InputLabel>Total Price</InputLabel>
             <Input value={total} />
           </FormControl>
-          <FormControl disabled style={{ marginRight: 15 }} margin='normal'>
-            <InputLabel>Status</InputLabel>
-            <Input value={status} />
-          </FormControl>
         </DialogContent>
         <DialogActions>
           {
@@ -116,7 +132,7 @@ class Order extends Component {
             <Button onClick={cancelOrder} color='secondary'>Cancel Request</Button>
           }
           {
-            !!user.id && accepted && involved &&
+            !!user.id && accepted && admin &&
             <Button onClick={cancelOrder} color='secondary'>Cancel Order</Button>
           }
           {
@@ -124,11 +140,11 @@ class Order extends Component {
             <Button onClick={completeOrder} color='primary'>Complete Order</Button>
           }
           {
-            !!user.id && requested && bid &&
+            !!user.id && bid && !involved &&
             <Button onClick={acceptBid} color='primary'>Accept Bid</Button>
           }
           {
-            !!user.id && requested && quote &&
+            !!user.id && quote && !involved &&
             <Button onClick={acceptQuote} color='primary'>Accept Quote</Button>
           }
         </DialogActions>

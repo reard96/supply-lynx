@@ -44,6 +44,7 @@ contract Business {
 
     function acceptBid(uint id) public {
         Order storage bid = orders[id];
+        require(msg.sender != bid.buyer);
         bid.status = "accepted";
         bid.seller = msg.sender;
     }
@@ -64,6 +65,7 @@ contract Business {
 
     function acceptQuote(uint id) public payable {
         Order storage quote = orders[id];
+        require(msg.sender != quote.seller);
         quote.status = "accepted";
         quote.buyer = msg.sender;
         quote.payment = msg.value;

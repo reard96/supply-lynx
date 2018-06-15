@@ -7,12 +7,16 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
 
 class Request extends Component {
   constructor() {
     super();
     this.state = {
-      productId: '',
+      productId: 0,
       quantity: '',
       price: '',
       unit: ''
@@ -26,29 +30,29 @@ class Request extends Component {
     this.setState({ [name]: value });
   }
 
-  createBid() {
+  async createBid() {
     const { productId, quantity, price, unit } = this.state;
     const total = quantity * price;
-    this.props.contract.createBid(productId, quantity, price, unit, {
+    await this.props.contract.createBid(productId, quantity, price, unit, {
       from: web3.eth.accounts[0],
       value: web3.toWei(total, 'ether')
     });
     this.props.closeRequest();
   }
 
-  createQuote() {
+  async createQuote() {
     const { productId, quantity, price, unit } = this.state;
-    this.props.contract.createQuote(productId, quantity, price, unit, {
+    await this.props.contract.createQuote(productId, quantity, price, unit, {
       from: web3.eth.accounts[0]
     });
     this.props.closeRequest();
   }
 
   render() {
-    const { requestOpen, closeRequest } = this.props;
+    const { user, services, requestOpen, closeRequest } = this.props;
     const { changeForm, createBid, createQuote } = this;
     const { productId, quantity, price, unit } = this.state;
-    const inputEmpty = Object.keys(this.state).some(field => !this.state[field].length);
+    const empty = Object.keys(this.state).some(field => !this.state[field]);
     return (
       <Dialog
         open={requestOpen}
@@ -58,16 +62,16 @@ class Request extends Component {
           <DialogContentText>
             Please enter the details of your bid or quote. Once submitted, it will be sent to the blockchain.
           </DialogContentText>
-          <TextField
-            autoFocus
-            margin='dense'
-            id='productId'
-            label='Product ID'
-            type='text'
-            onChange={changeForm('productId')}
-            value={productId}
-            fullWidth
-          />
+          <FormControl margin='dense' required fullWidth>
+            <InputLabel>Product</InputLabel>
+            <Select
+              autoFocus
+              onChange={changeForm('productId')}
+              value={productId}
+            >
+              {services.map(service => <MenuItem key={service.id} value={service.id}>{service.name}</MenuItem>)}
+            </Select>
+          </FormControl>
           <TextField
             margin='dense'
             id='quantity'
@@ -75,6 +79,7 @@ class Request extends Component {
             type='text'
             onChange={changeForm('quantity')}
             value={quantity}
+            required
             fullWidth
           />
           <TextField
@@ -84,35 +89,37 @@ class Request extends Component {
             type='text'
             onChange={changeForm('price')}
             value={price}
+            required
             fullWidth
           />
-          <TextField
-            margin='dense'
-            id='unit'
-            label='Unit'
-            type='text'
-            onChange={changeForm('unit')}
-            value={unit}
-            fullWidth
-          />
+          <FormControl margin='dense' required fullWidth>
+            <InputLabel>Unit</InputLabel>
+            <Select
+              onChange={changeForm('unit')}
+              value={unit}
+            >
+              <MenuItem value='kg'>kg</MenuItem>)
+              <MenuItem value='lb'>lb</MenuItem>)
+            </Select>
+          </FormControl>
         </DialogContent>
         <DialogActions>
-          <Button disabled={inputEmpty} onClick={createBid} color='primary'>Submit Bid</Button>
-          <Button disabled={inputEmpty} onClick={createQuote} color='primary'>Submit Quote</Button>
+          <Button disabled={empty || !user.id} onClick={createBid} color='primary'>Submit Bid</Button>
+          <Button disabled={empty || !user.id} onClick={createQuote} color='primary'>Submit Quote</Button>
         </DialogActions>
       </Dialog>
     );
   }
 }
 
-const mapStateToProps = ({ web3, contract }) => ({
-  web3, contract
+const mapStateToProps = ({ web3, contract, user, services }) => ({
+  web3, contract, user, services
 });
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchOrders: function (orders) {
-      return dispatch(fetchOrders(orders));
+    fetchOrders: function (contract) {
+      return dispatch(fetchOrders(contract));
     }
   };
 };

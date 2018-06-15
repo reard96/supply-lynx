@@ -18,15 +18,15 @@ async function seed() {
       '0xe9a5403ce8635d96b56573c6b6d4e03849f91c6c'];
   const users = await Promise.all([
     User.create({ address: addresses[0], name: 'Supply Lynx Inc.', category: 'admin' }),
-    User.create({ address: addresses[1], name: 'Ultra Market Ltd.', category: 'buyer' }),
-    User.create({ address: addresses[2], name: 'Whole Retail Ltd.', category: 'buyer' }),
-    User.create({ address: addresses[3], name: 'Main Chain Ltd.', category: 'buyer' }),
-    User.create({ address: addresses[4], name: 'Block Mart Ltd.', category: 'buyer' }),
-    User.create({ address: addresses[5], name: 'Make Everything Co.', category: 'seller' }),
-    User.create({ address: addresses[6], name: 'Max Wholesale Co.', category: 'seller' }),
-    User.create({ address: addresses[7], name: 'Super Producer Co.', category: 'seller' }),
-    User.create({ address: addresses[8], name: 'Mega Supplier Co.', category: 'seller' }),
-    User.create({ address: addresses[9], name: 'All Goods Co.', category: 'seller' }),
+    User.create({ address: addresses[1], name: 'Ultra Market Ltd.' }),
+    User.create({ address: addresses[2], name: 'Whole Retail Ltd.' }),
+    User.create({ address: addresses[3], name: 'Main Chain Ltd.' }),
+    User.create({ address: addresses[4], name: 'Block Mart Ltd.' }),
+    User.create({ address: addresses[5], name: 'Make Everything Co.' }),
+    User.create({ address: addresses[6], name: 'Max Wholesale Co.' }),
+    User.create({ address: addresses[7], name: 'Super Producer Co.' }),
+    User.create({ address: addresses[8], name: 'Mega Supplier Co.' }),
+    User.create({ address: addresses[9], name: 'All Goods Co.' }),
   ]);
   const services = await Promise.all([
     Service.create({ name: 'mung bean' }),

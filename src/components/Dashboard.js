@@ -309,7 +309,7 @@ class Dashboard extends Component {
               Create Request
             </Button>
           </FormGroup>
-          <Order order={order} product={product} buyer={buyer} seller={seller} orderOpen={orderOpen} closeOrder={closeOrder} />
+          <Order order={order} product={product} buyer={buyer} seller={seller} orderOpen={orderOpen} closeOrder={closeOrder} openNotification={openNotification} />
           <Request requestOpen={requestOpen} closeRequest={closeRequest} openNotification={openNotification} />
           <Snackbar
             anchorOrigin={{

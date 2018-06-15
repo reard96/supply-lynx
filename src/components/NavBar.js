@@ -7,8 +7,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-
 
 const styles = {
   root: {
@@ -18,33 +16,31 @@ const styles = {
     flex: 1,
   },
   menuButton: {
-    marginLeft: -12,
-    marginRight: 20,
+    marginRight: 10,
   },
 };
 
-function ButtonAppBar(props) {
-  const { classes } = props;
-  const img = <img src='/lynx-image.jpeg' height='40' width='30' />
+const NavBar = ({ classes }) => {
+  const img = <img src='/lynx-image.jpeg' height='40' width='30' />;
   return (
     <div>
       <div className={classes.root}>
-        <AppBar position="static" color="default" title={img}>
+        <AppBar position='static' color='default' title={img}>
           <Toolbar>
-            <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-              { img }
+            <IconButton className={classes.menuButton} color='inherit' aria-label='Menu'>
+              {img}
             </IconButton>
-            <Typography variant='display1' color="inherit" className={classes.flex}>
+            <Typography variant='display1' color='inherit' className={classes.flex}>
               Lynx
             </Typography>
             <Link to='/dashboard'>
-              <Button color="inherit">Dashboard</Button>
+              <Button>Dashboard</Button>
             </Link>
             <Link to='/about'>
-              <Button color="inherit">About</Button>
+              <Button>About</Button>
             </Link>
             <Link to='/faq'>
-              <Button color="inherit">FAQ</Button>
+              <Button>FAQ</Button>
             </Link>
           </Toolbar>
         </AppBar>
@@ -53,8 +49,8 @@ function ButtonAppBar(props) {
   );
 }
 
-ButtonAppBar.propTypes = {
+NavBar.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ButtonAppBar);
+export default withStyles(styles)(NavBar);

@@ -2,8 +2,6 @@ import Business from '../../build/contracts/Business.json';
 const contract = require('truffle-contract');
 const agreementStorage = contract(Business);
 
-const defaultContract = {};
-
 const GET_CONTRACT = 'GET_CONTRACT';
 
 const setContract = contract => ({ type: GET_CONTRACT, contract });
@@ -16,7 +14,7 @@ export const fetchContract = web3 => {
       .then(contract => dispatch(setContract(contract)));
 };
 
-export default function (state = defaultContract, action) {
+export default function (state = {}, action) {
   switch (action.type) {
     case GET_CONTRACT:
       return action.contract;

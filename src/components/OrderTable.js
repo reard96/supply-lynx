@@ -70,10 +70,10 @@ class OrderTable extends Component {
 
   render() {
     const { rowsPerPage, page } = this.state;
-    const { classes, users, orders, services, search } = this.props;
+    const { classes, contract, users, orders, services, search, tab } = this.props;
     const { selectRow, changePage, changeRowsPerPage } = this;
-    const loaded = !!orders.length;
-    const filtered = !!search.length;
+    const loaded = !!orders.length || !contract.address;
+    const filtered = !!search.length || !!tab;
     return (
       <div>
         {loaded || filtered ?

@@ -251,7 +251,7 @@ class Dashboard extends Component {
   }
 
   render() {
-    const { classes, users, services } = this.props;
+    const { classes, contract, users, services } = this.props;
     const { orders, order, product, buyer, seller, search, onlyOwn, orderOpen, requestOpen, notification, tab } = this.state;
     const { addSearchTerm, showOnlyOwn, openRequest, closeOrder, closeRequest, changeTab, openOrder, setOrder, openNotification, closeNotification } = this;
     const suggestions = services.sort((a, b) => {
@@ -267,7 +267,7 @@ class Dashboard extends Component {
         <Paper>
           <FormGroup row>
             <TextField
-              style={{ flex: 1 }}
+              style={{ flex: 1, marginLeft: 10 }}
               fullWidth={false}
               value={search}
               onChange={addSearchTerm}
@@ -329,7 +329,7 @@ class Dashboard extends Component {
           <br />
           <StatusTabs tab={tab} changeTab={changeTab} />
           <Divider />
-          <OrderTable users={users} orders={orders} search={search} services={services} openOrder={openOrder} setOrder={setOrder} />
+          <OrderTable contract={contract} users={users} orders={orders} search={search} tab={tab} services={services} openOrder={openOrder} setOrder={setOrder} />
         </Paper>
       </div>
     );
@@ -340,8 +340,8 @@ Dashboard.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = ({ orders, user, users, services }) => {
-  return { orders, user, users, services };
+const mapStateToProps = ({ contract, orders, user, users, services }) => {
+  return { contract, orders, user, users, services };
 };
 
 const styledComponent = withStyles(styles)(Dashboard);

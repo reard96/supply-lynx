@@ -5,7 +5,6 @@ import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 
 const styles = {
@@ -22,6 +21,7 @@ const styles = {
 
 const NavBar = ({ classes }) => {
   const img = <img src='/lynx-image.jpeg' height='40' width='30' />;
+  const gh = <img src='/GitHub-Mark.png' height='40' width='40' />;
   return (
     <div>
       <div className={classes.root}>
@@ -38,18 +38,20 @@ const NavBar = ({ classes }) => {
             {/* <Link to='/dashboard'>
               <Button>Dashboard</Button>
             </Link> */}
-            <Link to='/about'>
+            {/* <Link to='/about'>
               <Button>About</Button>
-            </Link>
-            <Link to='/faq'>
-              <Button>FAQ</Button>
-            </Link>
+            </Link> */}
+            <a href='https://github.com/reard96/supply-lynx'>
+              <IconButton className={classes.button}>
+                {gh}
+              </IconButton>
+            </a>
           </Toolbar>
         </AppBar>
       </div>
     </div>
   );
-}
+};
 
 NavBar.propTypes = {
   classes: PropTypes.object.isRequired,

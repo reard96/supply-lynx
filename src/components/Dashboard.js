@@ -317,7 +317,7 @@ class Dashboard extends Component {
               horizontal: 'left'
             }}
             open={notification}
-            autoHideDuration={5000}
+            autoHideDuration={7500}
             onClose={closeNotification}
             message='Blockchain transaction successful'
             action={[

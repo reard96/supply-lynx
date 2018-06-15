@@ -48,6 +48,7 @@ class Request extends Component {
       value: web3.toWei(total, 'ether')
     });
     this.props.postOrder(order);
+    this.props.openNotification();
     this.props.closeRequest();
   }
 
@@ -67,6 +68,7 @@ class Request extends Component {
       from: web3.eth.accounts[0]
     });
     this.props.postOrder(order);
+    this.props.openNotification();
     this.props.closeRequest();
   }
 

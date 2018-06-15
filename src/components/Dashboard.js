@@ -6,11 +6,14 @@ import { withStyles } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
 import Switch from '@material-ui/core/Switch';
 import Tooltip from '@material-ui/core/Tooltip';
+import Snackbar from '@material-ui/core/Snackbar';
 import TextField from '@material-ui/core/TextField';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Close from '@material-ui/icons/Close';
 import LibraryAdd from '@material-ui/icons/LibraryAdd';
 import Request from './Request';
 import Order from './Order';
@@ -134,7 +137,8 @@ class Dashboard extends Component {
       orders: [],
       onlyOwn: false,
       requestOpen: false,
-      orderOpen: false
+      orderOpen: false,
+      notification: false
     };
     this.addSearchTerm = this.addSearchTerm.bind(this);
     this.changeTab = this.changeTab.bind(this);
@@ -144,6 +148,8 @@ class Dashboard extends Component {
     this.openOrder = this.openOrder.bind(this);
     this.closeOrder = this.closeOrder.bind(this);
     this.setOrder = this.setOrder.bind(this);
+    this.openNotification = this.openNotification.bind(this);
+    this.closeNotification = this.closeNotification.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -153,6 +159,15 @@ class Dashboard extends Component {
 
   setOrder(order, product, buyer, seller) {
     this.setState({ order, product, buyer, seller });
+  }
+
+  openNotification() {
+    this.setState({ notification: true });
+  }
+
+  closeNotification(event, reason) {
+    if (reason === 'clickaway') return;
+    this.setState({ notification: false });
   }
 
   openRequest() {
@@ -236,9 +251,9 @@ class Dashboard extends Component {
   }
 
   render() {
-    const { classes, users, services } = this.props;
-    const { orders, order, product, buyer, seller, search, onlyOwn, orderOpen, requestOpen, tab } = this.state;
-    const { addSearchTerm, showOnlyOwn, openRequest, closeOrder, closeRequest, changeTab, openOrder, setOrder } = this;
+    const { classes, contract, users, services } = this.props;
+    const { orders, order, product, buyer, seller, search, onlyOwn, orderOpen, requestOpen, notification, tab } = this.state;
+    const { addSearchTerm, showOnlyOwn, openRequest, closeOrder, closeRequest, changeTab, openOrder, setOrder, openNotification, closeNotification } = this;
     const suggestions = services.sort((a, b) => {
       if (a.name < b.name) return -1;
       if (a.name > b.name) return 1;
@@ -252,7 +267,7 @@ class Dashboard extends Component {
         <Paper>
           <FormGroup row>
             <TextField
-              style={{ flex: 1 }}
+              style={{ flex: 1, marginLeft: 10 }}
               fullWidth={false}
               value={search}
               onChange={addSearchTerm}
@@ -294,12 +309,27 @@ class Dashboard extends Component {
               Create Request
             </Button>
           </FormGroup>
-          <Order order={order} product={product} buyer={buyer} seller={seller} orderOpen={orderOpen} closeOrder={closeOrder} />
-          <Request requestOpen={requestOpen} closeRequest={closeRequest} />
+          <Order order={order} product={product} buyer={buyer} seller={seller} orderOpen={orderOpen} closeOrder={closeOrder} openNotification={openNotification} />
+          <Request requestOpen={requestOpen} closeRequest={closeRequest} openNotification={openNotification} />
+          <Snackbar
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'left'
+            }}
+            open={notification}
+            autoHideDuration={7500}
+            onClose={closeNotification}
+            message='Blockchain transaction successful'
+            action={[
+              <IconButton key='close' onClick={closeNotification} color='inherit'>
+                <Close />
+              </IconButton>
+            ]}
+          />
           <br />
           <StatusTabs tab={tab} changeTab={changeTab} />
           <Divider />
-          <OrderTable users={users} orders={orders} search={search} services={services} openOrder={openOrder} setOrder={setOrder} />
+          <OrderTable contract={contract} users={users} orders={orders} search={search} tab={tab} services={services} openOrder={openOrder} setOrder={setOrder} />
         </Paper>
       </div>
     );
@@ -310,8 +340,8 @@ Dashboard.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = ({ orders, user, users, services }) => {
-  return { orders, user, users, services };
+const mapStateToProps = ({ contract, orders, user, users, services }) => {
+  return { contract, orders, user, users, services };
 };
 
 const styledComponent = withStyles(styles)(Dashboard);

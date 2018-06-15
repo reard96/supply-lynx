@@ -30,6 +30,7 @@ class Order extends Component {
       from: web3.eth.accounts[0]
     });
     this.props.updateOrder(order);
+    this.props.openNotification();
     this.props.closeOrder();
   }
 
@@ -44,6 +45,7 @@ class Order extends Component {
       value: web3.toWei(total, 'ether')
     });
     this.props.updateOrder(order);
+    this.props.openNotification();
     this.props.closeOrder();
   }
 
@@ -55,6 +57,7 @@ class Order extends Component {
       from: web3.eth.accounts[0]
     });
     this.props.updateOrder(order);
+    this.props.openNotification();
     this.props.closeOrder();
   }
 
@@ -66,6 +69,7 @@ class Order extends Component {
       from: web3.eth.accounts[0]
     });
     this.props.updateOrder(order);
+    this.props.openNotification();
     this.props.closeOrder();
   }
 

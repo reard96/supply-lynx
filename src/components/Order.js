@@ -71,7 +71,7 @@ class Order extends Component {
     const cancelled = status === 'cancelled';
     const admin = user.category === 'admin';
     const involved = order.buyer === web3.eth.accounts[0] || order.seller === web3.eth.accounts[0];
-    const steps = ['accepted', 'requested', 'completed'];
+    const steps = ['requested', 'accepted', 'completed'];
     return (
       <Dialog
         open={orderOpen}

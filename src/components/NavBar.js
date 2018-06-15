@@ -6,6 +6,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
+import Avatar from '@material-ui/core/Avatar';
 
 const styles = {
   root: {
@@ -14,36 +15,42 @@ const styles = {
   flex: {
     flex: 1,
   },
-  menuButton: {
+  homeButton: {
     marginRight: 10,
+    width: 55,
+    height: 55,
   },
+  avatar: {
+    width: 50,
+    height: 50,
+  }
 };
 
 const NavBar = ({ classes }) => {
-  const img = <img src='/lynx-image.jpeg' height='40' width='30' />;
-  const gh = <img src='/GitHub-Mark.png' height='40' width='40' />;
   return (
     <div>
       <div className={classes.root}>
-        <AppBar position='static' color='default' title={img}>
+        <AppBar position='static' color='default'>
           <Toolbar>
             <Link to='/'>
-              <IconButton className={classes.menuButton} color='inherit' aria-label='Menu'>
-                {img}
+              <IconButton className={classes.homeButton}>
+                <Avatar
+                  src='/lynx-icon.jpg'
+                  className={classes.avatar}
+                />
               </IconButton>
             </Link>
             <Typography variant='display1' color='inherit' className={classes.flex}>
               Lynx
             </Typography>
-            {/* <Link to='/dashboard'>
-              <Button>Dashboard</Button>
-            </Link> */}
             {/* <Link to='/about'>
               <Button>About</Button>
             </Link> */}
             <a href='https://github.com/reard96/supply-lynx'>
-              <IconButton className={classes.button}>
-                {gh}
+              <IconButton>
+                <Avatar
+                  src='/github-icon.png'
+                />
               </IconButton>
             </a>
           </Toolbar>

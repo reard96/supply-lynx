@@ -27,9 +27,11 @@ const NavBar = ({ classes }) => {
       <div className={classes.root}>
         <AppBar position='static' color='default' title={img}>
           <Toolbar>
-            <IconButton className={classes.menuButton} color='inherit' aria-label='Menu'>
-              {img}
-            </IconButton>
+            <Link to='/'>
+              <IconButton className={classes.menuButton} color='inherit' aria-label='Menu'>
+                {img}
+              </IconButton>
+            </Link>
             <Typography variant='display1' color='inherit' className={classes.flex}>
               Lynx
             </Typography>

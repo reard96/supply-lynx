@@ -22,9 +22,12 @@ Thumbs.db
 .idea
 .vscode
 
-# Bundled files
+# Bundle files
 public/bundle.js.map
 public/bundle.js
+
+# Build files
+build/contracts
 
 # Documentation
 readme.md

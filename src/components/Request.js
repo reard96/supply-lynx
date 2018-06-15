@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchOrders } from '../store';
+import { postOrder } from '../store';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -33,18 +33,40 @@ class Request extends Component {
   async createBid() {
     const { productId, quantity, price, unit } = this.state;
     const total = quantity * price;
+    const order = {
+      id: this.props.orders.length + 1,
+      productId,
+      quantity,
+      price,
+      unit,
+      status: 'requested',
+      buyer: web3.eth.accounts[0],
+      seller: null
+    };
     await this.props.contract.createBid(productId, quantity, price, unit, {
       from: web3.eth.accounts[0],
       value: web3.toWei(total, 'ether')
     });
+    this.props.postOrder(order);
     this.props.closeRequest();
   }
 
   async createQuote() {
     const { productId, quantity, price, unit } = this.state;
+    const order = {
+      id: this.props.orders.length + 1,
+      productId,
+      quantity,
+      price,
+      unit,
+      status: 'requested',
+      buyer: null,
+      seller: web3.eth.accounts[0]
+    };
     await this.props.contract.createQuote(productId, quantity, price, unit, {
       from: web3.eth.accounts[0]
     });
+    this.props.postOrder(order);
     this.props.closeRequest();
   }
 
@@ -98,8 +120,8 @@ class Request extends Component {
               onChange={changeForm('unit')}
               value={unit}
             >
-              <MenuItem value='kg'>kg</MenuItem>)
-              <MenuItem value='lb'>lb</MenuItem>)
+              <MenuItem value='kg'>kg</MenuItem>
+              <MenuItem value='lb'>lb</MenuItem>
             </Select>
           </FormControl>
         </DialogContent>
@@ -112,14 +134,14 @@ class Request extends Component {
   }
 }
 
-const mapStateToProps = ({ web3, contract, user, services }) => ({
-  web3, contract, user, services
+const mapStateToProps = ({ web3, contract, user, services, orders }) => ({
+  web3, contract, user, services, orders
 });
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchOrders: function (contract) {
-      return dispatch(fetchOrders(contract));
+    postOrder: function (order) {
+      return dispatch(postOrder(order));
     }
   };
 };

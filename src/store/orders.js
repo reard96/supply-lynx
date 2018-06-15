@@ -21,7 +21,7 @@ export function fetchOrders(contract) {
             unit: order[4],
             status: order[5],
             buyer: order[6],
-            seller: order[7],
+            seller: order[7]
           };
         }));
       return dispatch(getOrders(orders));

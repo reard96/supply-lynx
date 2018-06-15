@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchOrders } from '../store';
+import { updateOrder } from '../store';
 import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -21,53 +21,63 @@ class Order extends Component {
     this.cancelOrder = this.cancelOrder.bind(this);
   }
 
-  acceptBid() {
+  async acceptBid() {
     const { order } = this.props;
     const { id } = order;
-    this.props.contract.acceptBid(id, {
+    order.status = 'accepted';
+    order.seller = web3.eth.accounts[0];
+    await this.props.contract.acceptBid(id, {
       from: web3.eth.accounts[0]
     });
+    this.props.updateOrder(order);
     this.props.closeOrder();
   }
 
-  acceptQuote() {
+  async acceptQuote() {
     const { order } = this.props;
     const { id, quantity, price } = order;
     const total = quantity * price;
-    this.props.contract.acceptQuote(id, {
+    order.status = 'accepted';
+    order.buyer = web3.eth.accounts[0];
+    await this.props.contract.acceptQuote(id, {
       from: web3.eth.accounts[0],
       value: web3.toWei(total, 'ether')
     });
+    this.props.updateOrder(order);
     this.props.closeOrder();
   }
 
-  completeOrder() {
+  async completeOrder() {
     const { order } = this.props;
     const { id } = order;
-    this.props.contract.completeOrder(id, {
+    order.status = 'completed';
+    await this.props.contract.completeOrder(id, {
       from: web3.eth.accounts[0]
     });
+    this.props.updateOrder(order);
     this.props.closeOrder();
   }
 
-  cancelOrder() {
+  async cancelOrder() {
     const { order } = this.props;
     const { id } = order;
-    this.props.contract.cancelOrder(id, {
+    order.status = 'cancelled';
+    await this.props.contract.cancelOrder(id, {
       from: web3.eth.accounts[0]
     });
+    this.props.updateOrder(order);
     this.props.closeOrder();
   }
 
   render() {
+    const { acceptBid, acceptQuote, completeOrder, cancelOrder } = this;
     const { order, user, orderOpen, closeOrder, product, buyer, seller } = this.props;
     const { id, quantity, price, unit, status } = order;
     const total = quantity * price;
-    const { acceptBid, acceptQuote, completeOrder, cancelOrder } = this;
     const bid = !seller;
     const quote = !buyer;
-    const accepted = status === 'accepted';
     const requested = status === 'requested';
+    const accepted = status === 'accepted';
     const cancelled = status === 'cancelled';
     const admin = user.category === 'admin';
     const involved = order.buyer === web3.eth.accounts[0] || order.seller === web3.eth.accounts[0];
@@ -161,8 +171,8 @@ const mapStateToProps = ({ web3, contract, user }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchOrders: function (orders) {
-      return dispatch(fetchOrders(orders));
+    updateOrder: function (order) {
+      return dispatch(updateOrder(order));
     }
   };
 };

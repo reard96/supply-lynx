@@ -86,11 +86,13 @@ class OrderTable extends Component {
                 <Tooltip placement='top' title='Orders can be filtered by product name.'>
                   <CustomTableCell>Product</CustomTableCell>
                 </Tooltip>
-                <CustomTableCell numeric>Quantity</CustomTableCell>
-                <Tooltip placement='top' title='Orders are in kilograms (kg) or pounds (lb).'>
+                <Tooltip placement='top' title='Order quantity is shown in increments of 1,000.'>
+                  <CustomTableCell numeric>Quantity</CustomTableCell>
+                </Tooltip>
+                <Tooltip placement='top' title='Order quantity is in kilograms (kg) or pounds (lb).'>
                   <CustomTableCell>Unit</CustomTableCell>
                 </Tooltip>
-                <Tooltip placement='top' title='Order price is shown as Ether.'>
+                <Tooltip placement='top' title='Order unit price is in Ether.'>
                   <CustomTableCell numeric>Unit Price</CustomTableCell>
                 </Tooltip>
                 <Tooltip placement='top' title='No buyer listed indicates an open quote.'>

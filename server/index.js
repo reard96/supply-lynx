@@ -1,6 +1,7 @@
 const path = require('path');
 const express = require('express');
 const morgan = require('morgan');
+const favicon = require('serve-favicon');
 const bodyParser = require('body-parser');
 const compression = require('compression');
 const session = require('express-session');
@@ -12,9 +13,12 @@ const app = express();
 module.exports = app;
 
 const createApp = () => {
+  app.use(favicon(path.join(__dirname, '..', 'public', 'favicon.ico')));
+
   app.use(morgan('dev'));
 
   app.use(bodyParser.json());
+
   app.use(bodyParser.urlencoded({ extended: true }));
 
   app.use(compression());

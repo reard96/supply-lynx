@@ -34,7 +34,7 @@ class Request extends Component {
     const { productId, quantity, price, unit } = this.state;
     const total = quantity * price;
     const order = {
-      id: this.props.orders.length + 1,
+      id: this.props.orders.length,
       productId,
       quantity,
       price,
@@ -55,7 +55,7 @@ class Request extends Component {
   async createQuote() {
     const { productId, quantity, price, unit } = this.state;
     const order = {
-      id: this.props.orders.length + 1,
+      id: this.props.orders.length,
       productId,
       quantity,
       price,

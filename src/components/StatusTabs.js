@@ -13,6 +13,7 @@ const StatusTabs = ({ tab, changeTab }) => {
       value={tab}
       onChange={changeTab}
       fullWidth
+      centered
       indicatorColor='secondary'
       textColor='secondary'
     >
